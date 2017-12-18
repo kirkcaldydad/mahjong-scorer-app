@@ -273,6 +273,8 @@ public class TestScoredHand
 			
 			if (hand.isMahjong())
 				System.out.print(" Mahjong ");
+			else if (setsCopy.size() == sets.size() - 5)
+				System.out.print("         ");
 			
 			// Check that the subset of sets that are in the hand are in the order specified
 			// by the input list.
