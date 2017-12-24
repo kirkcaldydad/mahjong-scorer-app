@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentTop="true"
+    android:minHeight="100dp">
+
+    <TextView
+        android:id="@+id/tvPlayers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/createdLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tvPlayers"
+        android:layout_below="@+id/tvPlayers"
+        android:layout_marginTop="8dp"
+        android:maxLines="1"
+        android:text="@string/created_label"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tvCreatedOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/createdLabel"
+        android:layout_alignBottom="@+id/createdLabel"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/createdLabel"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/lastModifiedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tvCreatedOn"
+        android:layout_alignBottom="@+id/tvCreatedOn"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/tvCreatedOn"
+        android:minLines="1"
+        android:text="@string/last_modified_label"
+        android:textColor="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tvLastModifiedOn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/lastModifiedLabel"
+        android:layout_alignBottom="@+id/lastModifiedLabel"
+        android:layout_marginStart="8dp"
+        android:layout_toEndOf="@+id/lastModifiedLabel"
+        android:text="TextView" />
+</RelativeLayout>
