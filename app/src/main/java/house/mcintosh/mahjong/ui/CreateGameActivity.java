@@ -44,6 +44,8 @@ public class CreateGameActivity extends AppCompatActivity
 		m_windTextViews[1] = (TextView)findViewById(R.id.playerWindText1);
 		m_windTextViews[2] = (TextView)findViewById(R.id.playerWindText2);
 		m_windTextViews[3] = (TextView)findViewById(R.id.playerWindText3);
+
+		displayWinds();
 	}
 
 	public void onRotateWindClick(View view)
@@ -54,6 +56,11 @@ public class CreateGameActivity extends AppCompatActivity
 		m_winds[1] = m_winds[0];
 		m_winds[0] = last;
 
+		displayWinds();
+	}
+
+	private void displayWinds()
+	{
 		// Update the fields to display the new wind values.
 
 		for (int i = 0 ; i < 4 ; i++)
