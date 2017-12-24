@@ -82,6 +82,11 @@ public class Player
 		
 		return m_id.equals(otherPlayer.m_id);
 	}
+
+	public String getName()
+	{
+		return m_name;
+	}
 	
 	@Override
 	public String toString()

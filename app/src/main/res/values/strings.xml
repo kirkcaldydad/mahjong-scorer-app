@@ -1,10 +1,11 @@
 <resources>
-    <string name="app_name">mahjong-scorer-app</string>
+    <string name="app_name">Mahjong Scorer</string>
+    <string name="new_game_title">New Game</string>
     <string name="action_settings">Settings</string>
     <string name="last_modified_label">Last Played:</string>
     <string name="created_label">Created:</string>
     <string name="rotateWind">Rotate Wind</string>
-    <string name="saveAndStart">start</string>
+    <string name="saveAndStart">Save and Start</string>
     <string name="east">East</string>
     <string name="south">South</string>
     <string name="west">West</string>

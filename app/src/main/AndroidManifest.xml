@@ -21,7 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateGameActivity"></activity>
+        <activity
+            android:name=".CreateGameActivity"
+            android:label="@string/new_game_title">
+        </activity>
     </application>
 
 </manifest>

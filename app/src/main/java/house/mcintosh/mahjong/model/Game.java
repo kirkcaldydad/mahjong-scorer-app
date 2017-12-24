@@ -46,6 +46,8 @@ public class Game
 		ArrayNode	players	= JsonUtil.createArrayNode();
 		ObjectNode	scores	= JsonUtil.createObjectNode();
 
+		game.put("version", "1");
+
 		for (Player player : m_seats)
 		{
 			ObjectNode seat = JsonUtil.createObjectNode();

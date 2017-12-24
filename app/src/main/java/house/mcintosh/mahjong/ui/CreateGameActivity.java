@@ -1,21 +1,38 @@
 package house.mcintosh.mahjong.ui;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import house.mcintosh.mahjong.io.GameFile;
+import house.mcintosh.mahjong.model.Game;
+import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Wind;
+import house.mcintosh.mahjong.scoring.ScoringScheme;
+import house.mcintosh.mahjong.util.JsonUtil;
 
 public class CreateGameActivity extends AppCompatActivity
 {
+	private final static String LOG_TAG = CreateGameActivity.class.getName();
+
+	public final static String GAME_FILE_NAME_KEY = CreateGameActivity.class.getName() + "GAME_FILE_NAME";
 
 	private String[] m_names = new String[] {"", "", "", ""};
 	private Wind[] m_winds = new Wind[] {Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
@@ -79,7 +96,42 @@ public class CreateGameActivity extends AppCompatActivity
 
 	public void onStartGameClick(View view)
 	{
+		// Create a new game instance and save it.
 
+		// TODO: make scoring scheme selectable.
+		Game game = new Game(ScoringScheme.instance());
+
+		Player eastPlayer = null;
+
+		for (int i = 0 ; i < 4 ; i++)
+		{
+			String name = m_names[i];
+
+			if (name == null || name.isEmpty())
+				continue;
+
+			Player player = Player.create(name);
+
+			game.setPlayer(player, i);
+
+			if (m_winds[i] == Wind.EAST)
+				eastPlayer = player;
+		}
+
+		game.startGame(eastPlayer);
+
+		// Save the game to a file.
+
+		GameFile gameFile = new GameFile(this, game);
+
+		gameFile.save();
+
+		// Send the name of the created game file to the calling activity.
+
+		Intent result = new Intent();
+		result.putExtra(GAME_FILE_NAME_KEY, gameFile.getFilename());
+		setResult(Activity.RESULT_OK, result);
+		finish();
 	}
 
 	private class NameWatcher implements TextWatcher
