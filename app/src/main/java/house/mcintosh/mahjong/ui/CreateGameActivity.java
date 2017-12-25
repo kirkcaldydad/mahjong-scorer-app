@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -134,6 +135,12 @@ public class CreateGameActivity extends AppCompatActivity
 		finish();
 	}
 
+	/**
+	 * Responds to changes in the text in a player name field.  One instance is
+	 * associated with each field.  As the text is changed, it is copied into
+	 * m_names and the Start button is enabled/disabled depending on how many
+	 * players are defined.
+	 */
 	private class NameWatcher implements TextWatcher
 	{
 		final private int m_nameIndex;
@@ -144,21 +151,29 @@ public class CreateGameActivity extends AppCompatActivity
 		}
 
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after)
-		{
-
-		}
+		public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count)
 		{
-			m_names[m_nameIndex] = s.toString();
+			m_names[m_nameIndex] = s.toString().trim();
+
+			// Only enable the Save button if there are at least two players defined.
+
+			int playerCount = 0;
+
+			for (int i = 0 ; i < m_names.length ; i++)
+			{
+				String name = m_names[i];
+
+				if (name != null && !name.isEmpty())
+					playerCount++;
+			}
+
+			((Button) findViewById(R.id.startButton)).setEnabled(playerCount >= 2);
 		}
 
 		@Override
-		public void afterTextChanged(Editable nameField)
-		{
-
-		}
+		public void afterTextChanged(Editable nameField){}
 	}
 }
