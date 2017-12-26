@@ -73,6 +73,8 @@ public class GameFile
 		if (!parentDirectory.exists() && !parentDirectory.mkdirs())
 			Log.e(LOG_TAG, "Directory not created: " + m_file.getParentFile().getName());
 
+		m_game.getMeta().setLastModifiedOnToNow();
+
 		try
 		{
 			JsonUtil.writeFile(m_game.toJson(), m_file);

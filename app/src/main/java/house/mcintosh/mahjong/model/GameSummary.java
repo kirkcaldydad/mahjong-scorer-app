@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import house.mcintosh.mahjong.scoring.ScoringScheme;
@@ -14,15 +16,15 @@ import house.mcintosh.mahjong.scoring.ScoringScheme;
 
 public class GameSummary
 {
-	private final String m_playerNames;
-	private final String m_createdOn;
-	private final String m_lastModifiedOn;
+	private final static String DATE_DISPLAY_FORMAT = "d MMMM yyyy";
 
-	public GameSummary(String playerNames, String createdOn, String lastModifiedOn)
+	private final String m_playerNames;
+	private final GameMeta m_meta;
+
+	public GameSummary(String playerNames, GameMeta meta)
 	{
 		m_playerNames		= playerNames;
-		m_createdOn			= createdOn;
-		m_lastModifiedOn	= lastModifiedOn;
+		m_meta				= meta;
 	}
 
 	public String getPlayerNames()
@@ -32,12 +34,20 @@ public class GameSummary
 
 	public String getCreatedOn()
 	{
-		return m_createdOn;
+		Date createdOn = m_meta.getCreatedOn();
+
+		// Convert to a display value.
+
+		SimpleDateFormat formatter = new SimpleDateFormat(DATE_DISPLAY_FORMAT);
+
+		return new SimpleDateFormat(DATE_DISPLAY_FORMAT).format(createdOn);
 	}
 
 	public String getLastModifiedOn()
 	{
-		return m_lastModifiedOn;
+		Date lastModifiedOn = m_meta.getLastModifiedOn();
+
+		return new SimpleDateFormat(DATE_DISPLAY_FORMAT).format(lastModifiedOn);
 	}
 
 	static public GameSummary fromJson(ObjectNode gameNode)
@@ -70,6 +80,8 @@ public class GameSummary
 			sb.append(player.getName());
 		}
 
-		return new GameSummary(sb.toString(), "now", "later");
+		GameMeta meta = GameMeta.fromJson(gameNode.path("meta"));
+
+		return new GameSummary(sb.toString(), meta);
 	}
 }

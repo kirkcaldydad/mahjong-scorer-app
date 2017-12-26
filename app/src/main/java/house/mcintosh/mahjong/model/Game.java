@@ -28,6 +28,7 @@ public class Game
 	private boolean					m_finished			= false;
 	
 	private final ScoringScheme		m_scheme;
+	private final GameMeta			m_meta;
 	
 	private Player		m_startingPlayer;
 	private Player		m_endingPlayer;
@@ -37,6 +38,13 @@ public class Game
 	public Game(ScoringScheme scheme)
 	{
 		m_scheme = scheme;
+		m_meta = new GameMeta();
+	}
+
+	private Game(ScoringScheme scheme, GameMeta meta)
+	{
+		m_scheme = scheme;
+		m_meta = meta;
 	}
 
 	public ObjectNode toJson()
@@ -47,6 +55,7 @@ public class Game
 		ObjectNode	scores	= JsonUtil.createObjectNode();
 
 		game.put("version", "1");
+		game.set("meta", m_meta.toJson());
 
 		for (Player player : m_seats)
 		{
@@ -90,6 +99,10 @@ public class Game
 
 	static public Game fromJson(JsonNode gameNode, ScoringScheme scheme)
 	{
+		GameMeta meta = GameMeta.fromJson(gameNode.path("meta"));
+
+		Game game = new Game(scheme, meta);
+
 		// Create all the players so that they are available by ID from the cache inside Players.
 		ArrayNode playersNode = (ArrayNode)gameNode.get("players");
 
@@ -97,8 +110,6 @@ public class Game
 		{
 			Player.fromJson(playerNode);
 		}
-
-		Game game = new Game(scheme);
 
 		// Create the seats
 		ArrayNode seatsNode = (ArrayNode)gameNode.get("seats");
@@ -322,5 +333,10 @@ public class Game
 				return playerIndex;
 		
 		throw new InvalidModelException("Player not found");
+	}
+
+	public GameMeta getMeta()
+	{
+		return m_meta;
 	}
 }
