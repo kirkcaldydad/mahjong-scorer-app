@@ -68,16 +68,10 @@ public class GameListActivity extends AppCompatActivity
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				GameSummary selectedGame = games.get(position);
-				Intent playGameIntent = new Intent(context, GamePlayActivity.class);
 
-				playGameIntent.putExtra(GamePlayActivity.EXTRA_KEY_GAME_FILE, selectedGame.getFile());
-
-				startActivity(playGameIntent);
+				playGame(selectedGame.getFile());
 			}
-
 		});
-
-
 	}
 
 	@Override
@@ -112,6 +106,17 @@ public class GameListActivity extends AppCompatActivity
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Start the game play activity to play the game.
+	 * @param file	The file containing the current state of the game.
+	 */
+	private void playGame(File file)
+	{
+		Intent playGameIntent = new Intent(this, GamePlayActivity.class);
+		playGameIntent.putExtra(GamePlayActivity.EXTRA_KEY_GAME_FILE, file);
+		startActivity(playGameIntent);
+	}
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent result)
 	{
@@ -127,6 +132,10 @@ public class GameListActivity extends AppCompatActivity
 					m_summariesAdapter.insert(summary, 0);
 
 					Log.e(LOG_TAG, "Created filename: " + createdGameFile.getAbsolutePath());
+
+					// Start the activity to play the game.
+
+					playGame(createdGameFile);
 				}
 
 		}
