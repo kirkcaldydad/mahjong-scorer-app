@@ -4,11 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-
-import house.mcintosh.mahjong.scoring.ScoringScheme;
 
 /**
  * A reduced representation of a Game.
@@ -20,11 +18,14 @@ public class GameSummary
 
 	private final String m_playerNames;
 	private final GameMeta m_meta;
+	private final File m_file;
 
-	public GameSummary(String playerNames, GameMeta meta)
+
+	public GameSummary(String playerNames, GameMeta meta, File file)
 	{
 		m_playerNames		= playerNames;
 		m_meta				= meta;
+		m_file				= file;
 	}
 
 	public String getPlayerNames()
@@ -50,7 +51,12 @@ public class GameSummary
 		return new SimpleDateFormat(DATE_DISPLAY_FORMAT).format(lastModifiedOn);
 	}
 
-	static public GameSummary fromJson(ObjectNode gameNode)
+	public File getFile()
+	{
+		return m_file;
+	}
+
+	static public GameSummary fromJson(ObjectNode gameNode, File file)
 	{
 		// Create all the players so that they are available by ID from the cache inside Players.
 		ArrayNode playersNode = (ArrayNode)gameNode.get("players");
@@ -82,6 +88,6 @@ public class GameSummary
 
 		GameMeta meta = GameMeta.fromJson(gameNode.path("meta"));
 
-		return new GameSummary(sb.toString(), meta);
+		return new GameSummary(sb.toString(), meta, file);
 	}
 }

@@ -33,7 +33,7 @@ public class CreateGameActivity extends AppCompatActivity
 {
 	private final static String LOG_TAG = CreateGameActivity.class.getName();
 
-	public final static String GAME_FILE_NAME_KEY = CreateGameActivity.class.getName() + "GAME_FILE_NAME";
+	public final static String GAME_FILE_KEY = CreateGameActivity.class.getName() + "GAME_FILE";
 
 	private String[] m_names = new String[] {"", "", "", ""};
 	private Wind[] m_winds = new Wind[] {Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
@@ -130,7 +130,7 @@ public class CreateGameActivity extends AppCompatActivity
 		// Send the name of the created game file to the calling activity.
 
 		Intent result = new Intent();
-		result.putExtra(GAME_FILE_NAME_KEY, gameFile.getFilename());
+		result.putExtra(GAME_FILE_KEY, gameFile.getFile());
 		setResult(Activity.RESULT_OK, result);
 		finish();
 	}

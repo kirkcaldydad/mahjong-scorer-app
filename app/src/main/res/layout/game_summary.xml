@@ -38,7 +38,7 @@
         android:layout_marginStart="8dp"
         android:layout_toEndOf="@+id/lastModifiedLabel"
         android:text="TextView" />
-    
+
     <TextView
         android:id="@+id/createdLabel"
         android:layout_width="wrap_content"

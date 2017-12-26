@@ -3,6 +3,7 @@ package house.mcintosh.mahjong.io;
 import android.content.Context;
 import android.util.Log;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
@@ -18,6 +19,7 @@ import java.util.regex.Pattern;
 import house.mcintosh.mahjong.exception.LoadException;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.GameSummary;
+import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.ui.CreateGameActivity;
 import house.mcintosh.mahjong.util.JsonUtil;
 
@@ -32,7 +34,6 @@ public class GameFile
 
 	private final Game m_game;
 	private final File m_file;
-	private final String m_filename;
 
 	private static final FilenameFilter GAME_FILENAME_FILTER =
 			new FilenameFilter()
@@ -53,17 +54,21 @@ public class GameFile
 
 		// Create a new abstract File in which to store the game.
 
-		// Save the game to a file.
-
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
 		String nowStr = dateFormat.format(new Date());
 
-		m_filename = "game" + nowStr + ".json";
+		String filename = "game" + nowStr + ".json";
 
 		File directory = context.getExternalFilesDir(null);
 
-		m_file = new File(directory, m_filename);
+		m_file = new File(directory, filename);
+	}
+
+	private GameFile(Game game, File file)
+	{
+		m_game = game;
+		m_file = file;
 	}
 
 	public void save()
@@ -88,9 +93,33 @@ public class GameFile
 		}
 	}
 
-	public String getFilename()
+	public static GameFile load(File file)
 	{
-		return m_filename;
+		GameFile gameFile;
+
+		try
+		{
+			JsonNode gameNode = JsonUtil.loadFile(file);
+			Game game = Game.fromJson(gameNode, ScoringScheme.instance());
+
+			gameFile = new GameFile(game, file);
+		}
+		catch (IOException ioe)
+		{
+			throw new LoadException("Cannot load game file : " + file.getAbsolutePath());
+		}
+
+		return gameFile;
+	}
+
+	public File getFile()
+	{
+		return m_file;
+	}
+
+	public Game getGame()
+	{
+		return m_game;
 	}
 
 	static public List<GameSummary> getAllGames(Context context)
@@ -117,34 +146,20 @@ public class GameFile
 		return allGames;
 	}
 
-	static private GameSummary loadGameSummary(File gameFile)
+	public static GameSummary loadGameSummary(File gameFile)
 	{
 		GameSummary summary;
 
 		try
 		{
 			ObjectNode gameNode = (ObjectNode)JsonUtil.loadFile(gameFile);
-			summary = GameSummary.fromJson(gameNode);
+			summary = GameSummary.fromJson(gameNode, gameFile);
 		}
 		catch (IOException ioe)
 		{
 			Log.e(LOG_TAG, "Cannot load game file: " + gameFile.getAbsolutePath());
 			summary = null;
 		}
-
-		return summary;
-	}
-
-	static public GameSummary getGameSummary(Context context, String filename)
-	{
-		File directory = context.getExternalFilesDir(null);
-
-		if (!directory.isDirectory())
-			throw new LoadException("Cannot load game file - no directory.");
-
-		File gameFile = new File(directory, filename);
-
-		GameSummary summary = loadGameSummary(gameFile);
 
 		return summary;
 	}

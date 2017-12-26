@@ -1,6 +1,7 @@
 package house.mcintosh.mahjong.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,9 +12,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +50,34 @@ public class GameListActivity extends AppCompatActivity
 			}
 		});
 
-		List<GameSummary> games = getGames();
+		final List<GameSummary> games = getGames();
 
 		m_summariesAdapter = new GameSummariesAdapter(this, games);
 
 		ListView messageListView = findViewById(R.id.gameListView);
 
 		messageListView.setAdapter(m_summariesAdapter);
+
+		// Create a handler for clicks on the games on the list.
+
+		final Context context = this;
+
+		messageListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+		{
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				GameSummary selectedGame = games.get(position);
+				Intent playGameIntent = new Intent(context, GamePlayActivity.class);
+
+				playGameIntent.putExtra(GamePlayActivity.EXTRA_KEY_GAME_FILE, selectedGame.getFile());
+
+				startActivity(playGameIntent);
+			}
+
+		});
+
+
 	}
 
 	@Override
@@ -96,13 +120,13 @@ public class GameListActivity extends AppCompatActivity
 			case CREATE_GAME_REQUEST_CODE:
 				if (resultCode == Activity.RESULT_OK)
 				{
-					String createdGameFileName = result.getStringExtra(CreateGameActivity.GAME_FILE_NAME_KEY);
+					File createdGameFile = (File)result.getSerializableExtra(CreateGameActivity.GAME_FILE_KEY);
 
-					GameSummary summary = GameFile.getGameSummary(this, createdGameFileName);
+					GameSummary summary = GameFile.loadGameSummary(createdGameFile);
 
 					m_summariesAdapter.insert(summary, 0);
 
-					Log.e(LOG_TAG, "Created filename: " + createdGameFileName);
+					Log.e(LOG_TAG, "Created filename: " + createdGameFile.getAbsolutePath());
 				}
 
 		}

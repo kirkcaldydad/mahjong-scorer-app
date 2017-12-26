@@ -183,6 +183,14 @@ public class Game
 		
 		m_scores.put(player, m_scheme.InitialScore);
 	}
+
+	public Player getPlayer(int index)
+	{
+		if (index < 0 || index >= 4)
+			throw new InvalidModelException("Invalid index for game game player: " + index);
+
+		return m_seats[index];
+	}
 	
 	public void startGame(Player eastPlayer)
 	{
