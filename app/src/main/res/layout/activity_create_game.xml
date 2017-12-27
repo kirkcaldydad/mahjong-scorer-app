@@ -13,7 +13,8 @@
         android:layout_marginBottom="8dp"
         android:contentDescription="@string/nameHint"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords|textPersonName"
+        android:singleLine="true"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/playerWindText0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -38,7 +39,8 @@
         android:layout_marginTop="8dp"
         android:contentDescription="@string/nameHint"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords|textPersonName"
+        android:singleLine="true"
         android:textAlignment="textEnd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playerWindText1" />
@@ -64,10 +66,10 @@
         android:layout_marginTop="8dp"
         android:contentDescription="@string/nameHint"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords|textPersonName"
+        android:singleLine="true"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/playerWindText2" />
@@ -91,7 +93,8 @@
         android:layout_marginStart="16dp"
         android:contentDescription="@string/nameHint"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords|textPersonName"
+        android:singleLine="true"
         android:textAlignment="textStart"
         app:layout_constraintBottom_toTopOf="@+id/playerWindText3"
         app:layout_constraintStart_toStartOf="parent" />
@@ -135,7 +138,6 @@
             android:text="@string/rotateWind"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/startButton"
-            app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
