@@ -11,4 +11,5 @@
     <string name="west">West</string>
     <string name="north">North</string>
     <string name="nameHint">Name</string>
+    <string name="prevailingWind">Prevailing wind:</string>
 </resources>
