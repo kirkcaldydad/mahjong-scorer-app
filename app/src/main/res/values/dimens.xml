@@ -1,6 +1,7 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="gridTileWidth">24dp</dimen>
-    <dimen name="gridTileHeight">32dp</dimen>
-    <dimen name="gridTileMargin" />
+    <dimen name="gridTileWidth">30dp</dimen>
+    <dimen name="gridTileHeight">40dp</dimen>
+    <dimen name="gridTileMargin">2dp</dimen>
+    <dimen name="gridTilePadding">3dp</dimen>
 </resources>
