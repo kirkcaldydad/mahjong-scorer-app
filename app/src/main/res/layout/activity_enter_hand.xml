@@ -176,155 +176,155 @@
             android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles8" />
 
-            <ImageView
-                android:id="@+id/btnCircles9"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="8"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:layout_row="0"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCircles9"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCircles9"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="8"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:layout_row="0"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles9"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/circles9" />
+            app:srcCompat="@drawable/circles9" />
 
-            <ImageView
-                android:id="@+id/btnCharacters1"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="0"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters1"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters1"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters1"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters1" />
+            app:srcCompat="@drawable/characters1" />
 
-            <ImageView
-                android:id="@+id/btnCharacters2"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="1"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters2"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters2"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters2"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters2" />
+            app:srcCompat="@drawable/characters2" />
 
-            <ImageView
-                android:id="@+id/btnCharacters3"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="2"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters3"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters3"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters3"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters3" />
+            app:srcCompat="@drawable/characters3" />
 
-            <ImageView
-                android:id="@+id/btnCharacters4"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="3"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters4"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters4"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters4"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters4" />
+            app:srcCompat="@drawable/characters4" />
 
-            <ImageView
-                android:id="@+id/btnCharacters5"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="4"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters5"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters5"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="4"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters5"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters5" />
+            app:srcCompat="@drawable/characters5" />
 
-            <ImageView
-                android:id="@+id/btnCharacters6"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="5"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters6"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters6"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="5"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters6"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters6" />
+            app:srcCompat="@drawable/characters6" />
 
-            <ImageView
-                android:id="@+id/btnCharacters7"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="6"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters7"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters7"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="6"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters7"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters7" />
+            app:srcCompat="@drawable/characters7" />
 
-            <ImageView
-                android:id="@+id/btnCharacters8"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="7"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters8"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters8"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="7"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters8"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters8" />
+            app:srcCompat="@drawable/characters8" />
 
-            <ImageView
-                android:id="@+id/btnCharacters9"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="8"
-                android:layout_columnWeight="1"
-                android:layout_row="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descCharacters9"
-                android:gravity="center"
-                android:padding="@dimen/gridTilePadding"
+        <ImageView
+            android:id="@+id/btnCharacters9"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="8"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters9"
+            android:gravity="center"
+            android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/characters9" />
+            app:srcCompat="@drawable/characters9" />
 
             <ImageView
             android:id="@+id/btnBamboo1"
@@ -536,35 +536,84 @@
             android:onClick="onGridTileClick"
             app:srcCompat="@drawable/dragon_red" />
 
-            <ImageView
-                android:id="@+id/btnWhiteDragon"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="6"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:layout_row="4"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descWhiteDragon"
-                android:gravity="center"
+        <ImageView
+            android:id="@+id/btnWhiteDragon"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="6"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descWhiteDragon"
+            android:gravity="center"
             android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/dragon_white" />
+            app:srcCompat="@drawable/dragon_white" />
 
-            <ImageView
-                android:id="@+id/btnGreenDragon"
-                android:layout_width="@dimen/gridTileWidth"
-                android:layout_height="@dimen/gridTileHeight"
-                android:layout_column="7"
-                android:layout_columnWeight="1"
-                android:layout_margin="@dimen/gridTileMargin"
-                android:layout_row="4"
-                android:background="@drawable/tile_border"
-                android:contentDescription="@string/descGreenDragon"
-                android:gravity="center"
+        <ImageView
+            android:id="@+id/btnGreenDragon"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="7"
+            android:layout_columnWeight="1"
+            android:layout_margin="@dimen/gridTileMargin"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descGreenDragon"
+            android:gravity="center"
             android:padding="@dimen/gridTilePadding"
             android:onClick="onGridTileClick"
-                app:srcCompat="@drawable/dragon_green" />
+            app:srcCompat="@drawable/dragon_green" />
 
     </GridLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutSetTypeButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/tileGrid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ToggleButton
+            android:id="@+id/btnChow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onChowButtonClick"
+            android:textOff="@string/chow"
+            android:textOn="@string/chow" />
+
+        <ToggleButton
+            android:id="@+id/btnPung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onPungButtonClick"
+            android:textOff="@string/pung"
+            android:textOn="@string/pung" />
+
+        <ToggleButton
+            android:id="@+id/btnKong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onKongButtonClick"
+            android:textOff="@string/kong"
+            android:textOn="@string/kong" />
+
+        <ToggleButton
+            android:id="@+id/btnPair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onPairButtonClick"
+            android:textOff="@string/pair"
+            android:textOn="@string/pair" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

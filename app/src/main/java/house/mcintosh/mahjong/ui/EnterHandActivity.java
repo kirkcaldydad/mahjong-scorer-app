@@ -2,15 +2,18 @@ package house.mcintosh.mahjong.ui;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
@@ -62,6 +65,13 @@ public class EnterHandActivity extends AppCompatActivity
 		viewToTile.put(R.id.btnGreenDragon, new Tile(Tile.Dragon.GREEN));
 	}
 
+	private ToggleButton m_selectedGroupTypeButton = null;
+	private Group.Type m_selectedGroupType = null;
+	private ImageView m_selectedTileButton = null;
+	private Tile m_selectedTile = null;
+	private Drawable m_tileNormalBackground;
+	private Drawable m_tileSelectedBackground;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -73,10 +83,59 @@ public class EnterHandActivity extends AppCompatActivity
 		Player player = (Player) intent.getSerializableExtra(PLAYER_KEY);
 
 		Log.d(LOG_TAG, "Starting EnterHandActivity for player: " + player.getName());
+
+		m_tileNormalBackground = getDrawable(R.drawable.tile_border);
+		m_tileSelectedBackground = getDrawable(R.drawable.tile_border_selected);
 	}
 
 	public void onGridTileClick(View view)
 	{
 		Log.d(LOG_TAG, "Got click on grid view item: " + viewToTile.get(view.getId()));
+
+		m_selectedTile = viewToTile.get(view.getId());
+
+		if (m_selectedTileButton != null)
+		{
+			m_selectedTileButton.setBackground(m_tileNormalBackground);
+		}
+
+		m_selectedTileButton = (ImageView)view;
+		m_selectedTileButton.setBackground(m_tileSelectedBackground);
+	}
+
+	private void selectGroupTypeButton(View view)
+	{
+		if (m_selectedGroupTypeButton != null)
+			m_selectedGroupTypeButton.setChecked(false);
+
+		if (view != null)
+		{
+			m_selectedGroupTypeButton = (ToggleButton) view;
+			m_selectedGroupTypeButton.setChecked(true);
+		}
+	}
+
+	public void onChowButtonClick(View view)
+	{
+		selectGroupTypeButton(view);
+		m_selectedGroupType = Group.Type.CHOW;
+	}
+
+	public void onPungButtonClick(View view)
+	{
+		selectGroupTypeButton(view);
+		m_selectedGroupType = Group.Type.PUNG;
+	}
+
+	public void onKongButtonClick(View view)
+	{
+		selectGroupTypeButton(view);
+		m_selectedGroupType = Group.Type.KONG;
+	}
+
+	public void onPairButtonClick(View view)
+	{
+		selectGroupTypeButton(view);
+		m_selectedGroupType = Group.Type.PAIR;
 	}
 }
