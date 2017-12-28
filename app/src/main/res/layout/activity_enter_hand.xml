@@ -68,6 +68,7 @@
             android:contentDescription="@string/descCircles1"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles1" />
 
         <ImageView
@@ -82,6 +83,7 @@
             android:contentDescription="@string/descCircles2"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles2" />
 
         <ImageView
@@ -96,6 +98,7 @@
             android:contentDescription="@string/descCircles3"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles3" />
 
         <ImageView
@@ -110,6 +113,7 @@
             android:contentDescription="@string/descCircles4"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles4" />
 
         <ImageView
@@ -124,6 +128,7 @@
             android:contentDescription="@string/descCircles5"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles5" />
 
         <ImageView
@@ -138,6 +143,7 @@
             android:contentDescription="@string/descCircles6"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles6" />
 
         <ImageView
@@ -152,6 +158,7 @@
             android:contentDescription="@string/descCircles7"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles7" />
 
         <ImageView
@@ -166,6 +173,7 @@
             android:contentDescription="@string/descCircles8"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/circles8" />
 
             <ImageView
@@ -180,6 +188,7 @@
                 android:contentDescription="@string/descCircles9"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/circles9" />
 
             <ImageView
@@ -194,6 +203,7 @@
                 android:contentDescription="@string/descCharacters1"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters1" />
 
             <ImageView
@@ -208,6 +218,7 @@
                 android:contentDescription="@string/descCharacters2"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters2" />
 
             <ImageView
@@ -222,6 +233,7 @@
                 android:contentDescription="@string/descCharacters3"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters3" />
 
             <ImageView
@@ -236,6 +248,7 @@
                 android:contentDescription="@string/descCharacters4"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters4" />
 
             <ImageView
@@ -250,6 +263,7 @@
                 android:contentDescription="@string/descCharacters5"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters5" />
 
             <ImageView
@@ -264,6 +278,7 @@
                 android:contentDescription="@string/descCharacters6"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters6" />
 
             <ImageView
@@ -278,6 +293,7 @@
                 android:contentDescription="@string/descCharacters7"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters7" />
 
             <ImageView
@@ -292,6 +308,7 @@
                 android:contentDescription="@string/descCharacters8"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters8" />
 
             <ImageView
@@ -306,6 +323,7 @@
                 android:contentDescription="@string/descCharacters9"
                 android:gravity="center"
                 android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/characters9" />
 
             <ImageView
@@ -320,6 +338,7 @@
             android:contentDescription="@string/descBamboo1"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo1" />
 
         <ImageView
@@ -334,6 +353,7 @@
             android:contentDescription="@string/descBamboo2"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo2" />
 
         <ImageView
@@ -348,6 +368,7 @@
             android:contentDescription="@string/descBamboo3"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo3" />
 
         <ImageView
@@ -362,6 +383,7 @@
             android:contentDescription="@string/descBamboo4"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo4" />
 
         <ImageView
@@ -376,6 +398,7 @@
             android:contentDescription="@string/descBamboo5"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo5" />
 
         <ImageView
@@ -390,6 +413,7 @@
             android:contentDescription="@string/descBamboo6"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo6" />
 
         <ImageView
@@ -404,6 +428,7 @@
             android:contentDescription="@string/descBamboo7"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo7" />
 
         <ImageView
@@ -418,6 +443,7 @@
             android:contentDescription="@string/descBamboo8"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo8" />
 
         <ImageView
@@ -432,6 +458,7 @@
             android:contentDescription="@string/descBamboo9"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/bamboo9" />
 
         <ImageView
@@ -446,6 +473,7 @@
             android:contentDescription="@string/descEast"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/wind_east" />
 
         <ImageView
@@ -460,6 +488,7 @@
             android:contentDescription="@string/descSouth"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/wind_south" />
 
         <ImageView
@@ -474,6 +503,7 @@
             android:contentDescription="@string/descWest"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/wind_west" />
 
         <ImageView
@@ -488,6 +518,7 @@
             android:contentDescription="@string/descNorth"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/wind_north" />
 
         <ImageView
@@ -502,6 +533,7 @@
             android:contentDescription="@string/descRedDragon"
             android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
             app:srcCompat="@drawable/dragon_red" />
 
             <ImageView
@@ -516,6 +548,7 @@
                 android:contentDescription="@string/descWhiteDragon"
                 android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/dragon_white" />
 
             <ImageView
@@ -530,6 +563,7 @@
                 android:contentDescription="@string/descGreenDragon"
                 android:gravity="center"
             android:padding="@dimen/gridTilePadding"
+            android:onClick="onGridTileClick"
                 app:srcCompat="@drawable/dragon_green" />
 
     </GridLayout>
