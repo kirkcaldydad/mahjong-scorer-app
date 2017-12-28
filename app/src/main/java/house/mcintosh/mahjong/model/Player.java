@@ -3,6 +3,7 @@ package house.mcintosh.mahjong.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.Set;
 import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.util.JsonUtil;
 
-public class Player
+public class Player implements Serializable
 {
 	/** All the instances that have been created so far. */
 	static private final Set<Player> s_allPlayers = new HashSet<>();

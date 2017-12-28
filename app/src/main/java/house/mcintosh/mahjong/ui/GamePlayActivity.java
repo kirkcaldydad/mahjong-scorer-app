@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import house.mcintosh.mahjong.io.GameFile;
@@ -17,7 +18,11 @@ import house.mcintosh.mahjong.model.Wind;
 
 public class GamePlayActivity extends AppCompatActivity
 {
+	private static final String LOG_TAG = GamePlayActivity.class.getName();
+
 	public static final String EXTRA_KEY_GAME_FILE = GamePlayActivity.class.getName() + ":gameFile";
+
+	public static final int ENTER_HAND_REQUEST_CODE = 1;
 
 	private Game m_game;
 	private GameFile m_gameFile;
@@ -73,7 +78,15 @@ public class GamePlayActivity extends AppCompatActivity
 		m_windNames.put(Wind.WEST, getText(R.string.west));
 		m_windNames.put(Wind.NORTH, getText(R.string.north));
 
-		m_prevailingWindView = (TextView) findViewById(R.id.tvPrevailingWind);
+		m_prevailingWindView = findViewById(R.id.tvPrevailingWind);
+
+		// Attach listeners for clicks that enter player hands for scoring.
+		for (int i = 0 ; i < 4 ; i++)
+		{
+			Player player = m_game.getPlayer(i);
+			if (player != null)
+				m_playerViews[i].playerName.setOnClickListener(new EnterHandClickListener(player));
+		}
 
 		displayGame();
 	}
@@ -89,7 +102,7 @@ public class GamePlayActivity extends AppCompatActivity
 	}
 
 	private void displayPlayer(Player player, PlayerViews views)
-	{;
+	{
 		if (player == null)
 		{
 			views.wind.setText("");
@@ -100,21 +113,47 @@ public class GamePlayActivity extends AppCompatActivity
 		{
 			views.wind.setText(m_windNames.get(m_game.getPlayerWind(player)));
 			views.playerName.setText(player.getName());
-			views.score.setText("" + m_game.getPlayerScore(player));
+			views.score.setText(String.format(Locale.UK, "%d", m_game.getPlayerScore(player)));
 		}
 	}
 
+	/**
+	 * A simple object in which to cache the view elements associated with each player.
+	 */
 	private class PlayerViews
 	{
 		final TextView wind;
 		final TextView playerName;
 		final TextView score;
 
-		public PlayerViews(View windView, View playerName, View score)
+		PlayerViews(View windView, View playerName, View score)
 		{
 			this.wind = (TextView)windView;
 			this.playerName = (TextView)playerName;
 			this.score = (TextView)score;
+		}
+	}
+
+	/**
+	 * Listener for a click on a name (or similar) that triggers entering a hand.
+	 */
+	private class EnterHandClickListener implements View.OnClickListener
+	{
+		private final Player m_player;
+
+		EnterHandClickListener(Player player)
+		{
+			m_player = player;
+		}
+
+		@Override
+		public void onClick(View view)
+		{
+			Intent intent = new Intent(view.getContext(), EnterHandActivity.class);
+
+			intent.putExtra(EnterHandActivity.PLAYER_KEY, m_player);
+
+			startActivityForResult(intent, ENTER_HAND_REQUEST_CODE);
 		}
 	}
 }

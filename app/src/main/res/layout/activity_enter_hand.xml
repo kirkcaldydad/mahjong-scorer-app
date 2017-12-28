@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="house.mcintosh.mahjong.ui.EnterHandActivity">
+
+    <GridLayout
+        android:id="@+id/tileGrid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+<!--        <Button
+            android:id="@+id/btnChow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_columnSpan="2"
+            android:layout_row="0"
+            android:text="@string/chow"
+            tools:text="@string/chow" />
+
+        <Button
+            android:id="@+id/btnPung"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_columnSpan="2"
+            android:layout_row="0"
+            android:text="@string/pung"
+            tools:text="@string/pung" />
+
+        <Button
+            android:id="@+id/btnKong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="4"
+            android:layout_columnSpan="2"
+            android:layout_row="0"
+            android:text="@string/kong"
+            tools:text="@string/kong" />
+
+        <Button
+            android:id="@+id/btnPair"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="6"
+            android:layout_columnSpan="3"
+            android:layout_row="0"
+            android:text="@string/pair" />-->
+
+            <ImageView
+                android:id="@+id/btnCharacters1"
+                android:layout_width="@dimen/gridTileWidth"
+                android:layout_height="@dimen/gridTileHeight"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:layout_row="1"
+                android:layout_margin="2dp"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/descCharacters1"
+                android:gravity="center"
+                android:padding="2dp"
+                app:srcCompat="@drawable/characters1" />
+
+        <ImageView
+            android:id="@+id/btnCharacters2"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters2"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters2" />
+
+        <ImageView
+            android:id="@+id/btnCharacters3"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters3"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters3" />
+
+        <ImageView
+            android:id="@+id/btnCharacters4"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters4"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters4" />
+
+        <ImageView
+            android:id="@+id/btnCharacters5"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="4"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters5"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters5" />
+
+        <ImageView
+            android:id="@+id/btnCharacters6"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="5"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters6"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters6" />
+
+        <ImageView
+            android:id="@+id/btnCharacters7"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="6"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters7"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters7" />
+
+        <ImageView
+            android:id="@+id/btnCharacters8"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="7"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters8"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters8" />
+
+        <ImageView
+            android:id="@+id/btnCharacters9"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="8"
+            android:layout_columnWeight="1"
+            android:layout_row="1"
+            android:layout_margin="2dp"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCharacters9"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/characters9" />
+
+        <ImageView
+            android:id="@+id/btnCircles1"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles1"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles1" />
+
+        <ImageView
+            android:id="@+id/btnCircles2"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles2"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles2" />
+
+        <ImageView
+            android:id="@+id/btnCircles3"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles3"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles3" />
+
+        <ImageView
+            android:id="@+id/btnCircles4"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles4"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles4" />
+
+        <ImageView
+            android:id="@+id/btnCircles5"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="4"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles5"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles5" />
+
+        <ImageView
+            android:id="@+id/btnCircles6"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="5"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles6"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles6" />
+
+        <ImageView
+            android:id="@+id/btnCircles7"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="6"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles7"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/circles7" />
+
+        <ImageView
+            android:id="@+id/btnCircles8"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="7"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="2"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descCircles8"
+            android:gravity="center"
+                android:padding="8dp"
+            app:srcCompat="@drawable/circles8" />
+
+            <ImageView
+                android:id="@+id/btnCircles9"
+                android:layout_width="@dimen/gridTileWidth"
+                android:layout_height="@dimen/gridTileHeight"
+                android:layout_column="8"
+                android:layout_columnWeight="1"
+                android:layout_margin="2dp"
+                android:layout_row="2"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/descCircles9"
+                android:gravity="center"
+                android:padding="2dp"
+                app:srcCompat="@drawable/circles9" />
+
+        <ImageView
+            android:id="@+id/btnBamboo1"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo1"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo1" />
+
+        <ImageView
+            android:id="@+id/btnBamboo2"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo2"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo2" />
+
+        <ImageView
+            android:id="@+id/btnBamboo3"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo3"
+            android:gravity="center"
+            app:srcCompat="@drawable/bamboo3" />
+
+        <ImageView
+            android:id="@+id/btnBamboo4"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo4"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo4" />
+
+        <ImageView
+            android:id="@+id/btnBamboo5"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="4"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo5"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo5" />
+
+        <ImageView
+            android:id="@+id/btnBamboo6"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="5"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo6"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo6" />
+
+        <ImageView
+            android:id="@+id/btnBamboo7"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="6"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo7"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo7" />
+
+        <ImageView
+            android:id="@+id/btnBamboo8"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="7"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo8"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo8" />
+
+        <ImageView
+            android:id="@+id/btnBamboo9"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="8"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="3"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descBamboo9"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/bamboo9" />
+
+        <ImageView
+            android:id="@+id/btnEast"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descEast"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/wind_east" />
+
+        <ImageView
+            android:id="@+id/btnSouth"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="2"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descSouth"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/wind_south" />
+
+        <ImageView
+            android:id="@+id/btnWest"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="3"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descWest"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/wind_west" />
+
+        <ImageView
+            android:id="@+id/btnNorth"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="4"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descNorth"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/wind_north" />
+
+        <ImageView
+            android:id="@+id/btnRedDragon"
+            android:layout_width="@dimen/gridTileWidth"
+            android:layout_height="@dimen/gridTileHeight"
+            android:layout_column="6"
+            android:layout_columnWeight="1"
+            android:layout_margin="2dp"
+            android:layout_row="4"
+            android:background="@drawable/tile_border"
+            android:contentDescription="@string/descRedDragon"
+            android:gravity="center"
+                android:padding="2dp"
+            app:srcCompat="@drawable/dragon_red" />
+
+            <ImageView
+                android:id="@+id/btnWhiteDragon"
+                android:layout_width="@dimen/gridTileWidth"
+                android:layout_height="@dimen/gridTileHeight"
+                android:layout_column="5"
+                android:layout_columnWeight="1"
+                android:layout_margin="2dp"
+                android:layout_row="4"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/descWhiteDragon"
+                android:gravity="center"
+                android:padding="2dp"
+                app:srcCompat="@drawable/dragon_white" />
+
+            <ImageView
+                android:id="@+id/btnGreenDragon"
+                android:layout_width="@dimen/gridTileWidth"
+                android:layout_height="@dimen/gridTileHeight"
+                android:layout_column="7"
+                android:layout_columnWeight="1"
+                android:layout_margin="2dp"
+                android:layout_row="4"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/descGreenDragon"
+                android:gravity="center"
+                android:padding="2dp"
+                app:srcCompat="@drawable/dragon_green" />
+
+    </GridLayout>
+</android.support.constraint.ConstraintLayout>

@@ -131,7 +131,7 @@ public class GameListActivity extends AppCompatActivity
 
 					m_summariesAdapter.insert(summary, 0);
 
-					Log.e(LOG_TAG, "Created filename: " + createdGameFile.getAbsolutePath());
+					Log.d(LOG_TAG, "Created filename: " + createdGameFile.getAbsolutePath());
 
 					// Start the activity to play the game.
 
