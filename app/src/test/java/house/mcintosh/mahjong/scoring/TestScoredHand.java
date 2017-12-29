@@ -56,7 +56,7 @@ public class TestScoredHand
 	@Test
 	public void testMahjongHands()
 	{
-		ScoringScheme		scheme	= ScoringScheme.instance();
+		ScoringScheme	scheme	= ScoringScheme.instance();
 		ScoredHand		hand	= new ScoredHand(scheme);
 		
 		hand.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Tile.Dragon.RED), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));

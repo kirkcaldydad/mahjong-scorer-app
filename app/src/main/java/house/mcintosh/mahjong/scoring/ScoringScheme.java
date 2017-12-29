@@ -1,9 +1,10 @@
 package house.mcintosh.mahjong.scoring;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScoringScheme
+public class ScoringScheme implements Serializable
 {
 	enum ScoreElement
 	{

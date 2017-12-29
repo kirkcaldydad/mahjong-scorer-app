@@ -1,5 +1,9 @@
 package house.mcintosh.mahjong.model;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -17,12 +21,26 @@ public final class Tile
 	
 	public enum Suit
 	{
-		CHARACTERS, BAMBOO, CIRCLES
+		CHARACTERS, BAMBOO, CIRCLES;
+
+		public final String drawableNameComponent;
+
+		Suit()
+		{
+			drawableNameComponent = this.name().toLowerCase();
+		}
 	}
 
 	public enum Number
 	{
 		ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE;
+
+		public final String drawableNameComponent;
+
+		Number()
+		{
+			drawableNameComponent = Integer.toString(this.ordinal() + 1);
+		}
 
 		Number next()
 		{
@@ -32,12 +50,26 @@ public final class Tile
 
 	public enum Dragon
 	{
-		RED, GREEN, WHITE
+		RED, GREEN, WHITE;
+
+		public final String drawableNameComponent;
+
+		Dragon()
+		{
+			drawableNameComponent = this.name().toLowerCase();
+		}
 	}
 
 	public enum Type
 	{
-		DRAGON, WIND, SUIT
+		DRAGON, WIND, SUIT;
+
+		public final String drawableNameComponent;
+
+		Type()
+		{
+			drawableNameComponent = this.name().toLowerCase();
+		}
 	}
 
 	private final Suit m_suit;
@@ -123,6 +155,39 @@ public final class Tile
 	public Tile createNextNumber()
 	{
 		return new Tile(this.m_suit, this.m_number.next());
+	}
+
+	public boolean equals(Object other)
+	{
+		if (!(other instanceof Tile))
+			return false;
+
+		Tile that = (Tile)other;
+
+		return     this.m_type == that.m_type
+				&& this.m_dragon == that.m_dragon
+				&& this.m_wind == that.m_wind
+				&& this.m_suit == that.m_suit
+				&& this.m_number == that.m_number;
+	}
+
+	public int hashCode()
+	{
+		int hash = m_type.hashCode();
+
+		if (m_dragon != null)
+			hash ^= m_dragon.hashCode();
+
+		if (m_wind != null)
+			hash ^= m_wind.hashCode();
+
+		if (m_suit != null)
+			hash ^= m_suit.hashCode();
+
+		if (m_number != null)
+			hash ^= m_number.hashCode();
+
+		return hash;
 	}
 
 	public ObjectNode toJson()

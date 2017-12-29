@@ -1,5 +1,7 @@
 package house.mcintosh.mahjong.scoring;
 
+import java.io.Serializable;
+
 import house.mcintosh.mahjong.exception.InvalidScoreSchemeException;
 import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
 
@@ -7,7 +9,7 @@ import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
  * A ScorePair is a combination of a simple score and a hand multiplier.
  */
 
-public class ScoreContribution
+public class ScoreContribution implements Serializable
 {
 	static public final ScoreContribution NULL = new ScoreContribution(ScoreElement.UNKNOWN, 0, 1);
 	

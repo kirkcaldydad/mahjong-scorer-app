@@ -6,6 +6,13 @@ public enum Wind
 	SOUTH,
 	WEST,
 	NORTH;
+
+	public final String drawableNameComponent;
+
+	Wind()
+	{
+		drawableNameComponent = this.name().toLowerCase();
+	}
 	
 	/**
 	 * @return The next wind in the normal rotation sequence of Winds.

@@ -5,24 +5,33 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ToggleButton;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
+import house.mcintosh.mahjong.scoring.ScoredGroup;
+import house.mcintosh.mahjong.scoring.ScoringScheme;
 
 public class EnterHandActivity extends AppCompatActivity
 {
 	private final static String LOG_TAG = EnterHandActivity.class.getName();
 
 	public final static String PLAYER_KEY = EnterHandActivity.class.getName() + "PLAYER";
+	public final static String OWN_WIND_KEY = EnterHandActivity.class.getName() + "OWN_WIND";
+	public final static String PREVAILING_WIND_KEY = EnterHandActivity.class.getName() + "PREVAILING_WIND";
+	public final static String SCORE_SCHEME_KEY = EnterHandActivity.class.getName() + "SCORE_SCHEME";
 
 	// A statically initialised map of the tiles that are associated with each grid item.
 	private final static Map<Integer, Tile> viewToTile = new HashMap<>();
@@ -65,13 +74,25 @@ public class EnterHandActivity extends AppCompatActivity
 		viewToTile.put(R.id.btnGreenDragon, new Tile(Tile.Dragon.GREEN));
 	}
 
+	private Player m_player;
+	private Wind m_ownWind;
+	private Wind m_prevailingWind;
+	private ScoringScheme m_scoringScheme;
+
 	private ToggleButton m_selectedGroupTypeButton = null;
 	private Group.Type m_selectedGroupType = null;
 	private ImageView m_selectedTileButton = null;
 	private Tile m_selectedTile = null;
+	private ToggleButton m_visibilityButton = null;
+	private Group.Visibility m_selectedVisibility = null;
 	private Drawable m_tileNormalBackground;
 	private Drawable m_tileSelectedBackground;
+	private LinearLayout m_handEntryDisplayTiles;
+	private ToggleButton m_btnChow;
+	private ToggleButton m_btnPung;
+	private Drawable m_tileBackDrawable;
 
+	private TileDrawables m_tileDrawables;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -80,17 +101,30 @@ public class EnterHandActivity extends AppCompatActivity
 		setContentView(R.layout.activity_enter_hand);
 
 		Intent intent = getIntent();
-		Player player = (Player) intent.getSerializableExtra(PLAYER_KEY);
+		m_player = (Player) intent.getSerializableExtra(PLAYER_KEY);
+		m_ownWind = (Wind) intent.getSerializableExtra(OWN_WIND_KEY);
+		m_prevailingWind = (Wind) intent.getSerializableExtra(PREVAILING_WIND_KEY);
+		m_scoringScheme = (ScoringScheme) intent.getSerializableExtra(SCORE_SCHEME_KEY);
 
-		Log.d(LOG_TAG, "Starting EnterHandActivity for player: " + player.getName());
+		Log.d(LOG_TAG, "Starting EnterHandActivity for player: " + m_player.getName());
 
 		m_tileNormalBackground = getDrawable(R.drawable.tile_border);
 		m_tileSelectedBackground = getDrawable(R.drawable.tile_border_selected);
+		m_tileBackDrawable = getDrawable(R.drawable.tile_back);
+		m_handEntryDisplayTiles = findViewById(R.id.layoutEnteredGroup);
+		m_btnChow = findViewById(R.id.btnChow);
+		m_btnPung = findViewById(R.id.btnPung);
+
+		m_tileDrawables = new TileDrawables(this);
+
+		m_visibilityButton = findViewById(R.id.btnVisibility);
 	}
 
 	public void onGridTileClick(View view)
 	{
-		Log.d(LOG_TAG, "Got click on grid view item: " + viewToTile.get(view.getId()));
+		Tile tile = viewToTile.get(view.getId());
+
+		Log.d(LOG_TAG, "Got click on grid view item: " + tile);
 
 		m_selectedTile = viewToTile.get(view.getId());
 
@@ -99,12 +133,61 @@ public class EnterHandActivity extends AppCompatActivity
 			m_selectedTileButton.setBackground(m_tileNormalBackground);
 		}
 
-		m_selectedTileButton = (ImageView)view;
+		m_selectedTileButton = (ImageView) view;
 		m_selectedTileButton.setBackground(m_tileSelectedBackground);
+
+		// Create a group - a pung by default, and display it in the entry area.
+
+		setVisibility(Group.Visibility.EXPOSED);
+		selectGroupTypeButton(m_btnPung, Group.Type.PUNG);
+
+		enableButtons(tile);
 	}
 
-	private void selectGroupTypeButton(View view)
+	/**
+	 * Refresh the display of the entry group area.
+	 *
+ 	 * @param scoredGroup	The group of tiles to display.  If null, no tiles are displayed.
+	 */
+	private void displayEntryGroup(ScoredGroup scoredGroup)
 	{
+		// Get the tiles to display, or use an empty list to display no tiles.
+		List<Tile> tiles = (scoredGroup == null) ? Collections.<Tile>emptyList() : scoredGroup.getTiles();
+
+		int i = 0;
+		for ( ; i < tiles.size(); i++)
+		{
+			Drawable tileDrawable;
+
+			if (m_selectedVisibility == Group.Visibility.CONCEALED && (i == 0 || i == 3))
+			{
+				tileDrawable = m_tileBackDrawable;
+			}
+			else
+			{
+				Tile tile = tiles.get(i);
+				tileDrawable = m_tileDrawables.get(tile);
+			}
+
+
+			ImageView imageView = (ImageView)m_handEntryDisplayTiles.getChildAt(i);
+
+			imageView.setImageDrawable(tileDrawable);
+			imageView.setVisibility(View.VISIBLE);
+		}
+
+		// Hide any display tiles to the right of those we need to display.
+		while (i < 4)
+		{
+			View imageView = m_handEntryDisplayTiles.getChildAt(i);
+			imageView.setVisibility(View.INVISIBLE);
+			i++;
+		}
+	}
+
+	private void selectGroupTypeButton(View view, Group.Type groupType)
+	{
+		// Toggle off any previous selection, and toggle on the button just clicked.
 		if (m_selectedGroupTypeButton != null)
 			m_selectedGroupTypeButton.setChecked(false);
 
@@ -113,29 +196,83 @@ public class EnterHandActivity extends AppCompatActivity
 			m_selectedGroupTypeButton = (ToggleButton) view;
 			m_selectedGroupTypeButton.setChecked(true);
 		}
+
+		m_selectedGroupType = groupType;
+
+		updateScoredGroup();
+	}
+
+	private void updateScoredGroup()
+	{
+		// If there is a selected tile, update the selected group to match the tile.
+
+		ScoredGroup scoredGroup = null;
+
+		if (m_selectedTile != null)
+		{
+			Group group = new Group(m_selectedGroupType, m_selectedTile, m_selectedVisibility);
+			scoredGroup = new ScoredGroup(group, m_scoringScheme, m_ownWind, m_prevailingWind);
+		}
+
+		// scoredGroup may still be null, meaning display no tiles.
+		displayEntryGroup(scoredGroup);
 	}
 
 	public void onChowButtonClick(View view)
 	{
-		selectGroupTypeButton(view);
-		m_selectedGroupType = Group.Type.CHOW;
+		selectGroupTypeButton(view, Group.Type.CHOW);
 	}
 
 	public void onPungButtonClick(View view)
 	{
-		selectGroupTypeButton(view);
-		m_selectedGroupType = Group.Type.PUNG;
+		selectGroupTypeButton(view, Group.Type.PUNG);
 	}
 
 	public void onKongButtonClick(View view)
 	{
-		selectGroupTypeButton(view);
-		m_selectedGroupType = Group.Type.KONG;
+		selectGroupTypeButton(view, Group.Type.KONG);
 	}
 
 	public void onPairButtonClick(View view)
 	{
-		selectGroupTypeButton(view);
-		m_selectedGroupType = Group.Type.PAIR;
+		selectGroupTypeButton(view, Group.Type.PAIR);
+	}
+
+	public void onVisibilityButtonClick(View view)
+	{
+		m_selectedVisibility = m_visibilityButton.isChecked() ? Group.Visibility.CONCEALED : Group.Visibility.EXPOSED;
+		updateScoredGroup();
+		setConcealedButtonStyle();
+	}
+
+	private void setVisibility(Group.Visibility visibility)
+	{
+		m_selectedVisibility = visibility;
+		m_visibilityButton.setChecked(visibility == Group.Visibility.CONCEALED);
+		setConcealedButtonStyle();
+	}
+
+	private void setConcealedButtonStyle()
+	{
+		if (m_selectedVisibility == Group.Visibility.CONCEALED)
+			m_visibilityButton.setTextSize(10);
+		else
+			m_visibilityButton.setTextSize(12);
+	}
+
+	// Enable or disable the various buttons, depending on the currently selected Tile.
+	public void enableButtons(Tile tile)
+	{
+		switch (tile.getType())
+		{
+			case DRAGON:
+			case WIND:
+				m_btnChow.setEnabled(false);
+				break;
+
+			default:
+				m_btnChow.setEnabled(true);
+				break;
+		}
 	}
 }

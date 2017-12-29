@@ -50,4 +50,6 @@
     <string name="descWhiteDragon">White Dragon</string>
     <string name="descRedDragon">Red Dragon</string>
     <string name="descGreenDragon">Green Dragon</string>
+    <string name="exposed">Exposed</string>
+    <string name="concealed">Concealed</string>
 </resources>

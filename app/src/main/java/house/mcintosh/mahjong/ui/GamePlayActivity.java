@@ -15,6 +15,7 @@ import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Wind;
+import house.mcintosh.mahjong.scoring.ScoringScheme;
 
 public class GamePlayActivity extends AppCompatActivity
 {
@@ -152,6 +153,9 @@ public class GamePlayActivity extends AppCompatActivity
 			Intent intent = new Intent(view.getContext(), EnterHandActivity.class);
 
 			intent.putExtra(EnterHandActivity.PLAYER_KEY, m_player);
+			intent.putExtra(EnterHandActivity.OWN_WIND_KEY, m_game.getPlayerWind(m_player));
+			intent.putExtra(EnterHandActivity.PREVAILING_WIND_KEY, m_game.getPrevailingWind());
+			intent.putExtra(EnterHandActivity.SCORE_SCHEME_KEY, m_game.getScoringScheme());
 
 			startActivityForResult(intent, ENTER_HAND_REQUEST_CODE);
 		}

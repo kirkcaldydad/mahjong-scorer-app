@@ -300,6 +300,11 @@ public class Game
 
 		return score;
 	}
+
+	public ScoringScheme getScoringScheme()
+	{
+		return m_scheme;
+	}
 	
 	public boolean isStarted()
 	{
