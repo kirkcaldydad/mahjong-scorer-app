@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import java.util.Collections;
@@ -21,6 +22,8 @@ import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
+import house.mcintosh.mahjong.scoring.ScoreContribution;
+import house.mcintosh.mahjong.scoring.ScoreList;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 
@@ -91,6 +94,7 @@ public class EnterHandActivity extends AppCompatActivity
 	private ToggleButton m_btnChow;
 	private ToggleButton m_btnPung;
 	private Drawable m_tileBackDrawable;
+	private TextView m_txtEnteredGroupScore;
 
 	private TileDrawables m_tileDrawables;
 
@@ -114,6 +118,7 @@ public class EnterHandActivity extends AppCompatActivity
 		m_handEntryDisplayTiles = findViewById(R.id.layoutEnteredGroup);
 		m_btnChow = findViewById(R.id.btnChow);
 		m_btnPung = findViewById(R.id.btnPung);
+		m_txtEnteredGroupScore = findViewById(R.id.txtEnteredGroupScore);
 
 		m_tileDrawables = new TileDrawables(this);
 
@@ -183,6 +188,34 @@ public class EnterHandActivity extends AppCompatActivity
 			imageView.setVisibility(View.INVISIBLE);
 			i++;
 		}
+
+		// Display the score alongside the tiles.
+
+		ScoreList scoreList = scoredGroup.getScore();
+
+		int basicScore = 0;
+		StringBuilder multipliers = new StringBuilder();
+
+		for (ScoreContribution contribution : scoreList)
+		{
+			basicScore += contribution.getScore();
+
+			int multiplier = contribution.getHandMultiplier();
+
+			if (multiplier != 1)
+			{
+				multipliers.append("x").append(multiplier);
+			}
+		}
+
+		String score = Integer.toString(basicScore);
+
+		if (multipliers.length() > 0)
+		{
+			score += " " + multipliers;
+		}
+
+		m_txtEnteredGroupScore.setText(score);
 	}
 
 	private void selectGroupTypeButton(View view, Group.Type groupType)

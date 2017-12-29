@@ -650,6 +650,13 @@
                 android:visibility="invisible"
                 app:srcCompat="@drawable/circles1" />
 
+            <TextView
+                android:id="@+id/txtEnteredGroupScore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textSize="30sp" />
+
         </LinearLayout>
 
         <ToggleButton

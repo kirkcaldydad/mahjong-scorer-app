@@ -30,12 +30,12 @@ public class ScoreContribution implements Serializable
 			throw new InvalidScoreSchemeException("Invalid score multiplier");
 	}
 	
-	final int getScore()
+	public final int getScore()
 	{
 		return m_score;
 	}
 	
-	final int getHandMultiplier()
+	public final int getHandMultiplier()
 	{
 		return m_multiplier;
 	}
