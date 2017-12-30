@@ -17,7 +17,7 @@ import house.mcintosh.mahjong.util.JsonUtil;
 /**
  * A Round is a set of hands - one for each player.
  */
-public class Round
+public final class Round
 {
 	private final Map<Player, Entry>	m_entries			= new HashMap<>();
 	private final Wind					m_prevailingWind;

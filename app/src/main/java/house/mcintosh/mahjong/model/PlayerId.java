@@ -9,7 +9,7 @@ import java.util.Random;
  * A unique Id to identify a player.  Each player in each game is independently
  * identified by a PlayerId.
  */
-public class PlayerId implements Serializable
+public final class PlayerId implements Serializable
 {
 	private final String value;
 

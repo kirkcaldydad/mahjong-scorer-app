@@ -12,7 +12,7 @@ import java.util.Date;
  * A reduced representation of a Game.
  */
 
-public class GameSummary
+public final class GameSummary
 {
 	private final static String DATE_DISPLAY_FORMAT = "d MMMM yyyy";
 

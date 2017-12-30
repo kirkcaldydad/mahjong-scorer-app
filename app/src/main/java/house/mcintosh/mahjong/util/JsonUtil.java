@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 
-public class JsonUtil
+public final class JsonUtil
 {
 	static private ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 

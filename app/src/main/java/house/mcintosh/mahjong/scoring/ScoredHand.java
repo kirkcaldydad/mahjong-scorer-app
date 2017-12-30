@@ -25,7 +25,7 @@ import house.mcintosh.mahjong.util.JsonUtil;
  * be added using the add() method only, ensuring that the list is sorted and the score updated.
  */
 
-public class ScoredHand extends ArrayList<ScoredGroup>
+public final class ScoredHand extends ArrayList<ScoredGroup>
 {
 	private final ScoringScheme					m_scheme;
 	

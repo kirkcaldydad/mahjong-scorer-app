@@ -29,7 +29,7 @@ import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.JsonUtil;
 
-public class CreateGameActivity extends AppCompatActivity
+public final class CreateGameActivity extends AppCompatActivity
 {
 	private final static String LOG_TAG = CreateGameActivity.class.getName();
 

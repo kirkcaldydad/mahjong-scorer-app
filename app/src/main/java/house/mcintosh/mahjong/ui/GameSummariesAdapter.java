@@ -12,7 +12,7 @@ import java.util.List;
 
 import house.mcintosh.mahjong.model.GameSummary;
 
-public class GameSummariesAdapter extends ArrayAdapter<GameSummary>
+public final class GameSummariesAdapter extends ArrayAdapter<GameSummary>
 {
 	public GameSummariesAdapter(@NonNull Context context, @NonNull List<GameSummary> gameSummaries)
 	{

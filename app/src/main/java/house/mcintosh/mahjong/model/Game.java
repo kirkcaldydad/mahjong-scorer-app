@@ -18,7 +18,7 @@ import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.JsonUtil;
 
-public class Game
+public final class Game
 {
 	private Player[]				m_seats				= new Player[4];;
 	private int						m_seatsOccupied		= 0;

@@ -17,7 +17,7 @@ import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 
-public class GamePlayActivity extends AppCompatActivity
+public final class GamePlayActivity extends AppCompatActivity
 {
 	private static final String LOG_TAG = GamePlayActivity.class.getName();
 

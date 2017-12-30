@@ -24,7 +24,7 @@ import java.util.List;
 import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.GameSummary;
 
-public class GameListActivity extends AppCompatActivity
+public final class GameListActivity extends AppCompatActivity
 {
 	private static final String LOG_TAG = GameListActivity.class.getName();
 	private static final int CREATE_GAME_REQUEST_CODE = 1;

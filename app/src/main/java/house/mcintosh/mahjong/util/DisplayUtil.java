@@ -16,7 +16,7 @@ import house.mcintosh.mahjong.ui.TileDrawables;
  * Utilities class to factor out some common display operations.
  */
 
-public class DisplayUtil
+public final class DisplayUtil
 {
 	/**
 	 * Display a group of tiles.

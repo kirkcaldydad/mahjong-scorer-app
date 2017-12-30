@@ -9,7 +9,7 @@ import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
  * A ScorePair is a combination of a simple score and a hand multiplier.
  */
 
-public class ScoreContribution implements Serializable
+public final class ScoreContribution implements Serializable
 {
 	static public final ScoreContribution NULL = new ScoreContribution(ScoreElement.UNKNOWN, 0, 1);
 	

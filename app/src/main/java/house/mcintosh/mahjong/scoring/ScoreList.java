@@ -3,7 +3,7 @@ package house.mcintosh.mahjong.scoring;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ScoreList extends ArrayList<ScoreContribution>
+public final class ScoreList extends ArrayList<ScoreContribution>
 {
 	private static final long serialVersionUID = 1L;
 	

@@ -8,7 +8,7 @@ import java.util.Date;
 import house.mcintosh.mahjong.util.JsonUtil;
 import house.mcintosh.mahjong.util.TimeUtil;
 
-public class GameMeta
+public final class GameMeta
 {
 	private final Date m_createdOn;
 	private Date m_lastModifiedOn;

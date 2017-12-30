@@ -13,7 +13,7 @@ import house.mcintosh.mahjong.model.Tile;
  * A cache of the drawables associated with tiles in the current context.
  */
 
-public class TileDrawables
+public final class TileDrawables
 {
 	private final Context m_context;
 

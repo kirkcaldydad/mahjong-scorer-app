@@ -12,7 +12,7 @@ import java.util.Set;
 import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.util.JsonUtil;
 
-public class Player implements Serializable
+public final class Player implements Serializable
 {
 	/** All the instances that have been created so far. */
 	static private final Set<Player> s_allPlayers = new HashSet<>();

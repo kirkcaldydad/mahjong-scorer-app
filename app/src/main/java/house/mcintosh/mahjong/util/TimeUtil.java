@@ -7,7 +7,7 @@ import java.util.TimeZone;
 
 import house.mcintosh.mahjong.exception.InvalidModelException;
 
-public class TimeUtil
+public final class TimeUtil
 {
 	private static final String UTC_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
 	private static final TimeZone UTC_TIMEZONE = TimeZone.getTimeZone("UTC");

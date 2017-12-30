@@ -12,7 +12,7 @@ import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
  * A Group that has been scored.  Immutable because the Set is is constructed from is immutable, and
  * the score is calculated during construction.
  */
-public class ScoredGroup extends Group
+public final class ScoredGroup extends Group
 {
 	private final ScoreList	m_score;
 	

@@ -30,7 +30,7 @@ import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.DisplayUtil;
 
-public class EnterHandActivity extends AppCompatActivity
+public final class EnterHandActivity extends AppCompatActivity
 {
 	private final static String LOG_TAG = EnterHandActivity.class.getName();
 
