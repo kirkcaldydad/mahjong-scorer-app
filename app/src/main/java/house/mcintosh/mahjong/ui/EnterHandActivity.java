@@ -182,28 +182,19 @@ public final class EnterHandActivity extends AppCompatActivity
 
 		// Display the score alongside the tiles.
 
-		ScoreList scoreList = scoredGroup.getScore();
+		String score;
 
-		int basicScore = 0;
-		StringBuilder multipliers = new StringBuilder();
-
-		for (ScoreContribution contribution : scoreList)
+		if (scoredGroup != null)
 		{
-			basicScore += contribution.getScore();
+			score = DisplayUtil.getBasicScore(scoredGroup);
+			String multipliers = DisplayUtil.getScoreMultipliers(scoredGroup);
 
-			int multiplier = contribution.getHandMultiplier();
-
-			if (multiplier != 1)
-			{
-				multipliers.append("x").append(multiplier);
-			}
+			if (!multipliers.isEmpty())
+				score += ' ' + multipliers;
 		}
-
-		String score = Integer.toString(basicScore);
-
-		if (multipliers.length() > 0)
+		else
 		{
-			score += " " + multipliers;
+			score = "";
 		}
 
 		m_txtEnteredGroupScore.setText(score);
@@ -248,6 +239,9 @@ public final class EnterHandActivity extends AppCompatActivity
 
 	private void replaceGroup(ScoredGroup revisedGroup)
 	{
+		if (revisedGroup == null)
+			return;
+
 		m_hand.replaceLatestAddition(revisedGroup);
 		m_groupsAdapter.notifyDataSetChanged();
 		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());

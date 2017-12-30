@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -45,6 +46,12 @@ public class ScoredGroupsAdapter extends ArrayAdapter<ScoredGroup>
 		}
 
 		DisplayUtil.displayTileGroup(group, (LinearLayout)convertView.findViewById(R.id.layoutTileGroup), m_tileDrawables);
+
+		TextView scoreView = convertView.findViewById(R.id.txtGroupScore);
+		scoreView.setText(DisplayUtil.getBasicScore(group));
+
+		TextView multiplierView = convertView.findViewById(R.id.txtHandMultipliers);
+		multiplierView.setText(DisplayUtil.getScoreMultipliers(group));
 
 		return convertView;
 	}

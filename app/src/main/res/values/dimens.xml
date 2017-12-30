@@ -8,4 +8,6 @@
     <dimen name="displayTileHeight">40dp</dimen>
     <dimen name="displayTileMargin">2dp</dimen>
     <dimen name="displayTilePadding">3dp</dimen>
+    <dimen name="deleteButtonTopMargin">5dp</dimen>
+    <dimen name="scorePaddingRight">10dp</dimen>
 </resources>

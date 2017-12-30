@@ -10,6 +10,8 @@ import java.util.List;
 
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Tile;
+import house.mcintosh.mahjong.scoring.ScoreContribution;
+import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.ui.TileDrawables;
 
 /**
@@ -63,5 +65,34 @@ public final class DisplayUtil
 			imageView.setVisibility(View.INVISIBLE);
 			i++;
 		}
+	}
+
+	public static String getBasicScore(ScoredGroup group)
+	{
+		int basicScore = 0;
+
+		for (ScoreContribution contribution : group.getScore())
+		{
+			basicScore += contribution.getScore();
+		}
+
+		return Integer.toString(basicScore);
+	}
+
+	public static String getScoreMultipliers(ScoredGroup group)
+	{
+		StringBuilder multipliers = new StringBuilder();
+
+		for (ScoreContribution contribution : group.getScore())
+		{
+			int multiplier = contribution.getHandMultiplier();
+
+			if (multiplier != 1)
+			{
+				multipliers.append("x").append(multiplier);
+			}
+		}
+
+		return multipliers.toString();
 	}
 }
