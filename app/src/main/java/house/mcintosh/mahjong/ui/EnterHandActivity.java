@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
@@ -25,7 +26,9 @@ import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoreContribution;
 import house.mcintosh.mahjong.scoring.ScoreList;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
+import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
+import house.mcintosh.mahjong.util.DisplayUtil;
 
 public class EnterHandActivity extends AppCompatActivity
 {
@@ -93,10 +96,12 @@ public class EnterHandActivity extends AppCompatActivity
 	private LinearLayout m_handEntryDisplayTiles;
 	private ToggleButton m_btnChow;
 	private ToggleButton m_btnPung;
-	private Drawable m_tileBackDrawable;
 	private TextView m_txtEnteredGroupScore;
 
 	private TileDrawables m_tileDrawables;
+
+	private ScoredHand m_hand;
+	private ScoredGroupsAdapter m_groupsAdapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -114,7 +119,6 @@ public class EnterHandActivity extends AppCompatActivity
 
 		m_tileNormalBackground = getDrawable(R.drawable.tile_border);
 		m_tileSelectedBackground = getDrawable(R.drawable.tile_border_selected);
-		m_tileBackDrawable = getDrawable(R.drawable.tile_back);
 		m_handEntryDisplayTiles = findViewById(R.id.layoutEnteredGroup);
 		m_btnChow = findViewById(R.id.btnChow);
 		m_btnPung = findViewById(R.id.btnPung);
@@ -123,6 +127,14 @@ public class EnterHandActivity extends AppCompatActivity
 		m_tileDrawables = new TileDrawables(this);
 
 		m_visibilityButton = findViewById(R.id.btnVisibility);
+
+		// Create a hand that will contain the entered groups, and an adapter to display the hand.
+
+		m_hand = new ScoredHand(m_scoringScheme);
+		m_groupsAdapter = new ScoredGroupsAdapter(this, m_hand, m_tileDrawables);
+
+		ListView groupsList = findViewById(R.id.groupsList);
+		groupsList.setAdapter(m_groupsAdapter);
 	}
 
 	public void onGridTileClick(View view)
@@ -144,9 +156,14 @@ public class EnterHandActivity extends AppCompatActivity
 		// Create a group - a pung by default, and display it in the entry area.
 
 		setVisibility(Group.Visibility.EXPOSED);
-		selectGroupTypeButton(m_btnPung, Group.Type.PUNG);
+		ScoredGroup group = selectGroupTypeButton(m_btnPung, Group.Type.PUNG);
 
 		enableButtons(tile);
+
+		// Add the newly created group to the list view.
+
+		m_hand.add(group);
+		m_groupsAdapter.notifyDataSetChanged();
 	}
 
 	/**
@@ -156,38 +173,9 @@ public class EnterHandActivity extends AppCompatActivity
 	 */
 	private void displayEntryGroup(ScoredGroup scoredGroup)
 	{
-		// Get the tiles to display, or use an empty list to display no tiles.
-		List<Tile> tiles = (scoredGroup == null) ? Collections.<Tile>emptyList() : scoredGroup.getTiles();
+		// Display the tile images.
 
-		int i = 0;
-		for ( ; i < tiles.size(); i++)
-		{
-			Drawable tileDrawable;
-
-			if (m_selectedVisibility == Group.Visibility.CONCEALED && (i == 0 || i == 3))
-			{
-				tileDrawable = m_tileBackDrawable;
-			}
-			else
-			{
-				Tile tile = tiles.get(i);
-				tileDrawable = m_tileDrawables.get(tile);
-			}
-
-
-			ImageView imageView = (ImageView)m_handEntryDisplayTiles.getChildAt(i);
-
-			imageView.setImageDrawable(tileDrawable);
-			imageView.setVisibility(View.VISIBLE);
-		}
-
-		// Hide any display tiles to the right of those we need to display.
-		while (i < 4)
-		{
-			View imageView = m_handEntryDisplayTiles.getChildAt(i);
-			imageView.setVisibility(View.INVISIBLE);
-			i++;
-		}
+		DisplayUtil.displayTileGroup(scoredGroup, m_handEntryDisplayTiles, m_tileDrawables);
 
 		// Display the score alongside the tiles.
 
@@ -218,7 +206,7 @@ public class EnterHandActivity extends AppCompatActivity
 		m_txtEnteredGroupScore.setText(score);
 	}
 
-	private void selectGroupTypeButton(View view, Group.Type groupType)
+	private ScoredGroup selectGroupTypeButton(View view, Group.Type groupType)
 	{
 		// Toggle off any previous selection, and toggle on the button just clicked.
 		if (m_selectedGroupTypeButton != null)
@@ -232,10 +220,12 @@ public class EnterHandActivity extends AppCompatActivity
 
 		m_selectedGroupType = groupType;
 
-		updateScoredGroup();
+		ScoredGroup group = updateScoredGroup();
+
+		return group;
 	}
 
-	private void updateScoredGroup()
+	private ScoredGroup updateScoredGroup()
 	{
 		// If there is a selected tile, update the selected group to match the tile.
 
@@ -249,6 +239,8 @@ public class EnterHandActivity extends AppCompatActivity
 
 		// scoredGroup may still be null, meaning display no tiles.
 		displayEntryGroup(scoredGroup);
+
+		return scoredGroup;
 	}
 
 	public void onChowButtonClick(View view)

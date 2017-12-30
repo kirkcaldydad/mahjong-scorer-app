@@ -7,12 +7,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import house.mcintosh.mahjong.exception.InvalidHandException;
 import house.mcintosh.mahjong.model.Group;
-import house.mcintosh.mahjong.model.SetComparator;
+import house.mcintosh.mahjong.model.GroupComparator;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
@@ -21,12 +20,14 @@ import house.mcintosh.mahjong.util.JsonUtil;
 /**
  * A hand that is scored.  A scored hand can change. As sets are added to it the score and
  * Mahjong status of the hand change.
+ *
+ * Extends ArrayList so that an ArrayAdaptor can be used for display.  However, ScoredGroups should
+ * be added using the add() method only, ensuring that the list is sorted and the score updated.
  */
 
-public class ScoredHand implements Iterable<ScoredGroup>
+public class ScoredHand extends ArrayList<ScoredGroup>
 {
 	private final ScoringScheme					m_scheme;
-	private final ArrayList<ScoredGroup>		m_sortedGroups	= new ArrayList<>();
 	
 	private ScoreList							m_scores;
 	
@@ -49,14 +50,17 @@ public class ScoredHand implements Iterable<ScoredGroup>
 	{
 		m_scheme		= scheme;
 	}
-	
-	public void add(ScoredGroup group)
-	{
-		m_sortedGroups.add(group);
 
-		Collections.sort(m_sortedGroups, new SetComparator());
+	@Override
+	public boolean add(ScoredGroup group)
+	{
+		super.add(group);
+
+		Collections.sort(this, new GroupComparator());
 		
 		updateScore();
+
+		return true;
 	}
 	
 	public int getTotalScore()
@@ -177,12 +181,6 @@ public class ScoredHand implements Iterable<ScoredGroup>
 		this.m_nonMahjongByOriginalCall = nonMahjongByOriginalCall;
 		updateScore();
 	}
-
-	@Override
-	public Iterator<ScoredGroup> iterator()
-	{
-		return m_sortedGroups.iterator();
-	}
 	
 	public String toString()
 	{
@@ -216,7 +214,7 @@ public class ScoredHand implements Iterable<ScoredGroup>
 		int effectiveHandTiles	= 0;
 		int pairCount			= 0;
 		
-		for (ScoredGroup group : this.m_sortedGroups)
+		for (ScoredGroup group : this)
 		{
 			scores.append(group.getScore());
 			
@@ -234,7 +232,8 @@ public class ScoredHand implements Iterable<ScoredGroup>
 		else if (effectiveHandTiles >= m_scheme.MahjongHandSize)
 		{
 			m_isMahjong = false;
-			throw new InvalidHandException("Too many tiles for non-mahjong hand");
+			// TODO: Re-enable this.
+			//throw new InvalidHandException("Too many tiles for non-mahjong hand");
 		}
 		else
 			m_isMahjong = false;
@@ -319,7 +318,7 @@ public class ScoredHand implements Iterable<ScoredGroup>
 		ObjectNode	hand		= JsonUtil.createObjectNode();
 		ArrayNode	groups		= JsonUtil.createArrayNode();
 
-		for (ScoredGroup group : m_sortedGroups)
+		for (ScoredGroup group : this)
 		{
 			groups.add(group.toJson());
 		}

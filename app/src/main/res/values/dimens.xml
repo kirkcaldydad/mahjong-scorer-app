@@ -4,4 +4,8 @@
     <dimen name="gridTileHeight">40dp</dimen>
     <dimen name="gridTileMargin">2dp</dimen>
     <dimen name="gridTilePadding">3dp</dimen>
+    <dimen name="displayTileWidth">30dp</dimen>
+    <dimen name="displayTileHeight">40dp</dimen>
+    <dimen name="displayTileMargin">2dp</dimen>
+    <dimen name="displayTilePadding">3dp</dimen>
 </resources>

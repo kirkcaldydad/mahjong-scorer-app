@@ -19,6 +19,8 @@ public class TileDrawables
 
 	private final Map<Tile, Drawable> m_cache = new HashMap<>();
 
+	private Drawable m_tileBackDrawable;
+
 	TileDrawables(Context context)
 	{
 		m_context = context;
@@ -27,7 +29,7 @@ public class TileDrawables
 	/**
 	 * Get the drawable associated with a tile.
 	 */
-	Drawable get(Tile tile)
+	public Drawable get(Tile tile)
 	{
 		// Get the drawable from cache if available, else load it into cache.
 
@@ -58,11 +60,27 @@ public class TileDrawables
 
 			Resources resources = m_context.getResources();
 			int resourceId = resources.getIdentifier(name, "drawable", m_context.getPackageName());
-			drawable = resources.getDrawable(resourceId, m_context.getTheme());
+			drawable = getDrawable(resourceId);
 
 			m_cache.put(tile, drawable);
 		}
 
 		return drawable;
+	}
+
+	/**
+	 * @return	The special drawable that represents the back of a tile.
+	 */
+	public Drawable getTileBack()
+	{
+		if (m_tileBackDrawable == null)
+			m_tileBackDrawable = getDrawable(R.drawable.tile_back);
+
+		return m_tileBackDrawable;
+	}
+
+	private Drawable getDrawable(int resourceId)
+	{
+		return m_context.getResources().getDrawable(resourceId, m_context.getTheme());
 	}
 }

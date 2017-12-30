@@ -8,7 +8,7 @@ import java.util.Comparator;
  * sort order.
  */
 
-public class SetComparator implements Comparator<Group>
+public class GroupComparator implements Comparator<Group>
 {
 	@Override
 	public int compare(Group s1, Group s2)
