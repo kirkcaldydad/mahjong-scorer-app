@@ -45,6 +45,8 @@ public final class ScoredHand extends ArrayList<ScoredGroup>
 	private boolean	m_isMahjong					= false;
 	private int		m_totalScoreUnlimited		= 0;
 	private int		m_totalScoreLimited			= 0;
+
+	private ScoredGroup m_latestAddition;
 	
 	public ScoredHand(ScoringScheme scheme)
 	{
@@ -56,11 +58,21 @@ public final class ScoredHand extends ArrayList<ScoredGroup>
 	{
 		super.add(group);
 
+		m_latestAddition = group;
+
 		Collections.sort(this, new GroupComparator());
 		
 		updateScore();
 
 		return true;
+	}
+
+	public int getLatestAdditionPosition()
+	{
+		if (m_latestAddition == null)
+			return -1;
+
+		return this.indexOf(m_latestAddition);
 	}
 	
 	public int getTotalScore()

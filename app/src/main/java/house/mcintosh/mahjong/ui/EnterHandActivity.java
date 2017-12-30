@@ -101,6 +101,7 @@ public final class EnterHandActivity extends AppCompatActivity
 	private TileDrawables m_tileDrawables;
 
 	private ScoredHand m_hand;
+	private ListView m_groupsList;
 	private ScoredGroupsAdapter m_groupsAdapter;
 
 	@Override
@@ -133,8 +134,8 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_hand = new ScoredHand(m_scoringScheme);
 		m_groupsAdapter = new ScoredGroupsAdapter(this, m_hand, m_tileDrawables);
 
-		ListView groupsList = findViewById(R.id.groupsList);
-		groupsList.setAdapter(m_groupsAdapter);
+		m_groupsList = findViewById(R.id.groupsList);
+		m_groupsList.setAdapter(m_groupsAdapter);
 	}
 
 	public void onGridTileClick(View view)
@@ -164,6 +165,8 @@ public final class EnterHandActivity extends AppCompatActivity
 
 		m_hand.add(group);
 		m_groupsAdapter.notifyDataSetChanged();
+
+		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
 	}
 
 	/**
