@@ -67,6 +67,14 @@ public final class ScoredHand extends ArrayList<ScoredGroup>
 		return true;
 	}
 
+	public void replaceLatestAddition(ScoredGroup group)
+	{
+		// Remove the latest addition, and add the new group instead of it.
+
+		remove(m_latestAddition);
+		add(group);
+	}
+
 	public int getLatestAdditionPosition()
 	{
 		if (m_latestAddition == null)

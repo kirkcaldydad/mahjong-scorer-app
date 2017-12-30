@@ -21,7 +21,7 @@ public final class Tile
 	
 	public enum Suit
 	{
-		CHARACTERS, BAMBOO, CIRCLES;
+		CIRCLES, CHARACTERS, BAMBOO;
 
 		public final String drawableNameComponent;
 
@@ -50,7 +50,7 @@ public final class Tile
 
 	public enum Dragon
 	{
-		RED, GREEN, WHITE;
+		RED, WHITE, GREEN;
 
 		public final String drawableNameComponent;
 

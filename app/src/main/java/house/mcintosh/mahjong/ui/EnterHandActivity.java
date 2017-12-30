@@ -246,31 +246,43 @@ public final class EnterHandActivity extends AppCompatActivity
 		return scoredGroup;
 	}
 
+	private void replaceGroup(ScoredGroup revisedGroup)
+	{
+		m_hand.replaceLatestAddition(revisedGroup);
+		m_groupsAdapter.notifyDataSetChanged();
+		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+	}
+
 	public void onChowButtonClick(View view)
 	{
-		selectGroupTypeButton(view, Group.Type.CHOW);
+		ScoredGroup revisedGroup = selectGroupTypeButton(view, Group.Type.CHOW);
+		replaceGroup(revisedGroup);
 	}
 
 	public void onPungButtonClick(View view)
 	{
-		selectGroupTypeButton(view, Group.Type.PUNG);
+		ScoredGroup revisedGroup = selectGroupTypeButton(view, Group.Type.PUNG);
+		replaceGroup(revisedGroup);
 	}
 
 	public void onKongButtonClick(View view)
 	{
-		selectGroupTypeButton(view, Group.Type.KONG);
+		ScoredGroup revisedGroup = selectGroupTypeButton(view, Group.Type.KONG);
+		replaceGroup(revisedGroup);
 	}
 
 	public void onPairButtonClick(View view)
 	{
-		selectGroupTypeButton(view, Group.Type.PAIR);
+		ScoredGroup revisedGroup = selectGroupTypeButton(view, Group.Type.PAIR);
+		replaceGroup(revisedGroup);
 	}
 
 	public void onVisibilityButtonClick(View view)
 	{
 		m_selectedVisibility = m_visibilityButton.isChecked() ? Group.Visibility.CONCEALED : Group.Visibility.EXPOSED;
-		updateScoredGroup();
 		setConcealedButtonStyle();
+		ScoredGroup revisedGroup = updateScoredGroup();
+		replaceGroup(revisedGroup);
 	}
 
 	private void setVisibility(Group.Visibility visibility)

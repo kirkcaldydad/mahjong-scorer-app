@@ -29,22 +29,23 @@ public class TestScoredHand
 		ScoringScheme		scheme	= ScoringScheme.instance();
 
 		sets.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Tile.Dragon.RED), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
+		sets.add(new ScoredGroup(new Group(Group.Type.KONG, new Tile(Tile.Dragon.WHITE), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.KONG, new Tile(Tile.Dragon.GREEN), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.KONG, new Tile(Wind.EAST), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Wind.SOUTH), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.KONG, new Tile(Wind.WEST), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
+		sets.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.CIRCLES, Tile.Number.SIX), Group.Visibility.CONCEALED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Tile.Suit.CHARACTERS, Tile.Number.FIVE), Group.Visibility.CONCEALED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Tile.Suit.CHARACTERS, Tile.Number.EIGHT), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.CHARACTERS, Tile.Number.TWO), Group.Visibility.CONCEALED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.KONG, new Tile(Tile.Suit.BAMBOO, Tile.Number.SEVEN), Group.Visibility.CONCEALED), scheme, Wind.EAST, Wind.EAST));
-		sets.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.CIRCLES, Tile.Number.SIX), Group.Visibility.CONCEALED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Tile.Dragon.WHITE)), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Wind.EAST)), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Wind.NORTH), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
+		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Tile.Suit.CIRCLES, Tile.Number.ONE)), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Tile.Suit.CHARACTERS, Tile.Number.FOUR)), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Tile.Suit.BAMBOO, Tile.Number.SEVEN)), scheme, Wind.EAST, Wind.EAST));
-		sets.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Tile.Suit.CIRCLES, Tile.Number.ONE)), scheme, Wind.EAST, Wind.EAST));
-		
+
 		int iterations = 1000;
 		
 		while (iterations-- > 0)
