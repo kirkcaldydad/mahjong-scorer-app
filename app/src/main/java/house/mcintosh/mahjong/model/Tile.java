@@ -7,13 +7,15 @@ import android.graphics.drawable.Drawable;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.Serializable;
+
 import house.mcintosh.mahjong.exception.LoadException;
 import house.mcintosh.mahjong.util.JsonUtil;
 
 /**
  * A tile in a hand.
  */
-public final class Tile
+public final class Tile implements Serializable
 {
 	//
 	// The ordering of these enumerations affects the sort order of Sets in a Hand.

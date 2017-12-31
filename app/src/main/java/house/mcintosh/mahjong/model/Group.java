@@ -3,6 +3,7 @@ package house.mcintosh.mahjong.model;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ import house.mcintosh.mahjong.util.JsonUtil;
 /**
  * A Set contains a number of Tiles, contributing to a Hand.
  */
-public class Group
+public class Group implements Serializable
 {
 	public enum Type
 	{

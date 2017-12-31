@@ -18,6 +18,8 @@ import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.JsonUtil;
 
+import static house.mcintosh.mahjong.ui.ScoredHandWrapper.m_hand;
+
 public final class Game
 {
 	private Player[]				m_seats				= new Player[4];;
@@ -208,6 +210,20 @@ public final class Game
 		m_eastPlayer		= eastPlayer;
 		m_prevailingWind	= Wind.EAST;
 		m_started			= true;
+	}
+
+	/**
+	 * Determine whether the given round has hands set for all players in the game.
+	 */
+	public boolean isCompleteRound(Round round)
+	{
+		List<Player> allPlayers = new ArrayList<>();
+
+		for (Player player : m_seats)
+			if (player != null)
+				allPlayers.add(player);
+
+		return round.hasHandForAll(allPlayers);
 	}
 	
 	public void addRound(Round round)

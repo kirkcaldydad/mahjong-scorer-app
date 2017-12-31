@@ -24,8 +24,14 @@
         <activity
             android:name=".CreateGameActivity"
             android:label="@string/new_game_title" />
-        <activity android:name=".GamePlayActivity" />
-        <activity android:name=".EnterHandActivity"></activity>
+        <activity android:name=".GamePlayActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".EnterHandActivity"
+            android:label="Enter Hand Label"
+            android:parentActivityName=".GamePlayActivity"
+            >
+
+        </activity>
     </application>
 
 </manifest>

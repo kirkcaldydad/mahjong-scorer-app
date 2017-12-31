@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.json.JSONObject;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -145,6 +146,11 @@ public final class Round
 		}
 		
 		return score;
+	}
+
+	public boolean hasHandForAll(Collection players)
+	{
+		return m_entries.keySet().containsAll(players);
 	}
 	
 	static private class Entry

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ import house.mcintosh.mahjong.util.JsonUtil;
  * be added using the add() method only, ensuring that the list is sorted and the score updated.
  */
 
-public final class ScoredHand extends ArrayList<ScoredGroup>
+public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializable
 {
 	private final ScoringScheme					m_scheme;
 	
@@ -47,10 +48,19 @@ public final class ScoredHand extends ArrayList<ScoredGroup>
 	private int		m_totalScoreLimited			= 0;
 
 	private ScoredGroup m_latestAddition;
+
+	/**
+	 * Default contructor should not be used, but is necessary for deserialisation, hence marked Deprecated.
+	 */
+
+	public ScoredHand()
+	{
+		m_scheme = null;
+	}
 	
 	public ScoredHand(ScoringScheme scheme)
 	{
-		m_scheme		= scheme;
+		m_scheme = scheme;
 	}
 
 	@Override

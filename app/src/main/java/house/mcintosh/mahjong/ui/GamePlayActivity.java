@@ -3,6 +3,7 @@ package house.mcintosh.mahjong.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,17 +12,27 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.Player;
+import house.mcintosh.mahjong.model.Round;
 import house.mcintosh.mahjong.model.Wind;
+import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 
 public final class GamePlayActivity extends AppCompatActivity
 {
 	private static final String LOG_TAG = GamePlayActivity.class.getName();
 
+	// Identifiers for extra information included in intents targeted at this activity.
+
+	// This when a game play is started.
 	public static final String EXTRA_KEY_GAME_FILE = GamePlayActivity.class.getName() + ":gameFile";
+
+	// These when an entered hand is being returned from a called activity.
+	public static final String EXTRA_KEY_ENTERED_HAND = GamePlayActivity.class.getName() + ":hand";
+	public static final String EXTRA_KEY_PLAYER = GamePlayActivity.class.getName() + ":player";
 
 	public static final int ENTER_HAND_REQUEST_CODE = 1;
 
@@ -31,6 +42,8 @@ public final class GamePlayActivity extends AppCompatActivity
 
 	private PlayerViews[] m_playerViews = new PlayerViews[4];
 	private Map<Wind, CharSequence> m_windNames = new HashMap<>();
+
+	private Round m_round;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -90,6 +103,44 @@ public final class GamePlayActivity extends AppCompatActivity
 		}
 
 		displayGame();
+
+		// Create a new round, with the currently prevailing wind.  This is currently empty,
+		// waiting for hands to be added to it.
+
+		m_round = new Round(m_game.getPrevailingWind());
+	}
+
+	/*
+	 * Invoked when the EnterhandActivity is finished, and needs to return the entered hand to the game.
+	 */
+	@Override
+	public void onNewIntent(Intent intent)
+	{
+		Log.d(LOG_TAG, "GamePlayActivity.inNewIntent() intent:" + intent);
+
+		ScoredHand hand = ((ScoredHandWrapper)intent.getSerializableExtra(EXTRA_KEY_ENTERED_HAND)).getHand();
+		Player player = (Player)intent.getSerializableExtra(EXTRA_KEY_PLAYER);
+
+		// Update the round with the player's hand.
+
+		try
+		{
+			m_round.addHand(player, hand, m_game.getPlayerWind(player));
+		}
+		catch (InvalidModelException ime)
+		{
+			Log.e(LOG_TAG, "InvalidModelException: "  + ime);
+		}
+
+		// Check whether we now have hands for all players.
+		if (m_game.isCompleteRound(m_round))
+		{
+			m_game.addRound(m_round);
+
+			// Scores have changed and the game may now have moved on...
+			displayGame();
+			m_gameFile.save();
+		}
 	}
 
 	private void displayGame()

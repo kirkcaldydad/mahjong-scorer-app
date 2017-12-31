@@ -3,10 +3,12 @@ package house.mcintosh.mahjong.ui;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -112,6 +114,8 @@ public final class EnterHandActivity extends AppCompatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_enter_hand);
+
+		getSupportActionBar().setHomeButtonEnabled(true);
 
 		Intent intent = getIntent();
 		m_player = (Player) intent.getSerializableExtra(PLAYER_KEY);
@@ -341,5 +345,25 @@ public final class EnterHandActivity extends AppCompatActivity
 				m_btnChow.setEnabled(true);
 				break;
 		}
+	}
+
+	/**
+	 * Invoked when an item on the bar at the top is selected, including the back arrow button at the top.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId())
+		{
+			// Respond to the action bar's Up/Home button
+			case android.R.id.home:
+				Intent returnHandIntent = NavUtils.getParentActivityIntent(this);
+
+				returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_ENTERED_HAND, new ScoredHandWrapper(m_hand));
+				returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_PLAYER, m_player);
+
+				NavUtils.navigateUpTo(this, returnHandIntent);
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 }

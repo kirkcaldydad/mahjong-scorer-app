@@ -3,6 +3,8 @@ package house.mcintosh.mahjong.scoring;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.io.Serializable;
+
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
@@ -12,7 +14,7 @@ import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
  * A Group that has been scored.  Immutable because the Set is is constructed from is immutable, and
  * the score is calculated during construction.
  */
-public final class ScoredGroup extends Group
+public final class ScoredGroup extends Group implements Serializable
 {
 	private final ScoreList	m_score;
 	
