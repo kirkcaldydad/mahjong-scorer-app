@@ -690,7 +690,7 @@
             android:weightSum="100">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/txtTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
@@ -700,7 +700,7 @@
                 android:textSize="30sp" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/txtTotalCalculation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"

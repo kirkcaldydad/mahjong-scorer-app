@@ -97,6 +97,8 @@ public final class EnterHandActivity extends AppCompatActivity
 	private ToggleButton m_btnChow;
 	private ToggleButton m_btnPung;
 	private TextView m_txtEnteredGroupScore;
+	private TextView m_txtTotal;
+	private TextView m_txtTotalCalculation;
 
 	private TileDrawables m_tileDrawables;
 
@@ -124,6 +126,8 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_btnChow = findViewById(R.id.btnChow);
 		m_btnPung = findViewById(R.id.btnPung);
 		m_txtEnteredGroupScore = findViewById(R.id.txtEnteredGroupScore);
+		m_txtTotal = findViewById(R.id.txtTotal);
+		m_txtTotalCalculation = findViewById(R.id.txtTotalCalculation);
 
 		m_tileDrawables = new TileDrawables(this);
 
@@ -165,8 +169,10 @@ public final class EnterHandActivity extends AppCompatActivity
 
 		m_hand.add(group);
 		m_groupsAdapter.notifyDataSetChanged();
-
 		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+
+		// Hand has been changed, so update the total on display.
+		displayTotal();
 	}
 
 	/**
@@ -245,6 +251,9 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_hand.replaceLatestAddition(revisedGroup);
 		m_groupsAdapter.notifyDataSetChanged();
 		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+
+		// Hand has been changed, so update the total to show it.
+		displayTotal();
 	}
 
 	public void onChowButtonClick(View view)
@@ -277,6 +286,12 @@ public final class EnterHandActivity extends AppCompatActivity
 		setConcealedButtonStyle();
 		ScoredGroup revisedGroup = updateScoredGroup();
 		replaceGroup(revisedGroup);
+	}
+
+	public void displayTotal()
+	{
+		m_txtTotal.setText(DisplayUtil.getTotalScore(m_hand));
+		m_txtTotalCalculation.setText(DisplayUtil.getTotalCalculation(m_hand));
 	}
 
 	private void setVisibility(Group.Visibility visibility)

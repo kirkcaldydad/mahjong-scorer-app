@@ -12,6 +12,7 @@ import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.scoring.ScoreContribution;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
+import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.ui.TileDrawables;
 
 /**
@@ -94,5 +95,30 @@ public final class DisplayUtil
 		}
 
 		return multipliers.toString();
+	}
+
+	public static String getTotalScore(ScoredHand hand)
+	{
+		return Integer.toString(hand.getTotalScore());
+	}
+
+	public static String getTotalCalculation(ScoredHand hand)
+	{
+		int basicScore = 0;
+		int multiplier = 1;
+
+		for (ScoredGroup group : hand)
+		{
+			for (ScoreContribution contribution : group.getScore())
+			{
+				basicScore += contribution.getScore();
+				multiplier *= contribution.getHandMultiplier();
+			}
+		}
+
+		if (multiplier != 1)
+			return "(" + basicScore + 'x' + multiplier + ')';
+
+		return "";
 	}
 }
