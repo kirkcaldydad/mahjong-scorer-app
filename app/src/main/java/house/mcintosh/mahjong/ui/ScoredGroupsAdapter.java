@@ -2,14 +2,14 @@ package house.mcintosh.mahjong.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.util.List;
 
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
@@ -23,11 +23,18 @@ public class ScoredGroupsAdapter extends ArrayAdapter<ScoredGroup>
 {
 	private final TileDrawables m_tileDrawables;
 
-	public ScoredGroupsAdapter(@NonNull Context context, @NonNull ScoredHand hand, TileDrawables tileDrawables)
+	private final DeleteActioner m_deleteActioner;
+
+	public ScoredGroupsAdapter(
+			@NonNull Context context,
+			@NonNull ScoredHand hand,
+			@NonNull TileDrawables tileDrawables,
+			@Nullable DeleteActioner deleteActioner)
 	{
 		super(context, 0, hand);
 
 		m_tileDrawables = tileDrawables;
+		m_deleteActioner = deleteActioner;
 	}
 
 	@Override
@@ -53,6 +60,25 @@ public class ScoredGroupsAdapter extends ArrayAdapter<ScoredGroup>
 		TextView multiplierView = convertView.findViewById(R.id.txtHandMultipliers);
 		multiplierView.setText(DisplayUtil.getScoreMultipliers(group));
 
+		ImageButton deleteButton = convertView.findViewById(R.id.btnDelete);
+
+		deleteButton.setTag(R.id.deleteButtonPositionTag, position);
+
+		deleteButton.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View button)
+			{
+				if (m_deleteActioner != null)
+					m_deleteActioner.requestDelete((int)button.getTag(R.id.deleteButtonPositionTag));
+			}
+		});
+
 		return convertView;
+	}
+
+	public static abstract class DeleteActioner
+	{
+		public abstract void requestDelete(int position);
 	}
 }

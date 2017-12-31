@@ -99,7 +99,12 @@ public final class DisplayUtil
 
 	public static String getTotalScore(ScoredHand hand)
 	{
-		return Integer.toString(hand.getTotalScore());
+		int score = hand.getTotalScore();
+
+		if (score == 0)
+			return "";
+
+		return Integer.toString(score);
 	}
 
 	public static String getTotalCalculation(ScoredHand hand)

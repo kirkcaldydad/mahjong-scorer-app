@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.IntConsumer;
 
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Player;
@@ -136,7 +137,17 @@ public final class EnterHandActivity extends AppCompatActivity
 		// Create a hand that will contain the entered groups, and an adapter to display the hand.
 
 		m_hand = new ScoredHand(m_scoringScheme);
-		m_groupsAdapter = new ScoredGroupsAdapter(this, m_hand, m_tileDrawables);
+		m_groupsAdapter = new ScoredGroupsAdapter(
+				this,
+				m_hand,
+				m_tileDrawables,
+				new ScoredGroupsAdapter.DeleteActioner()
+				{
+					public void requestDelete(int position)
+					{
+						deleteGroup(position);
+					}
+				});
 
 		m_groupsList = findViewById(R.id.groupsList);
 		m_groupsList.setAdapter(m_groupsAdapter);
@@ -286,6 +297,13 @@ public final class EnterHandActivity extends AppCompatActivity
 		setConcealedButtonStyle();
 		ScoredGroup revisedGroup = updateScoredGroup();
 		replaceGroup(revisedGroup);
+	}
+
+	public void deleteGroup(int position)
+	{
+		m_hand.remove(position);
+		m_groupsAdapter.notifyDataSetChanged();
+		displayTotal();
 	}
 
 	public void displayTotal()

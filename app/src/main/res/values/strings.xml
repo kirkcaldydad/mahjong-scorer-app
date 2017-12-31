@@ -53,4 +53,5 @@
     <string name="exposed">Exposed</string>
     <string name="concealed">Concealed</string>
     <string name="enteredTile">Entered Tile</string>
+    <string name="deleteButton">Delete button</string>
 </resources>

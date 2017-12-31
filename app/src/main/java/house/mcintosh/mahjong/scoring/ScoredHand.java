@@ -67,6 +67,19 @@ public final class ScoredHand extends ArrayList<ScoredGroup>
 		return true;
 	}
 
+	@Override
+	public ScoredGroup remove(int position)
+	{
+		ScoredGroup removedGroup = super.remove(position);
+
+		if (removedGroup == m_latestAddition)
+			m_latestAddition = null;
+
+		updateScore();
+
+		return removedGroup;
+	}
+
 	public void replaceLatestAddition(ScoredGroup group)
 	{
 		// Remove the latest addition, and add the new group instead of it.

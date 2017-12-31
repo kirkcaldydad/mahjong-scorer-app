@@ -92,12 +92,13 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/deleteButtonTopMargin"
         android:adjustViewBounds="true"
         android:background="@android:color/transparent"
+        android:contentDescription="@string/deleteButton"
         android:scaleType="centerCrop"
         android:src="@android:drawable/ic_delete" />
 

@@ -695,7 +695,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:paddingRight="@dimen/scorePaddingRight"
-                android:text="3456"
                 android:textAlignment="viewEnd"
                 android:textSize="30sp" />
 
@@ -703,8 +702,7 @@
                 android:id="@+id/txtTotalCalculation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="30"
-                android:text="(356x32)" />
+                android:layout_weight="30" />
         </LinearLayout>
 
         <ImageButton
