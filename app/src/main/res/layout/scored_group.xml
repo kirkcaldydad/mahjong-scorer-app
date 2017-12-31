@@ -8,73 +8,85 @@
     tools:context="house.mcintosh.mahjong.ui.EnterHandActivity">
 
     <LinearLayout
-        android:id="@+id/layoutTileGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="75">
+        android:layout_weight="75"
+        android:gravity="left"
+        android:weightSum="100">
 
-        <ImageView
-            android:id="@+id/imgTile0"
-            android:layout_width="@dimen/displayTileWidth"
-            android:layout_height="@dimen/displayTileHeight"
-            android:layout_margin="@dimen/displayTileMargin"
-            android:background="@drawable/tile_border"
-            android:contentDescription="@string/enteredTile"
-            android:gravity="center"
-            android:padding="@dimen/displayTilePadding"
-            android:visibility="visible"
-            app:srcCompat="@drawable/circles1" />
+        <LinearLayout
+            android:id="@+id/layoutTileGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="45"
+            android:gravity="left"
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/imgTile1"
-            android:layout_width="@dimen/displayTileWidth"
-            android:layout_height="@dimen/displayTileHeight"
-            android:layout_margin="@dimen/gridTileMargin"
-            android:background="@drawable/tile_border"
-            android:contentDescription="@string/enteredTile"
-            android:gravity="center"
-            android:padding="@dimen/displayTilePadding"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/circles1" />
+            <ImageView
+                android:id="@+id/imgTile0"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_margin="@dimen/displayTileMargin"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="left|center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="visible"
+                app:srcCompat="@drawable/circles1" />
 
-        <ImageView
-            android:id="@+id/imgTile2"
-            android:layout_width="@dimen/displayTileWidth"
-            android:layout_height="@dimen/displayTileHeight"
-            android:layout_margin="@dimen/displayTileMargin"
-            android:background="@drawable/tile_border"
-            android:contentDescription="@string/enteredTile"
-            android:gravity="center"
-            android:padding="@dimen/displayTilePadding"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/circles1" />
+            <ImageView
+                android:id="@+id/imgTile1"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_margin="@dimen/gridTileMargin"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/circles1" />
 
-        <ImageView
-            android:id="@+id/imgTile3"
-            android:layout_width="@dimen/displayTileWidth"
-            android:layout_height="@dimen/displayTileHeight"
-            android:layout_margin="@dimen/displayTileMargin"
-            android:background="@drawable/tile_border"
-            android:contentDescription="@string/enteredTile"
-            android:gravity="center"
-            android:padding="@dimen/displayTilePadding"
-            android:visibility="visible"
-            app:srcCompat="@drawable/circles1" />
+            <ImageView
+                android:id="@+id/imgTile2"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_margin="@dimen/displayTileMargin"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/circles1" />
+
+            <ImageView
+                android:id="@+id/imgTile3"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_margin="@dimen/displayTileMargin"
+                android:background="@drawable/tile_border"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="visible"
+                app:srcCompat="@drawable/circles1" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/txtGroupScore"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="25"
             android:paddingRight="@dimen/scorePaddingRight"
             android:textAlignment="viewEnd"
             android:textSize="30sp" />
 
         <TextView
             android:id="@+id/txtHandMultipliers"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="30"
+            android:gravity="right"
+            android:textAlignment="textStart"
             android:textSize="30sp" />
 
     </LinearLayout>
@@ -88,6 +100,5 @@
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@android:drawable/ic_delete" />
-
 
 </LinearLayout>
