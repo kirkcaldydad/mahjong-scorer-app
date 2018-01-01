@@ -116,7 +116,7 @@ public final class GamePlayActivity extends AppCompatActivity
 	}
 
 	/*
-	 * Invoked when the EnterhandActivity is finished, and needs to return the entered hand to the game.
+	 * Invoked when the EnterHandActivity is finished, and needs to return the entered hand to the game.
 	 */
 	@Override
 	public void onNewIntent(Intent intent)
