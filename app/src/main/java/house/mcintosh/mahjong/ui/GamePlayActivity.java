@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -112,7 +114,7 @@ public final class GamePlayActivity extends AppCompatActivity
 
 		m_round = new Round(m_game.getPrevailingWind());
 
-		displayGame();
+		displayGame(false);
 	}
 
 	/*
@@ -128,39 +130,46 @@ public final class GamePlayActivity extends AppCompatActivity
 
 		// Update the round with the player's hand.
 
-		try
-		{
-			m_round.addHand(player, hand, m_game.getPlayerWind(player));
-		}
-		catch (InvalidModelException ime)
-		{
-			Log.e(LOG_TAG, "InvalidModelException: "  + ime);
-		}
+		m_round.addHand(player, hand, m_game.getPlayerWind(player));
 
-		// Check whether we now have hands for all players.
-		if (m_game.isCompleteRound(m_round))
-		{
-			m_game.addRound(m_round);
-			m_round = new Round(m_game.getPrevailingWind());
+		// Add to the game if it is now a complete and valid round.
 
-			m_gameFile.save();
+		List<Player> mahjongPlayers = m_round.getMahjongPlayers();
+
+		if (mahjongPlayers.size() == 1)
+		{
+			if (m_game.isCompleteRound(m_round))
+			{
+				m_game.addRound(m_round);
+				m_round = new Round(m_game.getPrevailingWind());
+
+				m_gameFile.save();
+			}
 		}
 
 		// Scores have changed and the game may now have moved on...
-		displayGame();
+
+		boolean showMultiMahjongError = mahjongPlayers.size() > 1;
+		displayGame(showMultiMahjongError);
+
+		if (showMultiMahjongError)
+		{
+			Toast toast = Toast.makeText(this, getText(R.string.multiMahjongErrorMessage), Toast.LENGTH_LONG);
+			toast.show();
+		}
 	}
 
-	private void displayGame()
+	private void displayGame(boolean showMultiMahjongError)
 	{
-		displayPlayer(m_game.getPlayer(0), m_playerViews[0]);
-		displayPlayer(m_game.getPlayer(1), m_playerViews[1]);
-		displayPlayer(m_game.getPlayer(2), m_playerViews[2]);
-		displayPlayer(m_game.getPlayer(3), m_playerViews[3]);
+		displayPlayer(m_game.getPlayer(0), m_playerViews[0], showMultiMahjongError);
+		displayPlayer(m_game.getPlayer(1), m_playerViews[1], showMultiMahjongError);
+		displayPlayer(m_game.getPlayer(2), m_playerViews[2], showMultiMahjongError);
+		displayPlayer(m_game.getPlayer(3), m_playerViews[3], showMultiMahjongError);
 
 		m_prevailingWindView.setText(m_windNames.get(m_game.getPrevailingWind()));
 	}
 
-	private void displayPlayer(Player player, PlayerViews views)
+	private void displayPlayer(Player player, PlayerViews views, boolean showMultiMahjongError)
 	{
 		if (player == null)
 		{
@@ -179,7 +188,12 @@ public final class GamePlayActivity extends AppCompatActivity
 		{
 			ScoredHand playerHand = m_round.getHand(player);
 
-			views.playerName.setTextAppearance(R.style.complete);
+			int styleResource =
+					(showMultiMahjongError && playerHand.isMahjong()) ?
+							R.style.error :
+							R.style.complete;
+
+			views.playerName.setTextAppearance(styleResource);
 			views.roundScore.setText(DisplayUtil.getTotalScoreWithStatus(this, playerHand));
 			views.roundScore.setVisibility(View.VISIBLE);
 		}

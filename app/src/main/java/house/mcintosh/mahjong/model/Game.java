@@ -18,8 +18,6 @@ import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.JsonUtil;
 
-import static house.mcintosh.mahjong.ui.ScoredHandWrapper.m_hand;
-
 public final class Game
 {
 	private Player[]				m_seats				= new Player[4];;

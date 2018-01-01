@@ -6,8 +6,10 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import house.mcintosh.mahjong.exception.InvalidModelException;
@@ -22,27 +24,36 @@ public final class Round
 {
 	private final Map<Player, Entry>	m_entries			= new HashMap<>();
 	private final Wind					m_prevailingWind;
-	private Player						m_mahjongPlayer;
 	
 	public Round(Wind prevailingWind)
 	{
 		m_prevailingWind = prevailingWind;
 	}
-	
+
+	/**
+	 * Add a hand into the round.  If there is already a hand for the player it is replaced.
+	 */
 	public void addHand(Player player, ScoredHand hand, Wind playerWind)
 	{
-		if (m_entries.containsKey(player))
-			throw new InvalidModelException("Duplicate player");
-		
-		if (hand.isMahjong())
-		{
-			if (m_mahjongPlayer != null)
-				throw new InvalidModelException("Already got mahjong hand in round");
-			
-			m_mahjongPlayer = player;
-		}
-		
 		m_entries.put(player, new Entry(player, hand, playerWind));
+	}
+
+	/**
+	 * Gets all the players that have a Mahjong hand in this Round.  For a valid Round there
+	 * should be exactly one Mahjong hand, but we allow more or fewer to allow the round to
+	 * be built up and edited before it is added to a Game.
+	 */
+	public List<Player> getMahjongPlayers()
+	{
+		List<Player> mahjongPlayers = new ArrayList<>(1);
+
+		for (Entry entry : m_entries.values())
+		{
+			if (entry.hand.isMahjong())
+				mahjongPlayers.add(entry.player);
+		}
+
+		return mahjongPlayers;
 	}
 
 	public Wind getPrevailingWind()
@@ -98,16 +109,15 @@ public final class Round
 	
 	public int getPlayerScore(Player player)
 	{
-		if (m_mahjongPlayer == null)
-			throw new InvalidModelException("Round has no mahjong hand");
-		
 		int score = 0;
+
+		Entry thisPlayerEntry = m_entries.get(player);
 		
-		if (player.equals(m_mahjongPlayer))
+		if (thisPlayerEntry.hand.isMahjong())
 		{
 			// Calculate score based on this being the mahjong player.
 			
-			Entry receivingEntry = m_entries.get(player);
+			Entry receivingEntry = thisPlayerEntry;
 			
 			for (Entry givingEntry : m_entries.values())
 			{
@@ -125,8 +135,6 @@ public final class Round
 		else
 		{
 			// Calculate score based on this not being mahjong player.
-			
-			Entry thisPlayerEntry = m_entries.get(player);
 			
 			for (Entry thatPlayerEntry : m_entries.values())
 			{

@@ -11,7 +11,7 @@ import house.mcintosh.mahjong.scoring.ScoredHand;
 
 public class ScoredHandWrapper implements Serializable
 {
-	public static ScoredHand m_hand;
+	public final ScoredHand m_hand;
 
 	public ScoredHandWrapper(ScoredHand hand)
 	{
