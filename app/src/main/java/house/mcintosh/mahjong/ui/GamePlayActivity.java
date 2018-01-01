@@ -102,12 +102,12 @@ public final class GamePlayActivity extends AppCompatActivity
 				m_playerViews[i].playerName.setOnClickListener(new EnterHandClickListener(player));
 		}
 
-		displayGame();
-
 		// Create a new round, with the currently prevailing wind.  This is currently empty,
 		// waiting for hands to be added to it.
 
 		m_round = new Round(m_game.getPrevailingWind());
+
+		displayGame();
 	}
 
 	/*
@@ -136,11 +136,13 @@ public final class GamePlayActivity extends AppCompatActivity
 		if (m_game.isCompleteRound(m_round))
 		{
 			m_game.addRound(m_round);
+			m_round = new Round(m_game.getPrevailingWind());
 
-			// Scores have changed and the game may now have moved on...
-			displayGame();
 			m_gameFile.save();
 		}
+
+		// Scores have changed and the game may now have moved on...
+		displayGame();
 	}
 
 	private void displayGame()
@@ -166,6 +168,15 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.wind.setText(m_windNames.get(m_game.getPlayerWind(player)));
 			views.playerName.setText(player.getName());
 			views.score.setText(String.format(Locale.UK, "%d", m_game.getPlayerScore(player)));
+		}
+
+		if (m_round.hasHandFor(player))
+		{
+			views.playerName.setTextAppearance(R.style.complete);
+		}
+		else
+		{
+			views.playerName.setTextAppearance(R.style.available);
 		}
 	}
 

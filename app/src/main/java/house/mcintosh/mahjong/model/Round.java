@@ -152,7 +152,12 @@ public final class Round
 	{
 		return m_entries.keySet().containsAll(players);
 	}
-	
+
+	public boolean hasHandFor(Player player)
+	{
+		return m_entries.keySet().contains(player);
+	}
+
 	static private class Entry
 	{
 		private final Player		player;

@@ -17,4 +17,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="complete">
+        <item name="android:textColor">@android:color/darker_gray</item>
+    </style>
+
+    <style name="available">
+        <item name="android:textColor">@android:color/holo_green_dark</item>
+    </style>
+
 </resources>
