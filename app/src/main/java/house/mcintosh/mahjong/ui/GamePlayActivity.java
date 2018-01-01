@@ -20,6 +20,7 @@ import house.mcintosh.mahjong.model.Round;
 import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
+import house.mcintosh.mahjong.util.DisplayUtil;
 
 public final class GamePlayActivity extends AppCompatActivity
 {
@@ -66,25 +67,29 @@ public final class GamePlayActivity extends AppCompatActivity
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind0),
 						findViewById(R.id.tvPlayerName0),
-						findViewById(R.id.tvPlayerScore0)
+						findViewById(R.id.tvPlayerScore0),
+						findViewById(R.id.tvPlayerRoundScore0)
 				);
 		m_playerViews[1] =
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind1),
 						findViewById(R.id.tvPlayerName1),
-						findViewById(R.id.tvPlayerScore1)
+						findViewById(R.id.tvPlayerScore1),
+						findViewById(R.id.tvPlayerRoundScore1)
 				);
 		m_playerViews[2] =
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind2),
 						findViewById(R.id.tvPlayerName2),
-						findViewById(R.id.tvPlayerScore2)
+						findViewById(R.id.tvPlayerScore2),
+						findViewById(R.id.tvPlayerRoundScore2)
 				);
 		m_playerViews[3] =
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind3),
 						findViewById(R.id.tvPlayerName3),
-						findViewById(R.id.tvPlayerScore3)
+						findViewById(R.id.tvPlayerScore3),
+						findViewById(R.id.tvPlayerRoundScore3)
 				);
 
 		m_windNames.put(Wind.EAST, getText(R.string.east));
@@ -172,11 +177,16 @@ public final class GamePlayActivity extends AppCompatActivity
 
 		if (m_round.hasHandFor(player))
 		{
+			ScoredHand playerHand = m_round.getHand(player);
+
 			views.playerName.setTextAppearance(R.style.complete);
+			views.roundScore.setText(DisplayUtil.getTotalScoreWithStatus(this, playerHand));
+			views.roundScore.setVisibility(View.VISIBLE);
 		}
 		else
 		{
 			views.playerName.setTextAppearance(R.style.available);
+			views.roundScore.setVisibility(View.INVISIBLE);
 		}
 	}
 
@@ -188,17 +198,19 @@ public final class GamePlayActivity extends AppCompatActivity
 		final TextView wind;
 		final TextView playerName;
 		final TextView score;
+		final TextView roundScore;
 
-		PlayerViews(View windView, View playerName, View score)
+		PlayerViews(View windView, View playerName, View score, View roundScore)
 		{
 			this.wind = (TextView)windView;
 			this.playerName = (TextView)playerName;
 			this.score = (TextView)score;
+			this.roundScore = (TextView)roundScore;
 		}
 	}
 
 	/**
-	 * Listener for a click on a name (or similar) that triggers entering a hand.
+	 * Listener for a click on a name (or similar) that triggers entering or editing a hand.
 	 */
 	private class EnterHandClickListener implements View.OnClickListener
 	{
@@ -217,7 +229,10 @@ public final class GamePlayActivity extends AppCompatActivity
 			intent.putExtra(EnterHandActivity.PLAYER_KEY, m_player);
 			intent.putExtra(EnterHandActivity.OWN_WIND_KEY, m_game.getPlayerWind(m_player));
 			intent.putExtra(EnterHandActivity.PREVAILING_WIND_KEY, m_game.getPrevailingWind());
-			intent.putExtra(EnterHandActivity.SCORE_SCHEME_KEY, m_game.getScoringScheme());
+
+			ScoredHand hand = m_round.hasHandFor(m_player) ? m_round.getHand(m_player) : new ScoredHand(m_game.getScoringScheme());
+
+			intent.putExtra(EnterHandActivity.HAND_KEY, new ScoredHandWrapper(hand));
 
 			startActivityForResult(intent, ENTER_HAND_REQUEST_CODE);
 		}

@@ -1,5 +1,6 @@
 package house.mcintosh.mahjong.util;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.scoring.ScoreContribution;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
+import house.mcintosh.mahjong.ui.R;
 import house.mcintosh.mahjong.ui.TileDrawables;
 
 /**
@@ -95,6 +97,22 @@ public final class DisplayUtil
 		}
 
 		return multipliers.toString();
+	}
+
+	public static String getTotalScoreWithStatus(Context context, ScoredHand hand)
+	{
+		int score = hand.getTotalScore();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append('(').append(score);
+
+		if (hand.isMahjong())
+			sb.append(' ').append(context.getText(R.string.mahjong));
+
+		sb.append(')');
+
+		return sb.toString();
 	}
 
 	public static String getTotalScore(ScoredHand hand)

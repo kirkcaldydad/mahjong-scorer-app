@@ -40,7 +40,7 @@ public final class EnterHandActivity extends AppCompatActivity
 	public final static String PLAYER_KEY = EnterHandActivity.class.getName() + "PLAYER";
 	public final static String OWN_WIND_KEY = EnterHandActivity.class.getName() + "OWN_WIND";
 	public final static String PREVAILING_WIND_KEY = EnterHandActivity.class.getName() + "PREVAILING_WIND";
-	public final static String SCORE_SCHEME_KEY = EnterHandActivity.class.getName() + "SCORE_SCHEME";
+	public final static String HAND_KEY = EnterHandActivity.class.getName() + "HAND";
 
 	// A statically initialised map of the tiles that are associated with each grid item.
 	private final static Map<Integer, Tile> viewToTile = new HashMap<>();
@@ -86,7 +86,6 @@ public final class EnterHandActivity extends AppCompatActivity
 	private Player m_player;
 	private Wind m_ownWind;
 	private Wind m_prevailingWind;
-	private ScoringScheme m_scoringScheme;
 
 	private ToggleButton m_selectedGroupTypeButton = null;
 	private Group.Type m_selectedGroupType = null;
@@ -121,7 +120,7 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_player = (Player) intent.getSerializableExtra(PLAYER_KEY);
 		m_ownWind = (Wind) intent.getSerializableExtra(OWN_WIND_KEY);
 		m_prevailingWind = (Wind) intent.getSerializableExtra(PREVAILING_WIND_KEY);
-		m_scoringScheme = (ScoringScheme) intent.getSerializableExtra(SCORE_SCHEME_KEY);
+		m_hand = ((ScoredHandWrapper) intent.getSerializableExtra(HAND_KEY)).getHand();
 
 		Log.d(LOG_TAG, "Starting EnterHandActivity for player: " + m_player.getName());
 
@@ -138,9 +137,8 @@ public final class EnterHandActivity extends AppCompatActivity
 
 		m_visibilityButton = findViewById(R.id.btnVisibility);
 
-		// Create a hand that will contain the entered groups, and an adapter to display the hand.
+		// Create an adapter to display the hand.
 
-		m_hand = new ScoredHand(m_scoringScheme);
 		m_groupsAdapter = new ScoredGroupsAdapter(
 				this,
 				m_hand,
@@ -249,7 +247,7 @@ public final class EnterHandActivity extends AppCompatActivity
 		if (m_selectedTile != null)
 		{
 			Group group = new Group(m_selectedGroupType, m_selectedTile, m_selectedVisibility);
-			scoredGroup = new ScoredGroup(group, m_scoringScheme, m_ownWind, m_prevailingWind);
+			scoredGroup = new ScoredGroup(group, m_hand.getScoringScheme(), m_ownWind, m_prevailingWind);
 		}
 
 		// scoredGroup may still be null, meaning display no tiles.
@@ -351,19 +349,38 @@ public final class EnterHandActivity extends AppCompatActivity
 	 * Invoked when an item on the bar at the top is selected, including the back arrow button at the top.
 	 */
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
 		switch (item.getItemId())
 		{
 			// Respond to the action bar's Up/Home button
 			case android.R.id.home:
-				Intent returnHandIntent = NavUtils.getParentActivityIntent(this);
-
-				returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_ENTERED_HAND, new ScoredHandWrapper(m_hand));
-				returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_PLAYER, m_player);
-
-				NavUtils.navigateUpTo(this, returnHandIntent);
+				returnEnteredHand();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Handler for the back button to make sure that the hand entered so far is returned to
+	 * the parent activity.
+	 */
+	@Override
+	public void onBackPressed()
+	{
+		returnEnteredHand();
+	}
+
+	/**
+	 * Finishes this activity, returning the entered hand to the calling activity.
+	 */
+	private void returnEnteredHand()
+	{
+		Intent returnHandIntent = NavUtils.getParentActivityIntent(this);
+
+		returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_ENTERED_HAND, new ScoredHandWrapper(m_hand));
+		returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_PLAYER, m_player);
+
+		NavUtils.navigateUpTo(this, returnHandIntent);
 	}
 }

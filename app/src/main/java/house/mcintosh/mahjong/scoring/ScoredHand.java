@@ -48,15 +48,6 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 	private int		m_totalScoreLimited			= 0;
 
 	private ScoredGroup m_latestAddition;
-
-	/**
-	 * Default contructor should not be used, but is necessary for deserialisation, hence marked Deprecated.
-	 */
-
-	public ScoredHand()
-	{
-		m_scheme = null;
-	}
 	
 	public ScoredHand(ScoringScheme scheme)
 	{
@@ -104,6 +95,11 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 			return -1;
 
 		return this.indexOf(m_latestAddition);
+	}
+
+	public ScoringScheme getScoringScheme()
+	{
+		return m_scheme;
 	}
 	
 	public int getTotalScore()
