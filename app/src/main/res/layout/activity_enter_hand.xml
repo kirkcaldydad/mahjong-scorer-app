@@ -680,7 +680,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -690,12 +689,20 @@
             android:weightSum="100">
 
             <TextView
+                android:id="@+id/txtWholeHandScores"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="40"
+                android:textSize="30sp" />
+
+            <TextView
                 android:id="@+id/txtTotal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="30"
                 android:paddingRight="@dimen/scorePaddingRight"
                 android:textAlignment="viewEnd"
+                android:textColor="@color/colorPrimary"
                 android:textSize="30sp" />
 
             <TextView

@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import house.mcintosh.mahjong.exception.InvalidHandException;
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.GroupComparator;
 import house.mcintosh.mahjong.model.Tile;
@@ -30,7 +29,8 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 {
 	private final ScoringScheme					m_scheme;
 	
-	private ScoreList							m_scores;
+	private ScoreList							m_wholeHandScores;
+	private ScoreList							m_groupScores;
 	
 	private boolean	m_requirePairConcealedInfo	= false;
 	private boolean	m_mahjongPairConcealed		= false;
@@ -101,7 +101,7 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 	{
 		return m_scheme;
 	}
-	
+
 	public int getTotalScore()
 	{
 		return m_totalScoreLimited;
@@ -110,6 +110,16 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 	public int getTotalScoreUnlimited()
 	{
 		return m_totalScoreUnlimited;
+	}
+
+	public ScoreList getWholeHandScores()
+	{
+		return m_wholeHandScores;
+	}
+
+	public ScoreList getGroupScores()
+	{
+		return m_groupScores;
 	}
 	
 	public boolean isMahjong()
@@ -248,14 +258,15 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 		// Zero score in case we exit early.
 		m_totalScoreLimited = m_totalScoreUnlimited = 0;
 		
-		ScoreList scores = new ScoreList();
+		ScoreList wholeHandScores = new ScoreList();
+		ScoreList groupScores = new ScoreList();
 		
 		int effectiveHandTiles	= 0;
 		int pairCount			= 0;
 		
 		for (ScoredGroup group : this)
 		{
-			scores.append(group.getScore());
+			groupScores.append(group.getScore());
 			
 			effectiveHandTiles += group.getType().getHandSize();
 			
@@ -264,7 +275,7 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 		}
 		
 		if (m_nonMahjongByOriginalCall)
-			scores.append(m_scheme.getScoreContribution(ScoreElement.OriginalCallHandScore));
+			wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.OriginalCallHandScore));
 		
 		if (effectiveHandTiles == m_scheme.MahjongHandSize && pairCount == 1)
 			m_isMahjong = true;
@@ -280,7 +291,7 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 		if (m_isMahjong)
 		{
 			// Additional scoring that applies to mahjong hand only.
-			scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongHandScore));
+			wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongHandScore));
 			
 			// Look for all major and no chows
 			
@@ -308,48 +319,48 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 				if (group.getType() != Group.Type.PAIR && !group.isConcealed())
 					allNonPairsConcealed = false;
 			}
-			
+
 			if (allMajor)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.AllMajorHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.AllMajorHandScore));
 			
 			if (noChow)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.NoChowsHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.NoChowsHandScore));
 			
 			if (suits.size() == 1)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.SingleSuitHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.SingleSuitHandScore));
 			
 			if (allNonPairsConcealed)
 				m_requirePairConcealedInfo = true;
 			
 			if (allNonPairsConcealed && m_mahjongPairConcealed)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.AllConcealedHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.AllConcealedHandScore));
 			
 			if (m_mahjongByWallTile)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByWallTileHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByWallTileHandScore));
 			
 			if (m_mahjongByLastWallTile)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByLastWallTileHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByLastWallTileHandScore));
 			
 			if (m_mahjongByOnlyPossibleTile)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByOnlyPossibleTileHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByOnlyPossibleTileHandScore));
 			
 			if (m_mahjongByLooseTile)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByLooseTileHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByLooseTileHandScore));
 			
 			if (m_mahjongByLastDiscard)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByLastDiscardHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByLastDiscardHandScore));
 			
 			if (m_mahjongByRobbingKong)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByRobbingKongHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByRobbingKongHandScore));
 
 			if (m_mahjongByOriginalCall)
-				scores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByOriginalCallHandScore));
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByOriginalCallHandScore));
 		}
-		
-		
-		m_totalScoreUnlimited	= scores.getTotal();
+
+		m_totalScoreUnlimited	= new ScoreList().append(groupScores).append(wholeHandScores).getTotal();
 		m_totalScoreLimited		= Math.min(m_totalScoreUnlimited, m_scheme.LimitScore);
-		m_scores				= scores;
+		m_wholeHandScores		= wholeHandScores;
+		m_groupScores			= groupScores;
 	}
 
 	public ObjectNode toJson()

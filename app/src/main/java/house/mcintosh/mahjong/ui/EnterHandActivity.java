@@ -1,12 +1,10 @@
 package house.mcintosh.mahjong.ui;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,21 +14,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.IntConsumer;
 
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
-import house.mcintosh.mahjong.scoring.ScoreContribution;
-import house.mcintosh.mahjong.scoring.ScoreList;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
-import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.DisplayUtil;
 
 public final class EnterHandActivity extends AppCompatActivity
@@ -99,6 +91,7 @@ public final class EnterHandActivity extends AppCompatActivity
 	private ToggleButton m_btnChow;
 	private ToggleButton m_btnPung;
 	private TextView m_txtEnteredGroupScore;
+	private TextView m_txtWholeHandScores;
 	private TextView m_txtTotal;
 	private TextView m_txtTotalCalculation;
 
@@ -130,6 +123,7 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_btnChow = findViewById(R.id.btnChow);
 		m_btnPung = findViewById(R.id.btnPung);
 		m_txtEnteredGroupScore = findViewById(R.id.txtEnteredGroupScore);
+		m_txtWholeHandScores = findViewById(R.id.txtWholeHandScores);
 		m_txtTotal = findViewById(R.id.txtTotal);
 		m_txtTotalCalculation = findViewById(R.id.txtTotalCalculation);
 
@@ -310,6 +304,7 @@ public final class EnterHandActivity extends AppCompatActivity
 
 	public void displayTotal()
 	{
+		m_txtWholeHandScores.setText(DisplayUtil.getWholeHandScores(m_hand));
 		m_txtTotal.setText(DisplayUtil.getTotalScore(m_hand));
 		m_txtTotalCalculation.setText(DisplayUtil.getTotalCalculation(m_hand));
 	}

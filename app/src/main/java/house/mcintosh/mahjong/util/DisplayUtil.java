@@ -115,6 +115,30 @@ public final class DisplayUtil
 		return sb.toString();
 	}
 
+	public static String getWholeHandScores(ScoredHand hand)
+	{
+		int basicScore = 0;
+
+		StringBuilder sb = new StringBuilder();
+
+		for (ScoreContribution contribution : hand.getWholeHandScores())
+		{
+			basicScore += contribution.getScore();
+
+			int multiplier = contribution.getHandMultiplier();
+
+			if (multiplier != 1)
+			{
+				sb.append('x').append(multiplier);
+			}
+		}
+
+		if (basicScore > 0)
+			sb.insert(0, "   ").insert(0, basicScore);
+
+		return sb.toString();
+	}
+
 	public static String getTotalScore(ScoredHand hand)
 	{
 		int score = hand.getTotalScore();
@@ -127,21 +151,45 @@ public final class DisplayUtil
 
 	public static String getTotalCalculation(ScoredHand hand)
 	{
-		int basicScore = 0;
+		int groupBasicScore = 0;
+		int handBasicScore = 0;
 		int multiplier = 1;
 
 		for (ScoredGroup group : hand)
 		{
 			for (ScoreContribution contribution : group.getScore())
 			{
-				basicScore += contribution.getScore();
+				groupBasicScore += contribution.getScore();
 				multiplier *= contribution.getHandMultiplier();
 			}
 		}
 
-		if (multiplier != 1)
-			return "(" + basicScore + 'x' + multiplier + ')';
+		for (ScoreContribution contribution : hand.getWholeHandScores())
+		{
+			handBasicScore += contribution.getScore();
+			multiplier *= contribution.getHandMultiplier();
+		}
 
-		return "";
+		StringBuilder sb = new StringBuilder();
+
+		if (groupBasicScore > 0 && handBasicScore > 0 && multiplier != 1)
+			sb.append('(');
+
+		if (groupBasicScore > 0 && (handBasicScore > 0 || multiplier != 1))
+			sb.append(groupBasicScore);
+
+		if (groupBasicScore > 0 && handBasicScore > 0)
+			sb.append('+');
+
+		if (handBasicScore > 0 && (groupBasicScore > 0 || multiplier != 1))
+			sb.append(handBasicScore);
+
+		if (groupBasicScore > 0 && handBasicScore > 0 && multiplier != 1)
+			sb.append(')');
+
+		if (multiplier != 1 && (groupBasicScore > 0 || handBasicScore > 0))
+			sb.append('x').append(multiplier);
+
+		return sb.toString();
 	}
 }
