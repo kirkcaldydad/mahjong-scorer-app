@@ -244,7 +244,7 @@ public final class GamePlayActivity extends AppCompatActivity
 			intent.putExtra(EnterHandActivity.OWN_WIND_KEY, m_game.getPlayerWind(m_player));
 			intent.putExtra(EnterHandActivity.PREVAILING_WIND_KEY, m_game.getPrevailingWind());
 
-			ScoredHand hand = m_round.hasHandFor(m_player) ? m_round.getHand(m_player) : new ScoredHand(m_game.getScoringScheme());
+			ScoredHand hand = m_round.hasHandFor(m_player) ? m_round.getHand(m_player) : new ScoredHand(m_game.getScoringScheme(), false);
 
 			intent.putExtra(EnterHandActivity.HAND_KEY, new ScoredHandWrapper(hand));
 

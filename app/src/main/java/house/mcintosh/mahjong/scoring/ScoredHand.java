@@ -28,6 +28,7 @@ import house.mcintosh.mahjong.util.JsonUtil;
 public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializable
 {
 	private final ScoringScheme					m_scheme;
+	private final boolean						m_sort;
 	
 	private ScoreList							m_wholeHandScores;
 	private ScoreList							m_groupScores;
@@ -51,7 +52,13 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 	
 	public ScoredHand(ScoringScheme scheme)
 	{
+		this(scheme, true);
+	}
+
+	public ScoredHand(ScoringScheme scheme, boolean sort)
+	{
 		m_scheme = scheme;
+		m_sort = sort;
 	}
 
 	@Override
@@ -61,7 +68,8 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 
 		m_latestAddition = group;
 
-		Collections.sort(this, new GroupComparator());
+		if (m_sort)
+			Collections.sort(this, new GroupComparator());
 		
 		updateScore();
 
