@@ -18,6 +18,7 @@ public class Group implements Serializable
 {
 	public enum Type
 	{
+		EMPTY(0, 0),
 		PAIR(2, 2),
 		CHOW(3, 3),
 		PUNG(3, 3),

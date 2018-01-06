@@ -420,4 +420,31 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 
 		return scoredHand;
 	}
+
+	/**
+	 * @return	The maximum number of tiles that can be added to this hand, excluding the extra
+	 * 			tile that comes with each Kong.
+	 */
+	public int getAvailableTileCapacity()
+	{
+		int tileCount = 0;
+		int pairCount = 0;
+
+		for (Group group : this)
+		{
+			Group.Type type = group.getType();
+
+			tileCount += type.getHandSize();
+
+			if (type == Group.Type.PAIR)
+				pairCount++;
+		}
+
+		if (pairCount > 1)
+			// Cannot become a Mahjong hand.
+			return Math.max(0, m_scheme.MahjongHandSize - 1 - tileCount);
+
+		// else pairCount <= 1, so could become a mahjong hand.
+		return Math.max(0, m_scheme.MahjongHandSize - tileCount);
+	}
 }

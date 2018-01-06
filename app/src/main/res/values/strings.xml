@@ -56,4 +56,5 @@
     <string name="deleteButton">Delete button</string>
     <string name="mahjong">Mahjong</string>
     <string name="multiMahjongErrorMessage">Only one player can have a Mahjong hand.</string>
+    <string name="cannotAddGroupErrorMessage">No more tiles can be added.</string>
 </resources>

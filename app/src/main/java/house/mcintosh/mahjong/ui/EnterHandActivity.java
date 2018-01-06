@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import java.util.HashMap;
@@ -90,6 +91,8 @@ public final class EnterHandActivity extends AppCompatActivity
 	private LinearLayout m_handEntryDisplayTiles;
 	private ToggleButton m_btnChow;
 	private ToggleButton m_btnPung;
+	private ToggleButton m_btnKong;
+	private ToggleButton m_btnPair;
 	private TextView m_txtEnteredGroupScore;
 	private TextView m_txtWholeHandScores;
 	private TextView m_txtTotal;
@@ -122,6 +125,8 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_handEntryDisplayTiles = findViewById(R.id.layoutEnteredGroup);
 		m_btnChow = findViewById(R.id.btnChow);
 		m_btnPung = findViewById(R.id.btnPung);
+		m_btnKong = findViewById(R.id.btnKong);
+		m_btnPair = findViewById(R.id.btnPair);
 		m_txtEnteredGroupScore = findViewById(R.id.txtEnteredGroupScore);
 		m_txtWholeHandScores = findViewById(R.id.txtWholeHandScores);
 		m_txtTotal = findViewById(R.id.txtTotal);
@@ -168,18 +173,47 @@ public final class EnterHandActivity extends AppCompatActivity
 		// Create a group - a pung by default, and display it in the entry area.
 
 		setVisibility(Group.Visibility.EXPOSED);
-		ScoredGroup group = selectGroupTypeButton(m_btnPung, Group.Type.PUNG);
 
-		enableButtons(tile);
+		Group.Type maxGroupSize = calculateMaxGroup();
 
-		// Add the newly created group to the list view.
+		ScoredGroup group;
 
-		m_hand.add(group);
-		m_groupsAdapter.notifyDataSetChanged();
-		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+		if (maxGroupSize == Group.Type.PAIR)
+			group = selectGroupTypeButton(m_btnPair, Group.Type.PAIR);
+		else
+			group = selectGroupTypeButton(m_btnPung, Group.Type.PUNG);
 
-		// Hand has been changed, so update the total on display.
-		displayTotal();
+		boolean canAddGroup = enableButtons(tile, maxGroupSize);
+
+		if (canAddGroup)
+		{
+			// Add the newly created group to the list view.
+
+			m_hand.add(group);
+			m_groupsAdapter.notifyDataSetChanged();
+			m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+
+			// Hand has been changed, so update the total on display.
+			displayTotal();
+		}
+		else
+		{
+			displayEntryGroup(null);
+
+			Toast toast = Toast.makeText(this, getText(R.string.cannotAddGroupErrorMessage), Toast.LENGTH_SHORT);
+			toast.show();
+		}
+	}
+
+	private Group.Type calculateMaxGroup()
+	{
+		int maxTiles = m_hand.getAvailableTileCapacity();
+
+		if (maxTiles > 2)
+			return Group.Type.CHOW;
+		if (maxTiles == 2)
+			return Group.Type.PAIR;
+		return Group.Type.EMPTY;
 	}
 
 	/**
@@ -324,20 +358,44 @@ public final class EnterHandActivity extends AppCompatActivity
 			m_visibilityButton.setTextSize(12);
 	}
 
-	// Enable or disable the various buttons, depending on the currently selected Tile.
-	public void enableButtons(Tile tile)
+	/**
+	 * Enable or disable the various buttons, depending on the currently selected Tile.
+	 *
+	 * @return true if a group can be added to the hand.
+ 	 */
+	public boolean enableButtons(Tile tile, Group.Type maxGroupSize)
 	{
+		boolean pairEnabled = true;
+		boolean chowEnabled = true;
+		boolean pungEnabled = true;
+		boolean kongEnabled = true;
+
 		switch (tile.getType())
 		{
 			case DRAGON:
 			case WIND:
-				m_btnChow.setEnabled(false);
-				break;
-
-			default:
-				m_btnChow.setEnabled(true);
+				chowEnabled = false;
 				break;
 		}
+
+		if (maxGroupSize.getHandSize() < 3)
+		{
+			chowEnabled = false;
+			pungEnabled = false;
+			kongEnabled = false;
+		}
+
+		if (maxGroupSize.getHandSize() < 2)
+			pairEnabled = false;
+
+		m_btnPair.setEnabled(pairEnabled);
+		m_btnChow.setEnabled(chowEnabled);
+		m_btnPung.setEnabled(pungEnabled);
+		m_btnKong.setEnabled(kongEnabled);
+
+		boolean canAddGroup = pairEnabled || chowEnabled || pungEnabled || kongEnabled;
+
+		return canAddGroup;
 	}
 
 	/**
