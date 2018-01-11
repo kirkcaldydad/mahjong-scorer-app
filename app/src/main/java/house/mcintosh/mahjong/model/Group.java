@@ -42,7 +42,12 @@ public class Group implements Serializable
 	public enum Visibility
 	{
 		EXPOSED,
-		CONCEALED
+		CONCEALED;
+
+		private static Visibility toggle(Visibility visibility)
+		{
+			return visibility == EXPOSED ? CONCEALED : EXPOSED;
+		}
 	}
 
 	private final Type m_type;
@@ -72,7 +77,7 @@ public class Group implements Serializable
 		switch (type)
 		{
 			case PAIR:
-				this.m_visibility = Visibility.EXPOSED;
+				this.m_visibility = visibility;
 				addIdenticalTiles(tiles, tile, type.size);
 				break;
 
@@ -104,6 +109,11 @@ public class Group implements Serializable
 			default:
 				throw new InvalidModelException("Visibility required");
 		}
+	}
+
+	public Group toggleVisibility()
+	{
+		return new Group(m_type, m_tiles.get(0), Visibility.toggle(m_visibility));
 	}
 
 	public Type getType()

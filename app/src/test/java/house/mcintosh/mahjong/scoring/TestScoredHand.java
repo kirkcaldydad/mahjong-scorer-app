@@ -1,6 +1,7 @@
 package house.mcintosh.mahjong.scoring;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.ser.std.StdArraySerializers;
 
 import static org.junit.Assert.*;
 
@@ -138,27 +139,27 @@ public class TestScoredHand
 		assertEquals(scheme.LimitScore, hand.getTotalScore());
 		
 		assertTrue(hand.requiresPairConcealedInfo());
-		
-		hand.setMahjongPairConcealed(true);
+
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_PAIR_CONCEALED, true);
 		
 		assertEquals((10+2+32+32+32+32)*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		assertEquals(scheme.LimitScore, hand.getTotalScore());
 		
 		// Not realistic scores, but test that finishing scores work.
 		
-		hand.setMahjongByLooseTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LOOSE_TILE, true);
 		assertEquals((10+2+32+32+32+32)*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByWallTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_WALL_TILE, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByLastWallTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LAST_WALL_TILE, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByLastDiscard(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LAST_DISCARD, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByOnlyPossibleTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ONLY_POSSIBLE_TILE, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByRobbingKong(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ROBBING_KONG, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByOriginalCall(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ORIGINAL_CALL, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		assertEquals(scheme.LimitScore, hand.getTotalScore());
 	}
@@ -192,7 +193,7 @@ public class TestScoredHand
 
 		assertTrue(hand.requiresPairConcealedInfo());
 
-		hand.setMahjongPairConcealed(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_PAIR_CONCEALED, true);
 		hand = checkSerialisation(hand, scheme, Wind.NORTH, Wind.NORTH);
 
 		assertEquals((10+2+32+32+32+32)*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
@@ -200,20 +201,20 @@ public class TestScoredHand
 
 		// Not realistic scores, but test that finishing scores work.
 
-		hand.setMahjongByLooseTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LOOSE_TILE, true);
 		assertEquals((10+2+32+32+32+32)*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByWallTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_WALL_TILE, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByLastWallTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LAST_WALL_TILE, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand = checkSerialisation(hand, scheme, Wind.NORTH, Wind.NORTH);
-		hand.setMahjongByLastDiscard(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LAST_DISCARD, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByOnlyPossibleTile(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ONLY_POSSIBLE_TILE, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByRobbingKong(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ROBBING_KONG, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
-		hand.setMahjongByOriginalCall(true);
+		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ORIGINAL_CALL, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand = checkSerialisation(hand, scheme, Wind.NORTH, Wind.NORTH);
 	}

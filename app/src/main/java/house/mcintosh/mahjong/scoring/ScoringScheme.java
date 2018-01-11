@@ -100,6 +100,21 @@ public final class ScoringScheme implements Serializable
 	{
 		return m_contributions.get(element);
 	}
+
+	/**
+	 * @return	true if a score element has some score or a multiplier.  False if it has
+	 * 			nothing that will affect the score of a group or hand.
+	 */
+	public boolean hasScore(ScoreElement element)
+	{
+		for (ScoreContribution contribution : getScoreContribution(element))
+		{
+			if (contribution.getScore() != 0 || contribution.getHandMultiplier() != 1)
+				return true;
+		}
+
+		return false;
+	}
 	
 	// Based on scores from http://mahjongbritishrules.com/scoring/overview.html
 	

@@ -17,10 +17,16 @@ import house.mcintosh.mahjong.scoring.ScoringScheme.ScoreElement;
 public final class ScoredGroup extends Group implements Serializable
 {
 	private final ScoreList	m_score;
+
+	// We keep references to these items, but there is no need to include them in our
+	// json serialisation because they are restored from a higher level during deserialisation.
+	private final ScoringScheme m_scheme;
+	private final Wind m_ownWind;
+	private final Wind m_prevailingWind;
 	
-	public ScoredGroup(Group set, ScoringScheme scheme, Wind ownWind, Wind prevailingWind)
+	public ScoredGroup(Group group, ScoringScheme scheme, Wind ownWind, Wind prevailingWind)
 	{
-		super(set);
+		super(group);
 		
 		switch (getType())
 		{
@@ -42,6 +48,20 @@ public final class ScoredGroup extends Group implements Serializable
 			m_score = ScoreList.EMPTY;
 			break;
 		}
+
+		m_scheme = scheme;
+		m_ownWind = ownWind;
+		m_prevailingWind = prevailingWind;
+	}
+
+	/**
+	 * Get a new instance, identical to this instance, except that visibility is toggled.
+	 */
+	public ScoredGroup toggleVisibility()
+	{
+		Group group = super.toggleVisibility();
+
+		return new ScoredGroup(group, m_scheme, m_ownWind, m_prevailingWind);
 	}
 	
 	public ScoreList getScore()

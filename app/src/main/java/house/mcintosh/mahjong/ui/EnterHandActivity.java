@@ -1,5 +1,7 @@
 package house.mcintosh.mahjong.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.NavUtils;
@@ -15,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import house.mcintosh.mahjong.model.Group;
@@ -104,6 +108,25 @@ public final class EnterHandActivity extends AppCompatActivity
 	private ListView m_groupsList;
 	private ScoredGroupsAdapter m_groupsAdapter;
 
+	private static WholeHandQuestion[] ALL_MAHJONG_HAND_QUESTIONS = new WholeHandQuestion[]
+			{
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_WALL_TILE, R.string.questionMahjongByWallTile),
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_LOOSE_TILE, R.string.questionMahjongByLooseTile),
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_ONLY_POSSIBLE_TILE, R.string.questionMahjongByOnlyPossibleTile),
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_ROBBING_KONG, R.string.questionMahjongByRobbingKong),
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_LAST_WALL_TILE, R.string.questionMahjongByLastWallTile),
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_LAST_DISCARD, R.string.questionMahjongByLastDiscard),
+					new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_ORIGINAL_CALL, R.string.questionMahjongByOriginalCall),
+			};
+
+	/** A subset of ALL_MAHJONG_HAND_QUESTIONS that can affect the score based on the scoring scheme. */
+	private List<WholeHandQuestion> m_filteredMahjongHandQuestions;
+
+	/** An additional question that is sometimes added to the Mahjong hand questions. */
+	private WholeHandQuestion CONCEALED_PAIR_QUESTION = new WholeHandQuestion(ScoredHand.HandCompletedBy.MAHJONG_PAIR_CONCEALED, R.string.questionMahjongPairConcealed);
+
+	private boolean m_mahjongQuestionsAsked = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -152,6 +175,16 @@ public final class EnterHandActivity extends AppCompatActivity
 
 		m_groupsList = findViewById(R.id.groupsList);
 		m_groupsList.setAdapter(m_groupsAdapter);
+
+		// Build a list of the questions to prompt for if the hand is made mahjong.
+
+		m_filteredMahjongHandQuestions = new ArrayList<>();
+
+		for (WholeHandQuestion question : ALL_MAHJONG_HAND_QUESTIONS)
+		{
+			if (m_hand.getScoringScheme().hasScore(question.completedBy.scoreElement))
+				m_filteredMahjongHandQuestions.add(question);
+		}
 	}
 
 	public void onGridTileClick(View view)
@@ -179,6 +212,7 @@ public final class EnterHandActivity extends AppCompatActivity
 		ScoredGroup group;
 
 		if (maxGroupSize == Group.Type.PAIR)
+
 			group = selectGroupTypeButton(m_btnPair, Group.Type.PAIR);
 		else
 			group = selectGroupTypeButton(m_btnPung, Group.Type.PUNG);
@@ -192,6 +226,8 @@ public final class EnterHandActivity extends AppCompatActivity
 			m_hand.add(group);
 			m_groupsAdapter.notifyDataSetChanged();
 			m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+
+			showHandQuestionsIfRequired();
 
 			// Hand has been changed, so update the total on display.
 			displayTotal();
@@ -292,6 +328,8 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_hand.replaceLatestAddition(revisedGroup);
 		m_groupsAdapter.notifyDataSetChanged();
 		m_groupsList.smoothScrollToPosition(m_hand.getLatestAdditionPosition());
+
+		showHandQuestionsIfRequired();
 
 		// Hand has been changed, so update the total to show it.
 		displayTotal();
@@ -435,5 +473,91 @@ public final class EnterHandActivity extends AppCompatActivity
 		returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_PLAYER, m_player);
 
 		NavUtils.navigateUpTo(this, returnHandIntent);
+	}
+
+	private void showHandQuestionsIfRequired()
+	{
+		if (!m_mahjongQuestionsAsked && m_hand.isMahjong())
+		{
+			m_mahjongQuestionsAsked = true; // Only ask once by this route.
+
+			// Build an array of the question text that is to go on the dialog, and another array of
+			// the corresponding states for the checkboxes.
+
+			int questionCount = m_filteredMahjongHandQuestions.size();
+
+			if (m_hand.requiresPairConcealedInfo())
+				questionCount++;
+
+			String[] questions = new String[questionCount];
+			boolean[] states = new boolean[questionCount];
+			final WholeHandQuestion[] whQuestions = new WholeHandQuestion[questionCount];
+
+			int questionIndex = 0;
+
+			if (m_hand.requiresPairConcealedInfo())
+			{
+				questions[questionIndex] = this.getString(CONCEALED_PAIR_QUESTION.questionResource);
+				states[questionIndex] = m_hand.isPairConcealed();
+				whQuestions[questionIndex] = CONCEALED_PAIR_QUESTION;
+				questionIndex++;
+			}
+
+			for (int loopIndex = 0 ;  questionIndex < questions.length ; questionIndex++, loopIndex++)
+			{
+				WholeHandQuestion question = m_filteredMahjongHandQuestions.get(loopIndex);
+
+				questions[questionIndex] = this.getString(question.questionResource);
+				states[questionIndex] = m_hand.isMahjongCompletedBy(question.completedBy);
+				whQuestions[questionIndex] = question;
+			}
+
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+			builder
+					.setTitle(R.string.mahjongHandMultipliersDialogTitle)
+					.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int id)
+							{
+								// User clicked OK button.  Update the displayed hand to show any
+								// change in the score.
+
+								displayTotal();
+							}
+						})
+					.setMultiChoiceItems(questions, states,
+						new DialogInterface.OnMultiChoiceClickListener()
+						{
+							@Override
+							public void onClick(DialogInterface dialog, int which,
+												boolean isChecked)
+							{
+								// Copy the checkbox state to the hand, for use in score calculations.
+
+								WholeHandQuestion question = whQuestions[which];
+								boolean tilesChanged = m_hand.setMahjongCompletedBy(question.completedBy, isChecked);
+
+								if (tilesChanged)
+									m_groupsAdapter.notifyDataSetChanged();
+							}
+						});
+
+			AlertDialog dialog = builder.create();
+
+			dialog.show();
+		}
+	}
+
+	private static class WholeHandQuestion
+	{
+		final ScoredHand.HandCompletedBy completedBy;
+		final int questionResource;
+
+		public WholeHandQuestion(ScoredHand.HandCompletedBy completedBy, int questionResource)
+		{
+			this.completedBy = completedBy;
+			this.questionResource = questionResource;
+		}
 	}
 }

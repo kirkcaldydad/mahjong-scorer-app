@@ -57,4 +57,17 @@
     <string name="mahjong">Mahjong</string>
     <string name="multiMahjongErrorMessage">Only one player can have a Mahjong hand.</string>
     <string name="cannotAddGroupErrorMessage">No more tiles can be added.</string>
+    <string name="mahjongHandMultipliersDialogTitle">Mahjong hand completed by...</string>
+    <string name="ok">OK</string>
+
+    <string name="questionMahjongByLooseTile">A loose tile</string>
+    <string name="questionMahjongByWallTile">A tile from the wall</string>
+    <string name="questionMahjongByLastWallTile">The last available wall tile</string>
+    <string name="questionMahjongByLastDiscard">The last available discard</string>
+    <string name="questionMahjongByRobbingKong">Robbing a Kong</string>
+    <string name="questionMahjongByOnlyPossibleTile">The only possible tile to complete</string>
+    <string name="questionMahjongByOriginalCall">Original Call</string>
+    <string name="questionMahjongPairConcealed">Pair is concealed</string>
+    <string name="questionNonMahjongByOriginalCall"></string>
+
 </resources>
