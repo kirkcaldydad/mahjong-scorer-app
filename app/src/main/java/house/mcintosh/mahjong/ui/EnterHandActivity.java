@@ -8,6 +8,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -185,6 +186,29 @@ public final class EnterHandActivity extends AppCompatActivity
 			if (m_hand.getScoringScheme().hasScore(question.completedBy.scoreElement))
 				m_filteredMahjongHandQuestions.add(question);
 		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		// Menu item click is handled in onOptionsItemSelected().
+		getMenuInflater().inflate(R.menu.menu_hand_entry, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu)
+	{
+		if (menu != null)
+		{
+			MenuItem item = menu.findItem(R.id.action_show_hand_completion_dialog);
+
+			item.setEnabled(m_hand.isMahjong());
+		}
+
+		return super.onMenuOpened(featureId, menu);
 	}
 
 	public void onGridTileClick(View view)
@@ -448,6 +472,10 @@ public final class EnterHandActivity extends AppCompatActivity
 			case android.R.id.home:
 				returnEnteredHand();
 				return true;
+
+			case R.id.action_show_hand_completion_dialog:
+				showHandCompletionDialog();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -480,73 +508,77 @@ public final class EnterHandActivity extends AppCompatActivity
 		if (!m_mahjongQuestionsAsked && m_hand.isMahjong())
 		{
 			m_mahjongQuestionsAsked = true; // Only ask once by this route.
-
-			// Build an array of the question text that is to go on the dialog, and another array of
-			// the corresponding states for the checkboxes.
-
-			int questionCount = m_filteredMahjongHandQuestions.size();
-
-			if (m_hand.requiresPairConcealedInfo())
-				questionCount++;
-
-			String[] questions = new String[questionCount];
-			boolean[] states = new boolean[questionCount];
-			final WholeHandQuestion[] whQuestions = new WholeHandQuestion[questionCount];
-
-			int questionIndex = 0;
-
-			if (m_hand.requiresPairConcealedInfo())
-			{
-				questions[questionIndex] = this.getString(CONCEALED_PAIR_QUESTION.questionResource);
-				states[questionIndex] = m_hand.isPairConcealed();
-				whQuestions[questionIndex] = CONCEALED_PAIR_QUESTION;
-				questionIndex++;
-			}
-
-			for (int loopIndex = 0 ;  questionIndex < questions.length ; questionIndex++, loopIndex++)
-			{
-				WholeHandQuestion question = m_filteredMahjongHandQuestions.get(loopIndex);
-
-				questions[questionIndex] = this.getString(question.questionResource);
-				states[questionIndex] = m_hand.isMahjongCompletedBy(question.completedBy);
-				whQuestions[questionIndex] = question;
-			}
-
-			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-			builder
-					.setTitle(R.string.mahjongHandMultipliersDialogTitle)
-					.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
-						{
-							public void onClick(DialogInterface dialog, int id)
-							{
-								// User clicked OK button.  Update the displayed hand to show any
-								// change in the score.
-
-								displayTotal();
-							}
-						})
-					.setMultiChoiceItems(questions, states,
-						new DialogInterface.OnMultiChoiceClickListener()
-						{
-							@Override
-							public void onClick(DialogInterface dialog, int which,
-												boolean isChecked)
-							{
-								// Copy the checkbox state to the hand, for use in score calculations.
-
-								WholeHandQuestion question = whQuestions[which];
-								boolean tilesChanged = m_hand.setMahjongCompletedBy(question.completedBy, isChecked);
-
-								if (tilesChanged)
-									m_groupsAdapter.notifyDataSetChanged();
-							}
-						});
-
-			AlertDialog dialog = builder.create();
-
-			dialog.show();
+			showHandCompletionDialog();
 		}
+	}
+
+	private void showHandCompletionDialog()
+	{
+		// Build an array of the question text that is to go on the dialog, and another array of
+		// the corresponding states for the checkboxes.
+
+		int questionCount = m_filteredMahjongHandQuestions.size();
+
+		if (m_hand.requiresPairConcealedInfo())
+			questionCount++;
+
+		String[] questions = new String[questionCount];
+		boolean[] states = new boolean[questionCount];
+		final WholeHandQuestion[] whQuestions = new WholeHandQuestion[questionCount];
+
+		int questionIndex = 0;
+
+		if (m_hand.requiresPairConcealedInfo())
+		{
+			questions[questionIndex] = this.getString(CONCEALED_PAIR_QUESTION.questionResource);
+			states[questionIndex] = m_hand.isPairConcealed();
+			whQuestions[questionIndex] = CONCEALED_PAIR_QUESTION;
+			questionIndex++;
+		}
+
+		for (int loopIndex = 0 ;  questionIndex < questions.length ; questionIndex++, loopIndex++)
+		{
+			WholeHandQuestion question = m_filteredMahjongHandQuestions.get(loopIndex);
+
+			questions[questionIndex] = this.getString(question.questionResource);
+			states[questionIndex] = m_hand.isMahjongCompletedBy(question.completedBy);
+			whQuestions[questionIndex] = question;
+		}
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder
+				.setTitle(R.string.mahjongHandMultipliersDialogTitle)
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int id)
+						{
+							// User clicked OK button.  Update the displayed hand to show any
+							// change in the score.
+
+							displayTotal();
+						}
+					})
+				.setMultiChoiceItems(questions, states,
+					new DialogInterface.OnMultiChoiceClickListener()
+					{
+						@Override
+						public void onClick(DialogInterface dialog, int which,
+											boolean isChecked)
+						{
+							// Copy the checkbox state to the hand, for use in score calculations.
+
+							WholeHandQuestion question = whQuestions[which];
+							boolean tilesChanged = m_hand.setMahjongCompletedBy(question.completedBy, isChecked);
+
+							if (tilesChanged)
+								m_groupsAdapter.notifyDataSetChanged();
+						}
+					});
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
 	}
 
 	private static class WholeHandQuestion

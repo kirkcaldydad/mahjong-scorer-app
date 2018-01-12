@@ -58,8 +58,8 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 	private final ScoringScheme					m_scheme;
 	private final boolean						m_sort;
 	
-	private ScoreList							m_wholeHandScores;
-	private ScoreList							m_groupScores;
+	private ScoreList							m_wholeHandScores = new ScoreList();
+	private ScoreList							m_groupScores = new ScoreList();
 	
 	private boolean	m_requirePairConcealedInfo	= false;
 

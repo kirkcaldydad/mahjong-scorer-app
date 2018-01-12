@@ -74,20 +74,20 @@ public final class GameListActivity extends AppCompatActivity
 		});
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_game_list, menu);
-		return true;
-	}
-
 	private List<GameSummary> getGames()
 	{
 
 		List<GameSummary> games = GameFile.getAllGames(this);
 
 		return games;
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar.
+		getMenuInflater().inflate(R.menu.menu_game_list, menu);
+		return true;
 	}
 
 	@Override

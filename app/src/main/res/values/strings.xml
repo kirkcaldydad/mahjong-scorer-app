@@ -70,4 +70,6 @@
     <string name="questionMahjongPairConcealed">Pair is concealed</string>
     <string name="questionNonMahjongByOriginalCall"></string>
 
+    <string name="action_show_hand_completion_dialog">Completed by...</string>
+
 </resources>
