@@ -12,8 +12,10 @@ import java.util.List;
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.scoring.ScoreContribution;
+import house.mcintosh.mahjong.scoring.ScoreList;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
+import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.ui.R;
 import house.mcintosh.mahjong.ui.TileDrawables;
 
@@ -115,7 +117,7 @@ public final class DisplayUtil
 		return sb.toString();
 	}
 
-	public static String getWholeHandScores(ScoredHand hand)
+	public static CharSequence getWholeHandScores(ScoredHand hand)
 	{
 		int basicScore = 0;
 
@@ -136,7 +138,7 @@ public final class DisplayUtil
 		if (basicScore > 0)
 			sb.insert(0, "   ").insert(0, basicScore);
 
-		return sb.toString();
+		return sb;
 	}
 
 	public static String getTotalScore(ScoredHand hand)
@@ -149,7 +151,7 @@ public final class DisplayUtil
 		return Integer.toString(score);
 	}
 
-	public static String getTotalCalculation(ScoredHand hand)
+	public static CharSequence getTotalCalculation(ScoredHand hand)
 	{
 		int groupBasicScore = 0;
 		int handBasicScore = 0;
@@ -190,6 +192,30 @@ public final class DisplayUtil
 		if (multiplier != 1 && (groupBasicScore > 0 || handBasicScore > 0))
 			sb.append('x').append(multiplier);
 
-		return sb.toString();
+		return sb;
+	}
+
+	public static CharSequence getScoreDescription(Context context, ScoredHand hand)
+	{
+		StringBuilder sb = new StringBuilder();
+		ScoreList scores = hand.getWholeHandScores();
+
+		for (ScoreContribution contribution : scores)
+		{
+			if (!contribution.hasScore())
+				continue;
+
+			ScoringScheme.ScoreElement element = contribution.getElement();
+
+			if (!element.hasDescription())
+				continue;
+
+			if (sb.length() != 0)
+				sb.append(", ");
+
+			sb.append(element.getDescription(context));
+		}
+
+		return sb;
 	}
 }

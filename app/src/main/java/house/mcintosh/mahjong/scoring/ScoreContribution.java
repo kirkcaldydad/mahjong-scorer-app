@@ -39,8 +39,13 @@ public final class ScoreContribution implements Serializable
 	{
 		return m_multiplier;
 	}
+
+	public final boolean hasScore()
+	{
+		return m_score != 0 || m_multiplier != 1;
+	}
 	
-	final ScoreElement getElement()
+	public final ScoreElement getElement()
 	{
 		return m_element;
 	}

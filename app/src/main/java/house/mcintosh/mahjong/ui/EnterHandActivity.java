@@ -102,6 +102,7 @@ public final class EnterHandActivity extends AppCompatActivity
 	private TextView m_txtWholeHandScores;
 	private TextView m_txtTotal;
 	private TextView m_txtTotalCalculation;
+	private TextView m_txtScoreDescription;
 
 	private TileDrawables m_tileDrawables;
 
@@ -155,6 +156,7 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_txtWholeHandScores = findViewById(R.id.txtWholeHandScores);
 		m_txtTotal = findViewById(R.id.txtTotal);
 		m_txtTotalCalculation = findViewById(R.id.txtTotalCalculation);
+		m_txtScoreDescription = findViewById(R.id.txtScoreDescription);
 
 		m_tileDrawables = new TileDrawables(this);
 
@@ -403,6 +405,7 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_txtWholeHandScores.setText(DisplayUtil.getWholeHandScores(m_hand));
 		m_txtTotal.setText(DisplayUtil.getTotalScore(m_hand));
 		m_txtTotalCalculation.setText(DisplayUtil.getTotalCalculation(m_hand));
+		m_txtScoreDescription.setText(DisplayUtil.getScoreDescription(this, m_hand));
 	}
 
 	private void setVisibility(Group.Visibility visibility)

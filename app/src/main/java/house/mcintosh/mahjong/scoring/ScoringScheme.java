@@ -1,13 +1,19 @@
 package house.mcintosh.mahjong.scoring;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import house.mcintosh.mahjong.ui.R;
+
 public final class ScoringScheme implements Serializable
 {
-	enum ScoreElement
+	public enum ScoreElement
 	{
+		// Group scores
+
 		PairSuitScore,
 		PairWindScore,
 		PairOwnWindScore,
@@ -55,28 +61,62 @@ public final class ScoringScheme implements Serializable
 		
 		KongExposedDragonScore,
 		KongConcealedDragonScore,
+
+		// Whole hand scores
 		
 //		OwnFlowerHandScore		 ,
 //		OwnSeasonHandScore		 ,
 //		AllFlowersHandScore,
 //		AllSeasonsHandScore		 ,
-		OriginalCallHandScore		 ,
-	
+		OriginalCallHandScore(				R.string.scoreDescriptionOriginalCallHandScore),
+
 		// Mahjong hand scores
-		MahjongHandScore,
-		NoChowsHandScore,
-		SingleSuitHandScore,
-		AllMajorHandScore,
-		AllConcealedHandScore,
-		MahjongByLooseTileHandScore,
-		MahjongByOnlyPossibleTileHandScore,
-		MahjongByWallTileHandScore,
-		MahjongByLastWallTileHandScore,
-		MahjongByLastDiscardHandScore,
-		MahjongByRobbingKongHandScore,
-		MahjongByOriginalCallHandScore,
+		MahjongHandScore(					R.string.scoreDescriptionMahjongHandScore),
+		NoChowsHandScore(					R.string.scoreDescriptionNoChowsHandScore),
+		SingleSuitHandScore(				R.string.scoreDescriptionSingleSuitHandScore),
+		AllMajorHandScore(					R.string.scoreDescriptionAllMajorHandScore),
+		AllConcealedHandScore(				R.string.scoreDescriptionAllConcealedHandScore),
+		MahjongByLooseTileHandScore(		R.string.scoreDescriptionMahjongByLooseTileHandScore),
+		MahjongByOnlyPossibleTileHandScore(	R.string.scoreDescriptionMahjongByOnlyPossibleTileHandScore),
+		MahjongByWallTileHandScore(			R.string.scoreDescriptionMahjongByWallTileHandScore),
+		MahjongByLastWallTileHandScore(		R.string.scoreDescriptionMahjongByLastWallTileHandScore),
+		MahjongByLastDiscardHandScore(		R.string.scoreDescriptionMahjongByLastDiscardHandScore),
+		MahjongByRobbingKongHandScore(		R.string.scoreDescriptionMahjongByRobbingKongHandScore),
+		MahjongByOriginalCallHandScore(		R.string.scoreDescriptionMahjongByOriginalCallHandScore),
 		
-		UNKNOWN
+		UNKNOWN;
+
+		private final int descriptionId;
+
+		ScoreElement()
+		{
+			this.descriptionId = 0;
+		}
+
+		ScoreElement(int descriptionId)
+		{
+			this.descriptionId = descriptionId;
+		}
+
+		public boolean hasDescription()
+		{
+			return descriptionId != 0;
+		}
+
+		/**
+		 * Get a text description of the ScoreElement if it has one.
+		 *
+		 * @param context	A context from which to read the string.
+		 *
+		 * @return A string description, or null if the ScoreElement has no description.
+		 */
+		public String getDescription(Context context)
+		{
+			if (descriptionId == 0)
+				return null;
+
+			return context.getString(descriptionId);
+		}
 	}
 	
 	static private ScoringScheme s_instance = new ScoringScheme();
@@ -109,7 +149,7 @@ public final class ScoringScheme implements Serializable
 	{
 		for (ScoreContribution contribution : getScoreContribution(element))
 		{
-			if (contribution.getScore() != 0 || contribution.getHandMultiplier() != 1)
+			if (contribution.hasScore())
 				return true;
 		}
 

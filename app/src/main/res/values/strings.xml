@@ -72,4 +72,21 @@
 
     <string name="action_show_hand_completion_dialog">Completed by...</string>
 
+    <!-- non-Mahjong hand scores -->
+    <string name="scoreDescriptionOriginalCallHandScore">Original call</string>
+
+    <!-- Mahjong hand scores -->
+    <string name="scoreDescriptionMahjongHandScore">Mahjong</string>
+    <string name="scoreDescriptionNoChowsHandScore">No chows</string>
+    <string name="scoreDescriptionSingleSuitHandScore">Single suit</string>
+    <string name="scoreDescriptionAllMajorHandScore">All major</string>
+    <string name="scoreDescriptionAllConcealedHandScore">All concealed</string>
+    <string name="scoreDescriptionMahjongByLooseTileHandScore">Mahjong by loose tile</string>
+    <string name="scoreDescriptionMahjongByOnlyPossibleTileHandScore">Mahjong by only possible tile</string>
+    <string name="scoreDescriptionMahjongByWallTileHandScore">Mahjong by wall tile</string>
+    <string name="scoreDescriptionMahjongByLastWallTileHandScore">Mahjong by last wall tile</string>
+    <string name="scoreDescriptionMahjongByLastDiscardHandScore">Mahjong by last discard</string>
+    <string name="scoreDescriptionMahjongByRobbingKongHandScore">Robbing kong</string>
+    <string name="scoreDescriptionMahjongByOriginalCallHandScore">Original call</string>
+
 </resources>
