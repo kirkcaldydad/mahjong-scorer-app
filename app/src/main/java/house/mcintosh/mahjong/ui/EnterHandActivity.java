@@ -406,6 +406,10 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_txtTotal.setText(DisplayUtil.getTotalScore(m_hand));
 		m_txtTotalCalculation.setText(DisplayUtil.getTotalCalculation(m_hand));
 		m_txtScoreDescription.setText(DisplayUtil.getScoreDescription(this, m_hand));
+
+		// Enable marquee scrolling for fields that might be too long.
+		m_txtWholeHandScores.setSelected(true);
+		m_txtScoreDescription.setSelected(true);
 	}
 
 	private void setVisibility(Group.Visibility visibility)
