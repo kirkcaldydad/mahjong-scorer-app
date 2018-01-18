@@ -277,6 +277,54 @@ public final class Game
 		if (m_eastPlayer == m_startingPlayer)
 			m_prevailingWind = m_prevailingWind.next();
 	}
+
+	/**
+	 * Remove the last added round from the hand and return it.
+	 *
+	 * @return The last added round or null if there is no round to return.
+	 */
+	public Round popRound()
+	{
+		if (m_rounds.size() == 0)
+			return null;
+
+		// To get the state of the game back to the way it was before the removed round,
+		// set it back to the start of the game, and add all the rounds again except for the
+		// last one.  Simplistic but simple and avoids complicated calculations to reverse
+		// scores and the position of play.
+
+		List<Round> allRounds = m_rounds;
+
+		m_rounds = new ArrayList<>();
+		m_prevailingWind = Wind.EAST;
+		m_eastPlayer = m_startingPlayer;
+		m_finished = false;
+
+		// Reset the scores.
+
+		Map<Player, Integer> initialScores = new HashMap<>();
+
+		for (Player player : m_scores.keySet())
+			initialScores.put(player, m_scheme.InitialScore);
+
+		m_scores = initialScores;
+
+		// Add all the rounds to the game, except the most recent one.
+
+		int lastRoundIndex = allRounds.size() - 1;
+
+		for (int i = 0 ; i < lastRoundIndex ; i++)
+		{
+			addRound(allRounds.get(i));
+		}
+
+		return allRounds.get(lastRoundIndex);
+	}
+
+	public int getRoundCount()
+	{
+		return m_rounds.size();
+	}
 	
 	public Wind getPrevailingWind()
 	{

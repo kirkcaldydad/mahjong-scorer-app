@@ -132,6 +132,19 @@ public final class GamePlayActivity extends AppCompatActivity
 		return true;
 	}
 
+	@Override
+	public boolean onMenuOpened(int featureId, Menu menu)
+	{
+		if (menu != null)
+		{
+			MenuItem item = menu.findItem(R.id.action_edit_previous_round);
+
+			item.setEnabled(m_round.isEmpty() && m_game.getRoundCount() > 0);
+		}
+
+		return super.onMenuOpened(featureId, menu);
+	}
+
 	/**
 	 * Invoked when an item on the bar at the top is selected, including the back arrow button at the top.
 	 */
@@ -144,7 +157,7 @@ public final class GamePlayActivity extends AppCompatActivity
 				return confirmEnteredRound();
 
 			case R.id.action_edit_previous_round:
-				Log.i(LOG_TAG, "onOptionsItemSelected:action_edit_previous_round");
+				editPreviousRound();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -298,6 +311,23 @@ public final class GamePlayActivity extends AppCompatActivity
 
 		// consume the navigation event so no navigation occurs.
 		return true;
+	}
+
+	private void editPreviousRound()
+	{
+		if (!m_round.isEmpty())
+			// Don't allow a partially entered round to be lost.  Should never get here.
+			return;
+
+		Round roundToEdit = m_game.popRound();
+
+		if (roundToEdit == null)
+			// No previous round to edit.  Should never get here.
+			return;
+
+		m_round = roundToEdit;
+
+		displayGame(false);
 	}
 
 	/**
