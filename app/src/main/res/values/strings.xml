@@ -60,6 +60,8 @@
     <string name="cannotAddGroupErrorMessage">No more tiles can be added.</string>
     <string name="mahjongHandMultipliersDialogTitle">Mahjong hand completed by...</string>
     <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="dontSave">Continue without saving</string>
 
     <string name="questionMahjongByLooseTile">A loose tile</string>
     <string name="questionMahjongByWallTile">A tile from the wall</string>
@@ -72,6 +74,7 @@
     <string name="questionNonMahjongByOriginalCall"></string>
 
     <string name="action_show_hand_completion_dialog">Completed by...</string>
+    <string name="action_edit_previous_round">Edit last round</string>
 
     <!-- non-Mahjong hand scores -->
     <string name="scoreDescriptionOriginalCallHandScore">Original call</string>
@@ -89,5 +92,13 @@
     <string name="scoreDescriptionMahjongByLastDiscardHandScore">Mahjong by last discard</string>
     <string name="scoreDescriptionMahjongByRobbingKongHandScore">Robbing kong</string>
     <string name="scoreDescriptionMahjongByOriginalCallHandScore">Original call</string>
+
+    <string name="notificationEastPlayer">{0} is now East</string>
+
+    <!-- Confirmation dialog for navigation that will lose entered hands. -->
+    <string name="titleConfirmLoseHandSingular">Discard entered hand?</string>
+    <string name="titleConfirmLoseHandPlural">Discard entered hands?</string>
+    <string name="questionLoseHandSingular">A hand has been entered but the round is not complete.  If you continue the entered hand will not be saved to the game.</string>
+    <string name="questionLoseHandPlural">Hands have been entered but the round is not complete.  If you continue the entered hands will not be saved to the game.</string>
 
 </resources>

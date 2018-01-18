@@ -36,6 +36,22 @@ public final class Round
 	}
 
 	/**
+	 * @return true if this round contains no hands.
+	 */
+	public boolean isEmpty()
+	{
+		return m_entries.isEmpty();
+	}
+
+	/**
+	 * @return The number of hands currently added into this round.
+	 */
+	public int getHandCount()
+	{
+		return m_entries.size();
+	}
+
+	/**
 	 * Gets all the players that have a Mahjong hand in this Round.  For a valid Round there
 	 * should be exactly one Mahjong hand, but we allow more or fewer to allow the round to
 	 * be built up and edited before it is added to a Game.

@@ -1,9 +1,14 @@
 package house.mcintosh.mahjong.ui;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -117,6 +122,44 @@ public final class GamePlayActivity extends AppCompatActivity
 		displayGame(false);
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		// Menu item click is handled in onOptionsItemSelected().
+		getMenuInflater().inflate(R.menu.menu_game_play, menu);
+
+		return true;
+	}
+
+	/**
+	 * Invoked when an item on the bar at the top is selected, including the back arrow button at the top.
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				return confirmEnteredRound();
+
+			case R.id.action_edit_previous_round:
+				Log.i(LOG_TAG, "onOptionsItemSelected:action_edit_previous_round");
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	/**
+	 * Handler for the back button to make sure that the hand entered so far is returned to
+	 * the parent activity.
+	 */
+	@Override
+	public void onBackPressed()
+	{
+		confirmEnteredRound();
+	}
+
 	/*
 	 * Invoked when the EnterHandActivity is finished, and needs to return the entered hand to the game.
 	 */
@@ -144,6 +187,9 @@ public final class GamePlayActivity extends AppCompatActivity
 				m_round = new Round(m_game.getPrevailingWind());
 
 				m_gameFile.save();
+
+				Toast toast = Toast.makeText(this, getText(R.string.notificationEastPlayer), Toast.LENGTH_LONG);
+				toast.show();
 			}
 		}
 
@@ -202,6 +248,56 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.playerName.setTextAppearance(R.style.available);
 			views.roundScore.setVisibility(View.INVISIBLE);
 		}
+	}
+
+	/**
+	 * If there are entries in the round that have not yet been saved in the game, prompt the
+	 * user to confirm that the changes will be lost.
+	 *
+	 * @return	false if there are no changes to be saved.  false if there are changes, in which case
+	 * 			a dialog is displayed to confirm whether navigation should proceed.
+	 */
+	private boolean confirmEnteredRound()
+	{
+		if (m_round.isEmpty())
+			// carry on with normal navigation.
+			return false;
+
+		// Prompt the user about losing entered hands.
+		boolean singular = m_round.getHandCount() == 1;
+
+		final GamePlayActivity self = this;
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder
+				.setTitle(singular ? R.string.titleConfirmLoseHandSingular : R.string.titleConfirmLoseHandPlural)
+				.setMessage(singular ? R.string.questionLoseHandSingular : R.string.questionLoseHandPlural)
+				.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Cancel button.  Stay on this page.  Nothing to do.
+					}
+				})
+				.setNegativeButton(R.string.dontSave, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Continue without saving button.  Navigate to parent.
+
+						Intent returnHandIntent = NavUtils.getParentActivityIntent(self);
+
+						NavUtils.navigateUpTo(self, returnHandIntent);
+					}
+				});
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
+
+		// consume the navigation event so no navigation occurs.
+		return true;
 	}
 
 	/**

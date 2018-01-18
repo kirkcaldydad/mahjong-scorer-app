@@ -23,15 +23,16 @@
         </activity>
         <activity
             android:name=".CreateGameActivity"
-            android:label="@string/new_game_title" />
+            android:label="@string/new_game_title"
+            />
         <activity android:name=".GamePlayActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop"
+            android:parentActivityName=".GameListActivity"
+            />
         <activity android:name=".EnterHandActivity"
             android:label="Enter Hand Label"
             android:parentActivityName=".GamePlayActivity"
-            >
-
-        </activity>
+            />
     </application>
 
 </manifest>
