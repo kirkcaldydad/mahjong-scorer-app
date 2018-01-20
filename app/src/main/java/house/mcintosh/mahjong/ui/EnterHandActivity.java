@@ -197,6 +197,8 @@ public final class EnterHandActivity extends AppCompatActivity
 			if (m_hand.getScoringScheme().hasScore(question.completedBy.scoreElement))
 				m_filteredMahjongHandQuestions.add(question);
 		}
+
+		displayTotal();
 	}
 
 	@Override
