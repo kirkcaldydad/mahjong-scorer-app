@@ -4,7 +4,7 @@
     <string name="new_game_title">New Game</string>
     <string name="action_settings">Settings</string>
     <string name="last_modified_label">Last Played:</string>
-    <string name="created_label">Created:</string>
+    <string name="created_label">Started:</string>
     <string name="rotateWind">Rotate Wind</string>
     <string name="saveAndStart">Save and Start</string>
     <string name="east">East</string>
