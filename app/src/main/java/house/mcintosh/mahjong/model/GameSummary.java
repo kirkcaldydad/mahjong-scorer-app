@@ -6,7 +6,12 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A reduced representation of a Game.
@@ -16,21 +21,34 @@ public final class GameSummary
 {
 	private final static String DATE_DISPLAY_FORMAT = "d MMMM yyyy";
 
-	private final String m_playerNames;
+	private final List<Player> m_players;
+	private final Map<Player, Integer> m_scores;
+	private final int m_highestScore;
 	private final GameMeta m_meta;
 	private final File m_file;
 
-
-	public GameSummary(String playerNames, GameMeta meta, File file)
+	private GameSummary(List<Player> players, Map<Player, Integer> scores, int highestScore, GameMeta meta, File file)
 	{
-		m_playerNames		= playerNames;
-		m_meta				= meta;
-		m_file				= file;
+		m_players = players;
+		m_scores = scores;
+		m_highestScore = highestScore;
+		m_meta = meta;
+		m_file = file;
 	}
 
-	public String getPlayerNames()
+	public List<Player> getPlayers()
 	{
-		return m_playerNames;
+		return m_players;
+	}
+
+	public int getScore(Player player)
+	{
+		return m_scores.get(player);
+	}
+
+	public Integer getHighestScore()
+	{
+		return m_highestScore;
 	}
 
 	public String getCreatedOn()
@@ -66,10 +84,31 @@ public final class GameSummary
 			Player.fromJson(playerNode);
 		}
 
-		// Get the player names in seat order.
-		ArrayNode seatsNode = (ArrayNode)gameNode.get("seats");
+		// Load the player scores, and find the highest score.
+		int highestScore = Integer.MIN_VALUE;
+		Map<Player, Integer> scores = new HashMap<>();
 
-		StringBuilder sb = new StringBuilder();
+		JsonNode scoresNode = gameNode.get("scores");
+
+		Iterator<Map.Entry<String, JsonNode>> fields = scoresNode.fields();
+
+		while (fields.hasNext())
+		{
+			Map.Entry<String, JsonNode> field = fields.next();
+
+			PlayerId playerId = new PlayerId(field.getKey());
+			int score = field.getValue().asInt();
+
+			highestScore = Math.max(highestScore, score);
+
+			Player player = Player.get(playerId);
+
+			scores.put(player, score);
+		}
+
+		// Get the player in seat order.
+		ArrayNode seatsNode = (ArrayNode)gameNode.get("seats");
+		List<Player> players = new ArrayList<>(seatsNode.size());
 
 		for (int i = 0 ; i < seatsNode.size() ; i++)
 		{
@@ -80,14 +119,11 @@ public final class GameSummary
 
 			Player player = Player.get(new PlayerId(seatNode.get("playerId")));
 
-			if (sb.length() > 0)
-				sb.append(", ");
-
-			sb.append(player.getName());
+			players.add(player);
 		}
 
 		GameMeta meta = GameMeta.fromJson(gameNode.path("meta"));
 
-		return new GameSummary(sb.toString(), meta, file);
+		return new GameSummary(players, scores, highestScore, meta, file);
 	}
 }
