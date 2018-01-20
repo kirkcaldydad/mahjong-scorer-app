@@ -94,6 +94,7 @@
     <string name="scoreDescriptionMahjongByOriginalCallHandScore">Original call</string>
 
     <string name="notificationEastPlayer">%s is now East</string>
+    <string name="enterHandActivityTitle">Enter Hand</string>
 
     <!-- Confirmation dialog for navigation that will lose entered hands. -->
     <plurals name="titleConfirmLoseHand">
@@ -104,5 +105,8 @@
         <item quantity="one">A hand has been entered but the round is not complete.  If you continue the entered hand will not be saved to the game.</item>
         <item quantity="other">Hands have been entered but the round is not complete.  If you continue the %d entered hands will not be saved to the game.</item>
     </plurals>
+
+    <string name="prevailingWindNote">Prev: %s</string>
+    <string name="ownWindNote">Own: %s</string>
 
 </resources>

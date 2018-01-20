@@ -30,7 +30,7 @@
             android:parentActivityName=".GameListActivity"
             />
         <activity android:name=".EnterHandActivity"
-            android:label="Enter Hand Label"
+            android:label="@string/enterHandActivityTitle"
             android:parentActivityName=".GamePlayActivity"
             />
     </application>

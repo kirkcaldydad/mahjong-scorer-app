@@ -3,6 +3,7 @@ package house.mcintosh.mahjong.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -161,6 +162,14 @@ public final class EnterHandActivity extends AppCompatActivity
 		m_tileDrawables = new TileDrawables(this);
 
 		m_visibilityButton = findViewById(R.id.btnVisibility);
+
+		setTitle(m_player.getName());
+
+		Resources resources = getResources();
+		TextView prevailingWindNote = findViewById(R.id.txtPrevailingWindNote);
+		TextView ownWindNote = findViewById(R.id.txtOwnWindNote);
+		prevailingWindNote.setText(resources.getString(R.string.prevailingWindNote, m_prevailingWind.getName(this)));
+		ownWindNote.setText(resources.getString(R.string.ownWindNote, m_ownWind.getName(this)));
 
 		// Create an adapter to display the hand.
 
