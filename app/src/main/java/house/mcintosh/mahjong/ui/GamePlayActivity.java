@@ -3,6 +3,7 @@ package house.mcintosh.mahjong.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,14 +20,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Round;
 import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoredHand;
-import house.mcintosh.mahjong.scoring.ScoringScheme;
 import house.mcintosh.mahjong.util.DisplayUtil;
 
 public final class GamePlayActivity extends AppCompatActivity
@@ -139,7 +138,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		{
 			MenuItem item = menu.findItem(R.id.action_edit_previous_round);
 
-			item.setEnabled(m_round.isEmpty() && m_game.getRoundCount() > 0);
+			item.setEnabled(m_game.getRoundCount() > 0);
 		}
 
 		return super.onMenuOpened(featureId, menu);
@@ -154,7 +153,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
-				return confirmEnteredRound();
+				return confirmLoseEnteredRoundForNavigateUp();
 
 			case R.id.action_edit_previous_round:
 				editPreviousRound();
@@ -170,7 +169,27 @@ public final class GamePlayActivity extends AppCompatActivity
 	@Override
 	public void onBackPressed()
 	{
-		confirmEnteredRound();
+		confirmLoseEnteredRoundForNavigateUp();
+	}
+
+	public boolean confirmLoseEnteredRoundForNavigateUp()
+	{
+		final GamePlayActivity self = this;
+
+		DialogInterface.OnClickListener navUpListener =
+				new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Continue without saving button.  Navigate to parent.
+
+						Intent returnHandIntent = NavUtils.getParentActivityIntent(self);
+
+						NavUtils.navigateUpTo(self, returnHandIntent);
+					}
+				};
+
+		return confirmLoseEnteredRound(navUpListener);
 	}
 
 	/*
@@ -201,7 +220,9 @@ public final class GamePlayActivity extends AppCompatActivity
 
 				m_gameFile.save();
 
-				Toast toast = Toast.makeText(this, getText(R.string.notificationEastPlayer), Toast.LENGTH_LONG);
+				String eastPlayerName = m_game.getEastPlayer().getName();
+
+				Toast toast = Toast.makeText(this, getResources().getString(R.string.notificationEastPlayer, eastPlayerName), Toast.LENGTH_LONG);
 				toast.show();
 			}
 		}
@@ -270,22 +291,21 @@ public final class GamePlayActivity extends AppCompatActivity
 	 * @return	false if there are no changes to be saved.  false if there are changes, in which case
 	 * 			a dialog is displayed to confirm whether navigation should proceed.
 	 */
-	private boolean confirmEnteredRound()
+	private boolean confirmLoseEnteredRound(DialogInterface.OnClickListener continueListener)
 	{
 		if (m_round.isEmpty())
 			// carry on with normal navigation.
 			return false;
 
 		// Prompt the user about losing entered hands.
-		boolean singular = m_round.getHandCount() == 1;
-
-		final GamePlayActivity self = this;
+		int handCount = m_round.getHandCount();
+		Resources resources = getResources();
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		builder
-				.setTitle(singular ? R.string.titleConfirmLoseHandSingular : R.string.titleConfirmLoseHandPlural)
-				.setMessage(singular ? R.string.questionLoseHandSingular : R.string.questionLoseHandPlural)
+				.setTitle(resources.getQuantityString(R.plurals.titleConfirmLoseHand, handCount, handCount))
+				.setMessage(resources.getQuantityString(R.plurals.questionConfirmLoseHand, handCount, handCount))
 				.setPositiveButton(R.string.cancel, new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface dialog, int id)
@@ -293,17 +313,7 @@ public final class GamePlayActivity extends AppCompatActivity
 						// User clicked Cancel button.  Stay on this page.  Nothing to do.
 					}
 				})
-				.setNegativeButton(R.string.dontSave, new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int id)
-					{
-						// User clicked Continue without saving button.  Navigate to parent.
-
-						Intent returnHandIntent = NavUtils.getParentActivityIntent(self);
-
-						NavUtils.navigateUpTo(self, returnHandIntent);
-					}
-				});
+				.setNegativeButton(R.string.dontSave, continueListener);
 
 		AlertDialog dialog = builder.create();
 
@@ -316,8 +326,29 @@ public final class GamePlayActivity extends AppCompatActivity
 	private void editPreviousRound()
 	{
 		if (!m_round.isEmpty())
-			// Don't allow a partially entered round to be lost.  Should never get here.
+		{
+			// Prompt about losing entered information.
+
+			final GamePlayActivity self = this;
+
+			DialogInterface.OnClickListener editRoundListener =
+					new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int id)
+						{
+							// User clicked 'Continue without saving' button.  Discard the entered
+							// round and replace it with an empty round, then try again to edit
+							// the previous round, which will now not come down this prompt route.
+							m_round = new Round(m_round.getPrevailingWind());
+
+							editPreviousRound();
+						}
+					};
+
+			confirmLoseEnteredRound(editRoundListener);
+
 			return;
+		}
 
 		Round roundToEdit = m_game.popRound();
 
