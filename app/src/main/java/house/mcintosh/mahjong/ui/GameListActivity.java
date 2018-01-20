@@ -79,6 +79,8 @@ public final class GameListActivity extends AppCompatActivity
 
 		List<GameSummary> games = GameFile.getAllGames(this);
 
+		GameSummary.sort(games);
+
 		return games;
 	}
 

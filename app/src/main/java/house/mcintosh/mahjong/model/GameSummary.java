@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +22,8 @@ import java.util.Map;
 public final class GameSummary
 {
 	private final static String DATE_DISPLAY_FORMAT = "d MMMM yyyy";
+
+	private final static LastModifiedComparator LAST_MODIFIED_COMPARATOR = new LastModifiedComparator();
 
 	private final List<Player> m_players;
 	private final Map<Player, Integer> m_scores;
@@ -170,5 +174,26 @@ public final class GameSummary
 		boolean hasRounds = ((ArrayNode)gameNode.path("rounds")).size() > 0;
 
 		return new GameSummary(players, scores, highestScore, meta, file, finished, eastPlayer, prevailingWind, hasRounds);
+	}
+
+	/**
+	 * Sorts a list of games in descending last modified date.  The given list is sorted,
+	 * and is also returned.
+	 */
+	public static List<GameSummary> sort(List<GameSummary> games)
+	{
+		Collections.sort(games, LAST_MODIFIED_COMPARATOR);
+
+		return games;
+	}
+
+	private static class LastModifiedComparator implements Comparator<GameSummary>
+	{
+		public int compare(GameSummary game1, GameSummary game2)
+		{
+			long diff = game2.m_meta.getLastModifiedOn().getTime() - game1.m_meta.getLastModifiedOn().getTime();
+
+			return diff > 0 ? 1 : diff < 0 ? -1 : 0;
+		}
 	}
 }
