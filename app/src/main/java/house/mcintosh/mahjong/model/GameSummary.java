@@ -26,14 +26,31 @@ public final class GameSummary
 	private final int m_highestScore;
 	private final GameMeta m_meta;
 	private final File m_file;
+	private final boolean m_finished;
+	private final Player m_eastPlayer;
+	private final Wind m_prevailingWind;
+	private final boolean m_hasRounds;
 
-	private GameSummary(List<Player> players, Map<Player, Integer> scores, int highestScore, GameMeta meta, File file)
+	private GameSummary(
+			List<Player> players,
+			Map<Player, Integer> scores,
+			int highestScore,
+			GameMeta meta,
+			File file,
+			boolean finished,
+			Player eastPlayer,
+			Wind prevailingWind,
+			boolean hasRounds)
 	{
 		m_players = players;
 		m_scores = scores;
 		m_highestScore = highestScore;
 		m_meta = meta;
 		m_file = file;
+		m_finished = finished;
+		m_eastPlayer = eastPlayer;
+		m_prevailingWind = prevailingWind;
+		m_hasRounds = hasRounds;
 	}
 
 	public List<Player> getPlayers()
@@ -49,6 +66,26 @@ public final class GameSummary
 	public Integer getHighestScore()
 	{
 		return m_highestScore;
+	}
+
+	public boolean isFinished()
+	{
+		return m_finished;
+	}
+
+	public Player getEastPlayer()
+	{
+		return m_eastPlayer;
+	}
+
+	public Wind getPrevailingWind()
+	{
+		return m_prevailingWind;
+	}
+
+	public boolean hasRounds()
+	{
+		return m_hasRounds;
 	}
 
 	public String getCreatedOn()
@@ -109,6 +146,7 @@ public final class GameSummary
 		// Get the player in seat order.
 		ArrayNode seatsNode = (ArrayNode)gameNode.get("seats");
 		List<Player> players = new ArrayList<>(seatsNode.size());
+		Player eastPlayer = null;
 
 		for (int i = 0 ; i < seatsNode.size() ; i++)
 		{
@@ -120,10 +158,17 @@ public final class GameSummary
 			Player player = Player.get(new PlayerId(seatNode.get("playerId")));
 
 			players.add(player);
+
+			if (seatNode.path("eastPlayer").asBoolean(false))
+				eastPlayer = player;
 		}
 
 		GameMeta meta = GameMeta.fromJson(gameNode.path("meta"));
 
-		return new GameSummary(players, scores, highestScore, meta, file);
+		boolean finished = gameNode.path("finished").asBoolean(false);
+		Wind prevailingWind = Wind.valueOf(gameNode.path("prevailingWind").asText());
+		boolean hasRounds = ((ArrayNode)gameNode.path("rounds")).size() > 0;
+
+		return new GameSummary(players, scores, highestScore, meta, file, finished, eastPlayer, prevailingWind, hasRounds);
 	}
 }

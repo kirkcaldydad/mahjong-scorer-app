@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -44,6 +45,7 @@ public final class GameSummariesAdapter extends ArrayAdapter<GameSummary>
 		
 		TextView tvCreatedOn		= (TextView) convertView.findViewById(R.id.tvCreatedOn);
 		TextView tvLastModifiedOn	= (TextView) convertView.findViewById(R.id.tvLastModifiedOn);
+		ProgressBar gameProgress	= (ProgressBar) convertView.findViewById(R.id.gameProgress);
 
 		// Populate the data into the template view using the data object
 		tvCreatedOn.setText(game.getCreatedOn());
@@ -84,6 +86,8 @@ public final class GameSummariesAdapter extends ArrayAdapter<GameSummary>
 			case 4:
 		}
 
+		setProgress(game, gameProgress);
+
 		// Return the completed view to render on screen
 		return convertView;
 	}
@@ -108,5 +112,32 @@ public final class GameSummariesAdapter extends ArrayAdapter<GameSummary>
 	{
 		nameView.setVisibility(View.INVISIBLE);
 		scoreView.setVisibility(View.INVISIBLE);
+	}
+
+	private void setProgress(GameSummary game, ProgressBar progressBar)
+	{
+		List<Player> players = game.getPlayers();
+
+		// Max progress is double the minimum number of rounds.  This allows us to show some
+		// progress on a game that has rounds but East has not moved on.
+
+		int maxProgress = 2 * 4 * players.size();
+
+		progressBar.setMax(maxProgress);
+
+		int progress;
+
+		if (game.isFinished())
+			progress = maxProgress;
+		else
+		{
+			int eastPlayerIndex = players.indexOf(game.getEastPlayer());
+			progress = 2 * (game.getPrevailingWind().ordinal() * players.size() + eastPlayerIndex);
+
+			if (progress == 0 && game.hasRounds())
+				progress = 1;
+		}
+
+		progressBar.setProgress(progress);
 	}
 }
