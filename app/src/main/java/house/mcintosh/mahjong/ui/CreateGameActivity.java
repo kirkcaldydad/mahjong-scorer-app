@@ -35,9 +35,8 @@ public final class CreateGameActivity extends AppCompatActivity
 
 	public final static String GAME_FILE_KEY = CreateGameActivity.class.getName() + "GAME_FILE";
 
-	private String[] m_names = new String[] {"", "", "", ""};
-	private Wind[] m_winds = new Wind[] {Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
-	private Map<Wind, CharSequence> m_windNames = new HashMap<>();
+	private String[] m_names = new String[]{"", "", "", ""};
+	private Wind[] m_winds = new Wind[]{Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
 	private TextView[] m_windTextViews = new TextView[4];
 
 	@Override
@@ -48,22 +47,18 @@ public final class CreateGameActivity extends AppCompatActivity
 
 		// Create listeners for the names being typed in.
 
-		((EditText)findViewById(R.id.playerName0)).addTextChangedListener(new NameWatcher(0));
-		((EditText)findViewById(R.id.playerName1)).addTextChangedListener(new NameWatcher(1));
-		((EditText)findViewById(R.id.playerName2)).addTextChangedListener(new NameWatcher(2));
-		((EditText)findViewById(R.id.playerName3)).addTextChangedListener(new NameWatcher(3));
+		((EditText) findViewById(R.id.playerName0)).addTextChangedListener(new NameWatcher(0));
+		((EditText) findViewById(R.id.playerName1)).addTextChangedListener(new NameWatcher(1));
+		((EditText) findViewById(R.id.playerName2)).addTextChangedListener(new NameWatcher(2));
+		((EditText) findViewById(R.id.playerName3)).addTextChangedListener(new NameWatcher(3));
 
-		m_windNames.put(Wind.EAST, getText(R.string.east));
-		m_windNames.put(Wind.SOUTH, getText(R.string.south));
-		m_windNames.put(Wind.WEST, getText(R.string.west));
-		m_windNames.put(Wind.NORTH, getText(R.string.north));
-
-		m_windTextViews[0] = (TextView)findViewById(R.id.playerWindText0);
-		m_windTextViews[1] = (TextView)findViewById(R.id.playerWindText1);
-		m_windTextViews[2] = (TextView)findViewById(R.id.playerWindText2);
-		m_windTextViews[3] = (TextView)findViewById(R.id.playerWindText3);
+		m_windTextViews[0] = (TextView) findViewById(R.id.playerWindText0);
+		m_windTextViews[1] = (TextView) findViewById(R.id.playerWindText1);
+		m_windTextViews[2] = (TextView) findViewById(R.id.playerWindText2);
+		m_windTextViews[3] = (TextView) findViewById(R.id.playerWindText3);
 
 		displayWinds();
+		setButtonState();
 	}
 
 	public void onRotateWindClick(View view)
@@ -81,12 +76,12 @@ public final class CreateGameActivity extends AppCompatActivity
 	{
 		// Update the fields to display the new wind values.
 
-		for (int i = 0 ; i < 4 ; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			TextView windView = m_windTextViews[i];
 			Wind wind = m_winds[i];
 
-			windView.setText(m_windNames.get(wind));
+			windView.setText(wind.getName(this));
 
 			if (wind == Wind.EAST)
 				windView.setTypeface(windView.getTypeface(), Typeface.BOLD);
@@ -104,7 +99,7 @@ public final class CreateGameActivity extends AppCompatActivity
 
 		Player eastPlayer = null;
 
-		for (int i = 0 ; i < 4 ; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			String name = m_names[i];
 
@@ -136,6 +131,26 @@ public final class CreateGameActivity extends AppCompatActivity
 	}
 
 	/**
+	 * Determine whether buttons should be enabled or disabled and set them accordingly.
+	 */
+	private void setButtonState()
+	{
+		// Only enable the Save button if there are at least two players defined.
+
+		int playerCount = 0;
+
+		for (int i = 0; i < m_names.length; i++)
+		{
+			String name = m_names[i];
+
+			if (name != null && !name.isEmpty())
+				playerCount++;
+		}
+
+		((Button) findViewById(R.id.startButton)).setEnabled(playerCount >= 2);
+	}
+
+	/**
 	 * Responds to changes in the text in a player name field.  One instance is
 	 * associated with each field.  As the text is changed, it is copied into
 	 * m_names and the Start button is enabled/disabled depending on how many
@@ -151,29 +166,22 @@ public final class CreateGameActivity extends AppCompatActivity
 		}
 
 		@Override
-		public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+		public void beforeTextChanged(CharSequence s, int start, int count, int after)
+		{
+		}
 
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count)
 		{
 			m_names[m_nameIndex] = s.toString().trim();
+			setButtonState();
 
-			// Only enable the Save button if there are at least two players defined.
 
-			int playerCount = 0;
-
-			for (int i = 0 ; i < m_names.length ; i++)
-			{
-				String name = m_names[i];
-
-				if (name != null && !name.isEmpty())
-					playerCount++;
-			}
-
-			((Button) findViewById(R.id.startButton)).setEnabled(playerCount >= 2);
 		}
 
 		@Override
-		public void afterTextChanged(Editable nameField){}
+		public void afterTextChanged(Editable nameField)
+		{
+		}
 	}
 }
