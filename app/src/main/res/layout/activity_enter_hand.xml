@@ -730,7 +730,7 @@
                 android:layout_weight="30"
                 android:paddingRight="@dimen/scorePaddingRight"
                 android:textAlignment="viewEnd"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/primaryDarkColor"
                 android:textSize="30sp" />
 
             <TextView
