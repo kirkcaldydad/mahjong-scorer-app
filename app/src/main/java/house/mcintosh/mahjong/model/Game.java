@@ -191,6 +191,19 @@ public final class Game
 
 		return m_seats[index];
 	}
+
+	public List<Player> getPlayers()
+	{
+		List<Player> players = new ArrayList<>(4);
+
+		for (Player player : m_seats)
+		{
+			if (player != null)
+				players.add(player);
+		}
+
+		return players;
+	}
 	
 	public void startGame(Player eastPlayer)
 	{

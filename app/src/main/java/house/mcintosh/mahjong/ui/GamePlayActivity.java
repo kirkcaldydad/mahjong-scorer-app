@@ -1,6 +1,7 @@
 package house.mcintosh.mahjong.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -110,7 +112,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		{
 			Player player = m_game.getPlayer(i);
 			if (player != null)
-				m_playerViews[i].playerName.setOnClickListener(new EnterHandClickListener(player));
+				m_playerViews[i].playerName.setOnClickListener(new EnterHandClickListener(player, this));
 		}
 
 		// Create a new round, with the currently prevailing wind.  This is currently empty,
@@ -211,7 +213,7 @@ public final class GamePlayActivity extends AppCompatActivity
 
 		List<Player> mahjongPlayers = m_round.getMahjongPlayers();
 
-		if (mahjongPlayers.size() == 1)
+		if (mahjongPlayers.size() == 1 && !m_game.isFinished())
 		{
 			if (m_game.isCompleteRound(m_round))
 			{
@@ -225,6 +227,11 @@ public final class GamePlayActivity extends AppCompatActivity
 				Toast toast = Toast.makeText(this, getResources().getString(R.string.notificationEastPlayer, eastPlayerName), Toast.LENGTH_LONG);
 				toast.show();
 			}
+		}
+
+		if (m_game.isFinished())
+		{
+			displayGameFinished();
 		}
 
 		// Scores have changed and the game may now have moved on...
@@ -256,12 +263,20 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.wind.setText("");
 			views.playerName.setText("");
 			views.score.setText("");
+
+			views.wind.setVisibility(View.INVISIBLE);
+			views.playerName.setVisibility(View.INVISIBLE);
+			views.score.setVisibility(View.INVISIBLE);
 		}
 		else
 		{
 			views.wind.setText(m_windNames.get(m_game.getPlayerWind(player)));
 			views.playerName.setText(player.getName());
 			views.score.setText(String.format(Locale.UK, "%d", m_game.getPlayerScore(player)));
+
+			views.wind.setVisibility(View.VISIBLE);
+			views.playerName.setVisibility(View.VISIBLE);
+			views.score.setVisibility(View.VISIBLE);
 		}
 
 		if (m_round.hasHandFor(player))
@@ -386,15 +401,24 @@ public final class GamePlayActivity extends AppCompatActivity
 	private class EnterHandClickListener implements View.OnClickListener
 	{
 		private final Player m_player;
+		private final Context m_context;
 
-		EnterHandClickListener(Player player)
+		EnterHandClickListener(Player player, Context context)
 		{
 			m_player = player;
+			m_context = context;
 		}
 
 		@Override
 		public void onClick(View view)
 		{
+			if (m_game.isFinished())
+			{
+				Toast toast = Toast.makeText(m_context, R.string.notificationGameFinished, Toast.LENGTH_SHORT);
+				toast.show();
+				return;
+			}
+
 			Intent intent = new Intent(view.getContext(), EnterHandActivity.class);
 
 			intent.putExtra(EnterHandActivity.PLAYER_KEY, m_player);
@@ -407,5 +431,58 @@ public final class GamePlayActivity extends AppCompatActivity
 
 			startActivityForResult(intent, ENTER_HAND_REQUEST_CODE);
 		}
+	}
+
+	/**
+	 * Show a dialog to tell that the game has finished.
+	 */
+	private void displayGameFinished()
+	{
+		if (!m_game.isFinished())
+			return;
+
+		// Look for the winning player.  Just a small chance that there is a draw!
+
+		int highestScore = Integer.MIN_VALUE;
+		List<Player> highestScoringPlayers = new ArrayList<>(1);
+
+		for (Player player : m_game.getPlayers())
+		{
+			int playerScore = m_game.getPlayerScore(player);
+
+			if (playerScore < highestScore)
+				continue;
+
+			if (playerScore > highestScore)
+				highestScoringPlayers.clear();
+
+			highestScore = playerScore;
+
+			highestScoringPlayers.add(player);
+		}
+
+		int winningPlayerCount = highestScoringPlayers.size();
+
+		StringBuilder winningPlayerNames = new StringBuilder();
+
+		for (Player player : highestScoringPlayers)
+		{
+			if (winningPlayerNames.length() > 0)
+				winningPlayerNames.append(", ");
+
+			winningPlayerNames.append(player.getName());
+		}
+
+		Resources resources = getResources();
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder
+				.setTitle(resources.getQuantityString(R.plurals.titleGameFinished, winningPlayerCount, winningPlayerNames, highestScore))
+				.setMessage(resources.getQuantityString(R.plurals.messageGameFinished, winningPlayerCount, winningPlayerNames, highestScore));
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
 	}
 }

@@ -109,4 +109,15 @@
     <string name="prevailingWindNote">Prev: %s</string>
     <string name="ownWindNote">Own: %s</string>
 
+    <plurals name="titleGameFinished">
+        <item quantity="one">%s won!</item>
+        <item quantity="other">Wow! It\'s a draw.</item>
+    </plurals>
+    <plurals name="messageGameFinished">
+        <item quantity="one">Congratulations %s.  Your winning score is %d.</item>
+        <item quantity="other">Congratulations to %s.  You finished with equal scores of %d.</item>
+    </plurals>
+
+    <string name="notificationGameFinished">This game is finished.</string>
+
 </resources>
