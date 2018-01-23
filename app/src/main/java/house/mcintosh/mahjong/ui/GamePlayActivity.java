@@ -76,28 +76,32 @@ public final class GamePlayActivity extends AppCompatActivity
 						findViewById(R.id.tvPlayerWind0),
 						findViewById(R.id.tvPlayerName0),
 						findViewById(R.id.tvPlayerScore0),
-						findViewById(R.id.tvPlayerRoundScore0)
+						findViewById(R.id.tvPlayerRoundScore0),
+						findViewById(R.id.layoutBox0)
 				);
 		m_playerViews[1] =
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind1),
 						findViewById(R.id.tvPlayerName1),
 						findViewById(R.id.tvPlayerScore1),
-						findViewById(R.id.tvPlayerRoundScore1)
+						findViewById(R.id.tvPlayerRoundScore1),
+						findViewById(R.id.layoutBox1)
 				);
 		m_playerViews[2] =
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind2),
 						findViewById(R.id.tvPlayerName2),
 						findViewById(R.id.tvPlayerScore2),
-						findViewById(R.id.tvPlayerRoundScore2)
+						findViewById(R.id.tvPlayerRoundScore2),
+						findViewById(R.id.layoutBox2)
 				);
 		m_playerViews[3] =
 				new PlayerViews(
 						findViewById(R.id.tvPlayerWind3),
 						findViewById(R.id.tvPlayerName3),
 						findViewById(R.id.tvPlayerScore3),
-						findViewById(R.id.tvPlayerRoundScore3)
+						findViewById(R.id.tvPlayerRoundScore3),
+						findViewById(R.id.layoutBox3)
 				);
 
 		m_windNames.put(Wind.EAST, getText(R.string.east));
@@ -112,7 +116,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		{
 			Player player = m_game.getPlayer(i);
 			if (player != null)
-				m_playerViews[i].playerName.setOnClickListener(new EnterHandClickListener(player, this));
+				m_playerViews[i].outlineBox.setOnClickListener(new EnterHandClickListener(player, this));
 		}
 
 		// Create a new round, with the currently prevailing wind.  This is currently empty,
@@ -291,11 +295,13 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.playerName.setTextAppearance(styleResource);
 			views.roundScore.setText(DisplayUtil.getTotalScoreWithStatus(this, playerHand));
 			views.roundScore.setVisibility(View.VISIBLE);
+			views.outlineBox.setBackground(getDrawable(R.drawable.name_entry_border_box_muted));
 		}
 		else
 		{
 			views.playerName.setTextAppearance(R.style.available);
 			views.roundScore.setVisibility(View.INVISIBLE);
+			views.outlineBox.setBackground(getDrawable(R.drawable.name_entry_border_box));
 		}
 	}
 
@@ -385,13 +391,15 @@ public final class GamePlayActivity extends AppCompatActivity
 		final TextView playerName;
 		final TextView score;
 		final TextView roundScore;
+		final View outlineBox;
 
-		PlayerViews(View windView, View playerName, View score, View roundScore)
+		PlayerViews(View windView, View playerName, View score, View roundScore, View outlineBox)
 		{
 			this.wind = (TextView)windView;
 			this.playerName = (TextView)playerName;
 			this.score = (TextView)score;
 			this.roundScore = (TextView)roundScore;
+			this.outlineBox = outlineBox;
 		}
 	}
 
