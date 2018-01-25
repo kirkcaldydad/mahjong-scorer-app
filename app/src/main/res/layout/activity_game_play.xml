@@ -58,6 +58,20 @@
             android:layout_weight="48"
             android:background="@drawable/name_entry_border_box">
 
+            <ImageView
+                android:id="@+id/imgEastWind0"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wind_east" />
+
             <TextView
                 android:id="@+id/tvPlayerWind0"
                 android:layout_width="0dp"
@@ -67,6 +81,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -109,10 +124,12 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore0" />
+
         </android.support.constraint.ConstraintLayout>
 
         <Space
@@ -141,6 +158,20 @@
             android:layout_weight="48"
             android:background="@drawable/name_entry_border_box">
 
+            <ImageView
+                android:id="@+id/imgEastWind3"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wind_east" />
+
             <TextView
                 android:id="@+id/tvPlayerWind3"
                 android:layout_width="0dp"
@@ -150,6 +181,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -192,10 +224,12 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore3" />
+
         </android.support.constraint.ConstraintLayout>
 
         <Space
@@ -209,6 +243,20 @@
             android:layout_weight="48"
             android:background="@drawable/name_entry_border_box">
 
+            <ImageView
+                android:id="@+id/imgEastWind1"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wind_east" />
+
             <TextView
                 android:id="@+id/tvPlayerWind1"
                 android:layout_width="0dp"
@@ -218,6 +266,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -260,6 +309,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -294,6 +344,20 @@
             android:layout_weight="48"
             android:background="@drawable/name_entry_border_box">
 
+            <ImageView
+                android:id="@+id/imgEastWind2"
+                android:layout_width="@dimen/displayTileWidth"
+                android:layout_height="@dimen/displayTileHeight"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/enteredTile"
+                android:gravity="center"
+                android:padding="@dimen/displayTilePadding"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/wind_east" />
+
             <TextView
                 android:id="@+id/tvPlayerWind2"
                 android:layout_width="0dp"
@@ -303,6 +367,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -345,6 +410,7 @@
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textAlignment="center"
+                android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

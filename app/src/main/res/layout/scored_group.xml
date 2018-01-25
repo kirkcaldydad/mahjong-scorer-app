@@ -29,7 +29,7 @@
                 android:layout_margin="@dimen/displayTileMargin"
                 android:background="@drawable/tile_border"
                 android:contentDescription="@string/enteredTile"
-                android:gravity="left|center"
+                android:gravity="center"
                 android:padding="@dimen/displayTilePadding"
                 android:visibility="visible"
                 app:srcCompat="@drawable/circles1" />

@@ -77,7 +77,8 @@ public final class GamePlayActivity extends AppCompatActivity
 						findViewById(R.id.tvPlayerName0),
 						findViewById(R.id.tvPlayerScore0),
 						findViewById(R.id.tvPlayerRoundScore0),
-						findViewById(R.id.layoutBox0)
+						findViewById(R.id.layoutBox0),
+						findViewById(R.id.imgEastWind0)
 				);
 		m_playerViews[1] =
 				new PlayerViews(
@@ -85,7 +86,8 @@ public final class GamePlayActivity extends AppCompatActivity
 						findViewById(R.id.tvPlayerName1),
 						findViewById(R.id.tvPlayerScore1),
 						findViewById(R.id.tvPlayerRoundScore1),
-						findViewById(R.id.layoutBox1)
+						findViewById(R.id.layoutBox1),
+						findViewById(R.id.imgEastWind1)
 				);
 		m_playerViews[2] =
 				new PlayerViews(
@@ -93,7 +95,8 @@ public final class GamePlayActivity extends AppCompatActivity
 						findViewById(R.id.tvPlayerName2),
 						findViewById(R.id.tvPlayerScore2),
 						findViewById(R.id.tvPlayerRoundScore2),
-						findViewById(R.id.layoutBox2)
+						findViewById(R.id.layoutBox2),
+						findViewById(R.id.imgEastWind2)
 				);
 		m_playerViews[3] =
 				new PlayerViews(
@@ -101,7 +104,8 @@ public final class GamePlayActivity extends AppCompatActivity
 						findViewById(R.id.tvPlayerName3),
 						findViewById(R.id.tvPlayerScore3),
 						findViewById(R.id.tvPlayerRoundScore3),
-						findViewById(R.id.layoutBox3)
+						findViewById(R.id.layoutBox3),
+						findViewById(R.id.imgEastWind3)
 				);
 
 		m_windNames.put(Wind.EAST, getText(R.string.east));
@@ -271,6 +275,7 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.wind.setVisibility(View.INVISIBLE);
 			views.playerName.setVisibility(View.INVISIBLE);
 			views.score.setVisibility(View.INVISIBLE);
+			views.eastIndicator.setVisibility(View.INVISIBLE);
 		}
 		else
 		{
@@ -281,6 +286,7 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.wind.setVisibility(View.VISIBLE);
 			views.playerName.setVisibility(View.VISIBLE);
 			views.score.setVisibility(View.VISIBLE);
+			views.eastIndicator.setVisibility(player.equals(m_game.getEastPlayer()) ? View.VISIBLE : View.INVISIBLE);
 		}
 
 		if (m_round.hasHandFor(player))
@@ -392,14 +398,16 @@ public final class GamePlayActivity extends AppCompatActivity
 		final TextView score;
 		final TextView roundScore;
 		final View outlineBox;
+		final View eastIndicator;
 
-		PlayerViews(View windView, View playerName, View score, View roundScore, View outlineBox)
+		PlayerViews(View windView, View playerName, View score, View roundScore, View outlineBox, View eastIndicator)
 		{
 			this.wind = (TextView)windView;
 			this.playerName = (TextView)playerName;
 			this.score = (TextView)score;
 			this.roundScore = (TextView)roundScore;
 			this.outlineBox = outlineBox;
+			this.eastIndicator = eastIndicator;
 		}
 	}
 
