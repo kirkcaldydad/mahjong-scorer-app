@@ -75,6 +75,7 @@
 
     <string name="action_show_hand_completion_dialog">Completed by...</string>
     <string name="action_edit_previous_round">Edit last round</string>
+    <string name="action_rotate_seat_display">Rotate seats</string>
 
     <!-- non-Mahjong hand scores -->
     <string name="scoreDescriptionOriginalCallHandScore">Original call</string>

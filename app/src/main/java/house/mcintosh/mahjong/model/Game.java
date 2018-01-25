@@ -204,6 +204,15 @@ public final class Game
 
 		return players;
 	}
+
+	public void rotateSeats()
+	{
+		Player player3 = m_seats[3];
+		m_seats[3] = m_seats[2];
+		m_seats[2] = m_seats[1];
+		m_seats[1] = m_seats[0];
+		m_seats[0] = player3;
+	}
 	
 	public void startGame(Player eastPlayer)
 	{

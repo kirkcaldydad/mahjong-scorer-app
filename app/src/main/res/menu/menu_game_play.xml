@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="@string/action_edit_previous_round"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_rotate_seat_display"
+        android:orderInCategory="100"
+        android:title="@string/action_rotate_seat_display"
+        app:showAsAction="never" />
 </menu>

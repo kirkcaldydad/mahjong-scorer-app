@@ -118,9 +118,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		// Attach listeners for clicks that enter player hands for scoring.
 		for (int i = 0 ; i < 4 ; i++)
 		{
-			Player player = m_game.getPlayer(i);
-			if (player != null)
-				m_playerViews[i].outlineBox.setOnClickListener(new EnterHandClickListener(player, this));
+			m_playerViews[i].outlineBox.setOnClickListener(new EnterHandClickListener(i, this));
 		}
 
 		// Create a new round, with the currently prevailing wind.  This is currently empty,
@@ -167,6 +165,10 @@ public final class GamePlayActivity extends AppCompatActivity
 
 			case R.id.action_edit_previous_round:
 				editPreviousRound();
+				return true;
+
+			case R.id.action_rotate_seat_display:
+				rotateSeatDisplay();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -388,6 +390,13 @@ public final class GamePlayActivity extends AppCompatActivity
 		displayGame(false);
 	}
 
+	private void rotateSeatDisplay()
+	{
+		m_game.rotateSeats();
+
+		displayGame(false);
+	}
+
 	/**
 	 * A simple object in which to cache the view elements associated with each player.
 	 */
@@ -416,12 +425,12 @@ public final class GamePlayActivity extends AppCompatActivity
 	 */
 	private class EnterHandClickListener implements View.OnClickListener
 	{
-		private final Player m_player;
+		private final int m_seatIndex;
 		private final Context m_context;
 
-		EnterHandClickListener(Player player, Context context)
+		EnterHandClickListener(int seatIndex, Context context)
 		{
-			m_player = player;
+			m_seatIndex = seatIndex;
 			m_context = context;
 		}
 
@@ -435,13 +444,20 @@ public final class GamePlayActivity extends AppCompatActivity
 				return;
 			}
 
+			Player player = m_game.getPlayer(m_seatIndex);
+
+			if (player == null)
+				// Seat is empty - shouldn't get here because the control that was clicked
+				// should be invisible.  Ignore this click.
+				return;
+
 			Intent intent = new Intent(view.getContext(), EnterHandActivity.class);
 
-			intent.putExtra(EnterHandActivity.PLAYER_KEY, m_player);
-			intent.putExtra(EnterHandActivity.OWN_WIND_KEY, m_game.getPlayerWind(m_player));
+			intent.putExtra(EnterHandActivity.PLAYER_KEY, player);
+			intent.putExtra(EnterHandActivity.OWN_WIND_KEY, m_game.getPlayerWind(player));
 			intent.putExtra(EnterHandActivity.PREVAILING_WIND_KEY, m_game.getPrevailingWind());
 
-			ScoredHand hand = m_round.hasHandFor(m_player) ? m_round.getHand(m_player) : new ScoredHand(m_game.getScoringScheme(), false);
+			ScoredHand hand = m_round.hasHandFor(player) ? m_round.getHand(player) : new ScoredHand(m_game.getScoringScheme(), false);
 
 			intent.putExtra(EnterHandActivity.HAND_KEY, new ScoredHandWrapper(hand));
 
