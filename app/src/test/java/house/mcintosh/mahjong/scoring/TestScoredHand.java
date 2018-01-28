@@ -156,11 +156,11 @@ public class TestScoredHand
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LAST_DISCARD, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ONLY_POSSIBLE_TILE, true);
-		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
+		assertEquals((10+2+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ROBBING_KONG, true);
-		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
+		assertEquals((10+2+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ORIGINAL_CALL, true);
-		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
+		assertEquals((10+2+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		assertEquals(scheme.LimitScore, hand.getTotalScore());
 	}
 
@@ -211,11 +211,11 @@ public class TestScoredHand
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_LAST_DISCARD, true);
 		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ONLY_POSSIBLE_TILE, true);
-		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
+		assertEquals((10+2+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ROBBING_KONG, true);
-		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
+		assertEquals((10+2+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand.setMahjongCompletedBy(ScoredHand.HandCompletedBy.MAHJONG_ORIGINAL_CALL, true);
-		assertEquals((10+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
+		assertEquals((10+2+2+32+32+32+32+2)*2*2*2*2*2*2*2*2*2*2*2*2, hand.getTotalScoreUnlimited());
 		hand = checkSerialisation(hand, scheme, Wind.NORTH, Wind.NORTH);
 	}
 

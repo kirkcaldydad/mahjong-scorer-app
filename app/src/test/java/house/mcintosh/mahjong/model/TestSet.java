@@ -180,7 +180,7 @@ public class TestSet
 	{
 		Group pair = new Group(Group.Type.PAIR, new Tile(Tile.Suit.BAMBOO, Tile.Number.FIVE), Group.Visibility.CONCEALED);
 		
-		assertEquals(Group.Visibility.EXPOSED, pair.getVisibility());
+		assertEquals(Group.Visibility.CONCEALED, pair.getVisibility());
 		
 		List<Tile> tiles = pair.getTiles();
 		assertEquals(2, tiles.size());
