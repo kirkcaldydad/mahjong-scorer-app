@@ -121,6 +121,7 @@
     </plurals>
 
     <string name="notificationGameFinished">This game is finished.</string>
+    <string name="notificationEmptyPlayerName">Each player must have a name.</string>
 
     <string name="editPlayersActivityTitle">Edit players</string>
 

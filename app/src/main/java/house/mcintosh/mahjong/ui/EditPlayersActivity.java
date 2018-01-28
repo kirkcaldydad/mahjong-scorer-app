@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import house.mcintosh.mahjong.model.Player;
 
@@ -90,16 +91,31 @@ public class EditPlayersActivity extends AppCompatActivity
 	 */
 	private void returnEnteredNames()
 	{
+		// Check that all the required names are set.
+
+		String name0 = m_playerName0.getText().toString().trim();
+		String name1 = m_playerName1.getText().toString().trim();
+		String name2 = m_playerName2.getText().toString().trim();
+		String name3 = m_playerName3.getText().toString().trim();
+
+		if (
+				   (m_players[0] != null && name0.isEmpty())
+				|| (m_players[1] != null && name1.isEmpty())
+				|| (m_players[2] != null && name2.isEmpty())
+				|| (m_players[3] != null && name3.isEmpty())
+				)
+		{
+			Toast toast = Toast.makeText(this, getResources().getString(R.string.notificationEmptyPlayerName), Toast.LENGTH_SHORT);
+			toast.show();
+
+			return;
+		}
+
 		Intent returnNamesIntent = NavUtils.getParentActivityIntent(this);
 
 		returnNamesIntent.setAction(RETURN_PLAYER_NAMES_ACTION);
 
-		String[] updatedNames = new String[] {
-				m_playerName0.getText().toString().trim(),
-				m_playerName1.getText().toString().trim(),
-				m_playerName2.getText().toString().trim(),
-				m_playerName3.getText().toString().trim()
-		};
+		String[] updatedNames = new String[] {name0, name1, name2, name3};
 
 		returnNamesIntent.putExtra(PLAYERS_NAMES_KEY, updatedNames);
 
