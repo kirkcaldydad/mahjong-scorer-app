@@ -25,8 +25,15 @@ public final class CreateGameActivity extends AppCompatActivity
 	public final static String GAME_FILE_KEY = CreateGameActivity.class.getName() + ".GAME_FILE";
 
 	private String[] m_names = new String[]{"", "", "", ""};
-	private Wind[] m_winds = new Wind[]{Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
+
+	/**
+	 * The wind for each play position.  Stays null until the first time that winds are rotated,
+	 * making sure that user has thought about wind position, since it cannot be changed manually
+	 * once the game has been created.
+	 */
+	private Wind[] m_winds = null;
 	private TextView[] m_windTextViews = new TextView[4];
+	private View[] m_eastSymbols = new View[4];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -46,36 +53,66 @@ public final class CreateGameActivity extends AppCompatActivity
 		m_windTextViews[2] = (TextView) findViewById(R.id.playerWindText2);
 		m_windTextViews[3] = (TextView) findViewById(R.id.playerWindText3);
 
+		m_eastSymbols[0] = findViewById(R.id.imgEastWind0);
+		m_eastSymbols[1] = findViewById(R.id.imgEastWind1);
+		m_eastSymbols[2] = findViewById(R.id.imgEastWind2);
+		m_eastSymbols[3] = findViewById(R.id.imgEastWind3);
+
 		displayWinds();
 		setButtonState();
 	}
 
 	public void onRotateWindClick(View view)
 	{
-		Wind last = m_winds[3];
-		m_winds[3] = m_winds[2];
-		m_winds[2] = m_winds[1];
-		m_winds[1] = m_winds[0];
-		m_winds[0] = last;
+		if (m_winds == null)
+			m_winds = new Wind[]{Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
+		else
+		{
+			Wind last = m_winds[3];
+			m_winds[3] = m_winds[2];
+			m_winds[2] = m_winds[1];
+			m_winds[1] = m_winds[0];
+			m_winds[0] = last;
+		}
 
 		displayWinds();
+		setButtonState();
 	}
 
 	private void displayWinds()
 	{
-		// Update the fields to display the new wind values.
+		// Update the fields to display the new wind values, setting to blank if
+		// no winds have been set yet.
 
 		for (int i = 0; i < 4; i++)
 		{
 			TextView windView = m_windTextViews[i];
-			Wind wind = m_winds[i];
+			View eastSymbolView = m_eastSymbols[i];
+			String windName;
+			Wind wind = null;
 
-			windView.setText(wind.getName(this));
+			if (m_winds == null)
+			{
+				windName = "";
+			}
+			else
+			{
+				wind = m_winds[i];
+				windName = wind.getName(this);
+			}
+
+			windView.setText(windName);
 
 			if (wind == Wind.EAST)
+			{
 				windView.setTypeface(windView.getTypeface(), Typeface.BOLD);
+				eastSymbolView.setVisibility(View.VISIBLE);
+			}
 			else
+			{
 				windView.setTypeface(Typeface.create(windView.getTypeface(), Typeface.NORMAL));
+				eastSymbolView.setVisibility(View.INVISIBLE);
+			}
 		}
 	}
 
@@ -124,19 +161,27 @@ public final class CreateGameActivity extends AppCompatActivity
 	 */
 	private void setButtonState()
 	{
-		// Only enable the Save button if there are at least two players defined.
+		// Only enable the Save button if there are at least two players defined, and winds
+		// are set such that East is on a configured player (i.e. East position does not
+		// have a blank name).
 
 		int playerCount = 0;
+		boolean gotEastPlayer = false;
 
 		for (int i = 0; i < m_names.length; i++)
 		{
 			String name = m_names[i];
 
 			if (name != null && !name.isEmpty())
+			{
 				playerCount++;
+
+				if (m_winds != null && m_winds[i] == Wind.EAST)
+					gotEastPlayer = true;
+			}
 		}
 
-		((Button) findViewById(R.id.startButton)).setEnabled(playerCount >= 2);
+		((Button) findViewById(R.id.startButton)).setEnabled(playerCount >= 2 && gotEastPlayer);
 	}
 
 	/**
