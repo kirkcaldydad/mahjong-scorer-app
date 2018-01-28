@@ -237,12 +237,13 @@ public final class ScoringScheme implements Serializable
 		addScoreContribution(new ScoreContribution(ScoreElement.AllMajorHandScore, 0, 2));
 		addScoreContribution(new ScoreContribution(ScoreElement.AllConcealedHandScore, 0, 2));
 		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByLooseTileHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByOnlyPossibleTileHandScore, 0, 2));
+		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByOnlyPossibleTileHandScore, 2, 1));
 		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByWallTileHandScore, 2, 1));
 		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByLastWallTileHandScore, 0, 2));
 		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByLastDiscardHandScore, 0, 2));
 		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByRobbingKongHandScore, 0, 2));
 		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByOriginalCallHandScore, 0, 2));
+		// Add in mahjong by no score.  score: 0, multiplier: 2
 	}
 }
 

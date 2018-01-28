@@ -44,6 +44,7 @@ public final class GamePlayActivity extends AppCompatActivity
 	public static final String EXTRA_KEY_PLAYER = GamePlayActivity.class.getName() + ":player";
 
 	public static final int ENTER_HAND_REQUEST_CODE = 1;
+	public static final int EDIT_PLAYERS_REQUEST_CODE = 2;
 
 	private Game m_game;
 	private GameFile m_gameFile;
@@ -170,6 +171,10 @@ public final class GamePlayActivity extends AppCompatActivity
 			case R.id.action_rotate_seat_display:
 				rotateSeatDisplay();
 				return true;
+
+			case R.id.action_edit_players:
+				editPlayers();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -212,9 +217,51 @@ public final class GamePlayActivity extends AppCompatActivity
 	{
 		Log.d(LOG_TAG, "GamePlayActivity.inNewIntent() intent:" + intent);
 
-		ScoredHand hand = ((ScoredHandWrapper)intent.getSerializableExtra(EXTRA_KEY_ENTERED_HAND)).getHand();
-		Player player = (Player)intent.getSerializableExtra(EXTRA_KEY_PLAYER);
+		switch (intent.getAction())
+		{
+			case EditPlayersActivity.RETURN_PLAYER_NAMES_ACTION:
+				String[] updatedNames = intent.getStringArrayExtra(EditPlayersActivity.PLAYERS_NAMES_KEY);
 
+				handleReturnedNames(updatedNames);
+
+				break;
+
+			case EnterHandActivity.RETURN_HAND_ACTION:
+				ScoredHand hand = ((ScoredHandWrapper) intent.getSerializableExtra(EXTRA_KEY_ENTERED_HAND)).getHand();
+				Player player = (Player) intent.getSerializableExtra(EXTRA_KEY_PLAYER);
+				handleReturnedHand(hand, player);
+
+				break;
+		}
+	}
+
+	/**
+	 * Updating the player names for this game, from an array of values returned from the
+	 * EditPlayers activity.
+	 *
+	 * @param updatedNames	An array of four strings.  Only the entries that correspond to
+	 *                      filled seats in the game are relavant.
+	 */
+	private void handleReturnedNames(String[] updatedNames)
+	{
+		Player[] players = m_game.getSeats();
+
+		for (int i = 0 ; i < players.length ; i++)
+		{
+			Player player = players[i];
+
+			if (player != null)
+				player.setName(updatedNames[i]);
+		}
+
+		// Update the names on display, and make sure they are persisted.
+
+		m_gameFile.save();
+		displayGame(false);
+	}
+
+	private void handleReturnedHand(ScoredHand hand, Player player)
+	{
 		// Update the round with the player's hand.
 
 		m_round.addHand(player, hand, m_game.getPlayerWind(player));
@@ -395,6 +442,25 @@ public final class GamePlayActivity extends AppCompatActivity
 		m_game.rotateSeats();
 
 		displayGame(false);
+	}
+
+	/**
+	 * Open the activity to edit players.
+	 */
+	private void editPlayers()
+	{
+		if (m_game.isFinished())
+		{
+			Toast toast = Toast.makeText(this, R.string.notificationGameFinished, Toast.LENGTH_SHORT);
+			toast.show();
+			return;
+		}
+
+		Intent intent = new Intent(this, EditPlayersActivity.class);
+
+		intent.putExtra(EditPlayersActivity.PLAYERS_KEY, m_game.getSeats());
+
+		startActivityForResult(intent, EDIT_PLAYERS_REQUEST_CODE);
 	}
 
 	/**

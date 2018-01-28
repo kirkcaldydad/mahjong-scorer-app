@@ -3,37 +3,26 @@ package house.mcintosh.mahjong.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
-import house.mcintosh.mahjong.util.JsonUtil;
 
 public final class CreateGameActivity extends AppCompatActivity
 {
 	private final static String LOG_TAG = CreateGameActivity.class.getName();
 
-	public final static String GAME_FILE_KEY = CreateGameActivity.class.getName() + "GAME_FILE";
+	public final static String GAME_FILE_KEY = CreateGameActivity.class.getName() + ".GAME_FILE";
 
 	private String[] m_names = new String[]{"", "", "", ""};
 	private Wind[] m_winds = new Wind[]{Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
@@ -43,7 +32,7 @@ public final class CreateGameActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_create_game);
+		setContentView(R.layout.activity_editcreate_players);
 
 		// Create listeners for the names being typed in.
 

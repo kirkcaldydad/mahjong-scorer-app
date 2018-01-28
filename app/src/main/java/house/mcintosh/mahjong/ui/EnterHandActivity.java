@@ -41,6 +41,8 @@ public final class EnterHandActivity extends AppCompatActivity
 	public final static String PREVAILING_WIND_KEY = EnterHandActivity.class.getName() + "PREVAILING_WIND";
 	public final static String HAND_KEY = EnterHandActivity.class.getName() + "HAND";
 
+	public final static String RETURN_HAND_ACTION = "EnterHandActivity.RETURN_HAND";
+
 	// A statically initialised map of the tiles that are associated with each grid item.
 	private final static Map<Integer, Tile> viewToTile = new HashMap<>();
 	
@@ -515,6 +517,7 @@ public final class EnterHandActivity extends AppCompatActivity
 	{
 		Intent returnHandIntent = NavUtils.getParentActivityIntent(this);
 
+		returnHandIntent.setAction(RETURN_HAND_ACTION);
 		returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_ENTERED_HAND, new ScoredHandWrapper(m_hand));
 		returnHandIntent.putExtra(GamePlayActivity.EXTRA_KEY_PLAYER, m_player);
 

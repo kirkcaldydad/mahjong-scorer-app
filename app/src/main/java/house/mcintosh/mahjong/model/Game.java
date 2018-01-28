@@ -213,6 +213,12 @@ public final class Game
 		m_seats[1] = m_seats[0];
 		m_seats[0] = player3;
 	}
+
+	public Player[] getSeats()
+	{
+		// Clone so that caller cannot fiddle with the seats.
+		return m_seats.clone();
+	}
 	
 	public void startGame(Player eastPlayer)
 	{

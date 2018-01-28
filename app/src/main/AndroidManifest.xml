@@ -33,6 +33,10 @@
             android:label="@string/enterHandActivityTitle"
             android:parentActivityName=".GamePlayActivity"
             />
+        <activity android:name=".EditPlayersActivity"
+            android:label="@string/editPlayersActivityTitle"
+            android:parentActivityName=".GamePlayActivity"
+            />
     </application>
 
 </manifest>

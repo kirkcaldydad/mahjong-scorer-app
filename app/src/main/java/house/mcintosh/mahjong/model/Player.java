@@ -88,6 +88,17 @@ public final class Player implements Serializable
 	{
 		return m_name;
 	}
+
+	/**
+	 * Update the name of the player.  Since each player is a singleton, this magically updates
+	 * the name of all uses of the player.  Changing the name does not change the use of this
+	 * player as a key in sets and maps, since equals() and hashCode() are based on the unique
+	 * ID only.
+	 */
+	public void setName(String name)
+	{
+		m_name = name;
+	}
 	
 	@Override
 	public String toString()

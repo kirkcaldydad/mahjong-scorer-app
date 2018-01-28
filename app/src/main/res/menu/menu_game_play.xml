@@ -12,4 +12,9 @@
         android:orderInCategory="100"
         android:title="@string/action_rotate_seat_display"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_edit_players"
+        android:orderInCategory="100"
+        android:title="@string/action_edit_players"
+        app:showAsAction="never" />
 </menu>
