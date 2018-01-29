@@ -58,6 +58,8 @@ public final class CreateGameActivity extends AppCompatActivity
 		m_eastSymbols[2] = findViewById(R.id.imgEastWind2);
 		m_eastSymbols[3] = findViewById(R.id.imgEastWind3);
 
+		findViewById(R.id.instructionScrollArea).setVisibility(View.VISIBLE);
+
 		displayWinds();
 		setButtonState();
 	}
