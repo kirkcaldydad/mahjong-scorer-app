@@ -20,7 +20,7 @@ import house.mcintosh.mahjong.exception.LoadException;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.GameSummary;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
-import house.mcintosh.mahjong.ui.CreateGameActivity;
+import house.mcintosh.mahjong.ui.R;
 import house.mcintosh.mahjong.util.JsonUtil;
 
 /**
@@ -93,14 +93,15 @@ public class GameFile
 		}
 	}
 
-	public static GameFile load(File file)
+	public static GameFile load(Context context, File file)
 	{
 		GameFile gameFile;
 
 		try
 		{
-			JsonNode gameNode = JsonUtil.loadFile(file);
-			Game game = Game.fromJson(gameNode, ScoringScheme.instance());
+			JsonNode gameNode = JsonUtil.load(file);
+
+			Game game = Game.fromJson(gameNode, ScoringScheme.load(context, R.raw.scoring_scheme_british));
 
 			gameFile = new GameFile(game, file);
 		}
@@ -152,7 +153,7 @@ public class GameFile
 
 		try
 		{
-			ObjectNode gameNode = (ObjectNode)JsonUtil.loadFile(gameFile);
+			ObjectNode gameNode = (ObjectNode)JsonUtil.load(gameFile);
 			summary = GameSummary.fromJson(gameNode, gameFile);
 		}
 		catch (IOException ioe)

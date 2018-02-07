@@ -66,7 +66,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		Intent launchIntent = getIntent();
 
 		File gamefile = (File)launchIntent.getSerializableExtra(EXTRA_KEY_GAME_FILE);
-		m_gameFile = GameFile.load(gamefile);
+		m_gameFile = GameFile.load(this, gamefile);
 		m_game = m_gameFile.getGame();
 
 		// Remember the various views we need to access to avoid repeated lookups and to

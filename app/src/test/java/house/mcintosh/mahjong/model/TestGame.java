@@ -6,16 +6,19 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import house.mcintosh.mahjong.exception.InvalidGameStateException;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
+import house.mcintosh.mahjong.util.TestUtil;
 
 public class TestGame
 {
 
 	@Test
-	public void gameRun()
+	public void gameRun() throws IOException
 	{
-		Game game = new Game(ScoringScheme.instance());
+		Game game = new Game(TestUtil.loadDefaultScoringScheme());
 		
 		Player[] players = new Player[4];
 		
@@ -159,7 +162,7 @@ public class TestGame
 
 		// Reconstitute the game from the JSON.
 
-		Game rebuiltGame = Game.fromJson(gameJson, ScoringScheme.instance());
+		Game rebuiltGame = Game.fromJson(gameJson, TestUtil.loadDefaultScoringScheme());
 
 		// Should now have two identical games, which produce identical JSON.
 
@@ -179,11 +182,11 @@ public class TestGame
 	}
 
 	@Test
-	public void gameInterruptedRun()
+	public void gameInterruptedRun() throws IOException
 	{
 		// Play two identical games, one of which is saved and restored a few times.  They should end up identical.
 
-		ScoringScheme scheme = ScoringScheme.instance();
+		ScoringScheme scheme = TestUtil.loadDefaultScoringScheme();
 
 		Game gameC = new Game(scheme);
 		Game gameI = new Game(scheme);

@@ -1,6 +1,7 @@
 package house.mcintosh.mahjong.util;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public final class JsonUtil
 {
@@ -33,8 +35,18 @@ public final class JsonUtil
 		PRETTY_OBJECT_MAPPER.writeValue(file, node);
 	}
 
-	static public JsonNode loadFile(File file) throws IOException
+	static public JsonNode load(File file) throws IOException
 	{
 		return OBJECT_MAPPER.readTree(file);
+	}
+
+	static public JsonNode load(InputStream inStream) throws IOException
+	{
+		return OBJECT_MAPPER.readTree(inStream);
+	}
+
+	static public String toString(JsonNode node) throws JsonProcessingException
+	{
+		return PRETTY_OBJECT_MAPPER.writeValueAsString(node);
 	}
 }

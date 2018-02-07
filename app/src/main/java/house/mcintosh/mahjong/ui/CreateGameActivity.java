@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.IOException;
+
 import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.Player;
@@ -118,12 +120,12 @@ public final class CreateGameActivity extends AppCompatActivity
 		}
 	}
 
-	public void onStartGameClick(View view)
+	public void onStartGameClick(View view) throws IOException
 	{
 		// Create a new game instance and save it.
 
 		// TODO: make scoring scheme selectable.
-		Game game = new Game(ScoringScheme.instance());
+		Game game = new Game(ScoringScheme.load(this, R.raw.scoring_scheme_british));
 
 		Player eastPlayer = null;
 

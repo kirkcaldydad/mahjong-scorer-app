@@ -1,5 +1,7 @@
 package house.mcintosh.mahjong.model;
 
+import java.io.IOException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -7,10 +9,12 @@ import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
+import house.mcintosh.mahjong.ui.R;
+import house.mcintosh.mahjong.util.TestUtil;
 
 public class RoundUtil
 {
-	public static Round createRound(Player[] players, Wind prevailingWind, Player eastPlayer, Player mahjongPlayer)
+	public static Round createRound(Player[] players, Wind prevailingWind, Player eastPlayer, Player mahjongPlayer) throws IOException
 	{
 		// Get the players into order for play.
 		Player[] orderedPlayers = new Player[4];
@@ -53,9 +57,9 @@ public class RoundUtil
 		return round;
 	}
 	
-	public static ScoredHand createMahjongHand136(Wind playerWind, Wind prevailingWind)
+	public static ScoredHand createMahjongHand136(Wind playerWind, Wind prevailingWind) throws IOException
 	{
-		ScoringScheme scheme = ScoringScheme.instance();
+		ScoringScheme scheme = TestUtil.loadDefaultScoringScheme();
 		
 		ScoredHand hand = new ScoredHand(scheme);
 		
@@ -77,7 +81,7 @@ public class RoundUtil
 	 * @param prevailingWind
 	 * @return
 	 */
-	private static ScoredHand createHand(int index, Wind playerWind, Wind prevailingWind)
+	private static ScoredHand createHand(int index, Wind playerWind, Wind prevailingWind) throws IOException
 	{
 		switch (index % 2)
 		{
@@ -92,9 +96,9 @@ public class RoundUtil
 		}
 	}
 	
-	public static ScoredHand createHand2(Wind playerWind, Wind prevailingWind)
+	public static ScoredHand createHand2(Wind playerWind, Wind prevailingWind) throws IOException
 	{
-		ScoringScheme scheme = ScoringScheme.instance();
+		ScoringScheme scheme = TestUtil.loadDefaultScoringScheme();
 		
 		ScoredHand hand = new ScoredHand(scheme);
 		
@@ -104,9 +108,9 @@ public class RoundUtil
 		return hand;
 	}
 	
-	public static ScoredHand createHand4(Wind playerWind, Wind prevailingWind)
+	public static ScoredHand createHand4(Wind playerWind, Wind prevailingWind) throws IOException
 	{
-		ScoringScheme scheme = ScoringScheme.instance();
+		ScoringScheme scheme =  TestUtil.loadDefaultScoringScheme();
 		
 		ScoredHand hand = new ScoredHand(scheme);
 		
@@ -116,9 +120,9 @@ public class RoundUtil
 		return hand;
 	}
 
-	public static ScoredHand createHand16(Wind playerWind, Wind prevailingWind)
+	public static ScoredHand createHand16(Wind playerWind, Wind prevailingWind) throws IOException
 	{
-		ScoringScheme scheme = ScoringScheme.instance();
+		ScoringScheme scheme =  TestUtil.loadDefaultScoringScheme();
 		
 		ScoredHand hand = new ScoredHand(scheme);
 		

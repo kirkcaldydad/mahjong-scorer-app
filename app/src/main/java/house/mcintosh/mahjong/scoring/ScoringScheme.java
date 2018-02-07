@@ -2,11 +2,21 @@ package house.mcintosh.mahjong.scoring;
 
 import android.content.Context;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import house.mcintosh.mahjong.ui.R;
+import house.mcintosh.mahjong.util.JsonUtil;
 
 public final class ScoringScheme implements Serializable
 {
@@ -82,9 +92,7 @@ public final class ScoringScheme implements Serializable
 		MahjongByLastWallTileHandScore(		R.string.scoreDescriptionMahjongByLastWallTileHandScore),
 		MahjongByLastDiscardHandScore(		R.string.scoreDescriptionMahjongByLastDiscardHandScore),
 		MahjongByRobbingKongHandScore(		R.string.scoreDescriptionMahjongByRobbingKongHandScore),
-		MahjongByOriginalCallHandScore(		R.string.scoreDescriptionMahjongByOriginalCallHandScore),
-		
-		UNKNOWN;
+		MahjongByOriginalCallHandScore(		R.string.scoreDescriptionMahjongByOriginalCallHandScore);
 
 		private final int descriptionId;
 
@@ -123,19 +131,6 @@ public final class ScoringScheme implements Serializable
 	
 	private Map<ScoreElement, ScoreList> m_contributions = new HashMap<>();
 	
-	/**
-	 * Private constructor for creating an instance.
-	 */
-	private ScoringScheme()
-	{
-		load();
-	}
-	
-	public static ScoringScheme instance()
-	{
-		return s_instance;
-	}
-	
 	public ScoreList getScoreContribution(ScoreElement element)
 	{
 		return m_contributions.get(element);
@@ -173,77 +168,164 @@ public final class ScoringScheme implements Serializable
 		
 		return list;
 	}
-	
-	private void load()
+
+	public static ScoringScheme load(Context context, int resourceId) throws IOException
 	{
-		addScoreContribution(new ScoreContribution(ScoreElement.PairSuitScore, 0, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PairWindScore, 0, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PairOwnWindScore, 2, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PairPrevailingWindScore, 2, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PairDragonScore, 2, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.ChowSuitScore, 0, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedMinorSuitScore, 2, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedMajorSuitScore, 4, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedMinorSuitScore, 4, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedMajorSuitScore, 8, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedPrevailingOwnWindScore, 4, 1))
-			.append(new ScoreContribution(ScoreElement.PungOwnWindMultiplier, 0, 2))
-			.append(new ScoreContribution(ScoreElement.PungPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedOwnWindScore, 4, 1))
-			.append(new ScoreContribution(ScoreElement.PungOwnWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedPrevailingWindScore, 4, 1))
-			.append(new ScoreContribution(ScoreElement.PungPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedWindScore, 4, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedPrevailingOwnWindScore, 8, 1))
-			.append(new ScoreContribution(ScoreElement.PungOwnWindMultiplier, 0, 2))
-			.append(new ScoreContribution(ScoreElement.PungPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedOwnWindScore, 8, 1))
-			.append(new ScoreContribution(ScoreElement.PungOwnWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedPrevailingWindScore, 8, 1))
-			.append(new ScoreContribution(ScoreElement.PungPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedWindScore, 8, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungExposedDragonScore, 4, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.PungConcealedDragonScore, 8, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedMinorSuitScore, 8, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedMajorSuitScore, 16, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedMinorSuitScore, 16, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedMajorSuitScore, 32, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedPrevailingOwnWindScore, 16, 1))
-			.append(new ScoreContribution(ScoreElement.KongOwnWindMultiplier, 0, 2))
-			.append(new ScoreContribution(ScoreElement.KongPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedOwnWindScore, 16, 1))
-			.append(new ScoreContribution(ScoreElement.KongOwnWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedPrevailingWindScore, 16, 1))
-			.append(new ScoreContribution(ScoreElement.KongPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedWindScore, 16, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedPrevailingOwnWindScore, 32, 1))
-			.append(new ScoreContribution(ScoreElement.KongOwnWindMultiplier, 0, 2))
-			.append(new ScoreContribution(ScoreElement.KongPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedOwnWindScore, 32, 1))
-			.append(new ScoreContribution(ScoreElement.KongOwnWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedPrevailingWindScore, 32, 1))
-			.append(new ScoreContribution(ScoreElement.KongPrevailingWindMultiplier, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedWindScore, 32, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongExposedDragonScore, 16, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.KongConcealedDragonScore, 32, 2));
-	//	addScoreContribution(new ScoreContribution(ScoreElement.OwnFlowerHandScore, 0, 2));
-	//	addScoreContribution(new ScoreContribution(ScoreElement.OwnSeasonHandScore, 0, 2));
-	//	addScoreContribution(new ScoreContribution(ScoreElement.AllFlowersHandScore, 0, 2));
-	//	addScoreContribution(new ScoreContribution(ScoreElement.AllSeasonsHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.OriginalCallHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongHandScore, 10, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.NoChowsHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.SingleSuitHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.AllMajorHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.AllConcealedHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByLooseTileHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByOnlyPossibleTileHandScore, 2, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByWallTileHandScore, 2, 1));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByLastWallTileHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByLastDiscardHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByRobbingKongHandScore, 0, 2));
-		addScoreContribution(new ScoreContribution(ScoreElement.MahjongByOriginalCallHandScore, 0, 2));
+		InputStream inStream = context.getResources().openRawResource(resourceId);
+
+		ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
+		
+		return fromJson(node);
+	}
+
+	public static ScoringScheme fromJson(InputStream inStream) throws IOException
+	{
+		ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
+
+		return fromJson(node);
+	}
+	
+	private static ScoringScheme fromJson(ObjectNode node)
+	{
+		ScoringScheme scheme = new ScoringScheme();
+
+		scheme.MahjongHandSize	= node.get("mahjongHandSize").asInt(14);
+		scheme.LimitScore		= node.get("limitScore").asInt(1000);
+		scheme.InitialScore		= node.get("initialScore").asInt(2000);
+		
+		// Load the contributions into a map from where they can be organised into ScoreLists.
+		
+		Map<ScoreElement, ScoreContribution> contributions = new HashMap<>();
+		
+		ArrayNode contributionsArray =(ArrayNode) node.get("contributions");
+		
+		for (JsonNode contributionNode : contributionsArray)
+		{
+			ScoreContribution contribution = ScoreContribution.fromJson(contributionNode);
+			
+			contributions.put(contribution.getElement(), contribution);
+		}
+		
+		scheme.addScoreContribution(contributions.get(ScoreElement.PairSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PairWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PairOwnWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PairPrevailingWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PairDragonScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.ChowSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedMinorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedMajorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedMinorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedMajorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedPrevailingOwnWindScore))
+			.append(contributions.get(ScoreElement.PungOwnWindMultiplier))
+			.append(contributions.get(ScoreElement.PungPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedOwnWindScore))
+			.append(contributions.get(ScoreElement.PungOwnWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedPrevailingWindScore))
+			.append(contributions.get(ScoreElement.PungPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedPrevailingOwnWindScore))
+			.append(contributions.get(ScoreElement.PungOwnWindMultiplier))
+			.append(contributions.get(ScoreElement.PungPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedOwnWindScore))
+			.append(contributions.get(ScoreElement.PungOwnWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedPrevailingWindScore))
+			.append(contributions.get(ScoreElement.PungPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungExposedDragonScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.PungConcealedDragonScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedMinorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedMajorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedMinorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedMajorSuitScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedPrevailingOwnWindScore))
+			.append(contributions.get(ScoreElement.KongOwnWindMultiplier))
+			.append(contributions.get(ScoreElement.KongPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedOwnWindScore))
+			.append(contributions.get(ScoreElement.KongOwnWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedPrevailingWindScore))
+			.append(contributions.get(ScoreElement.KongPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedPrevailingOwnWindScore))
+			.append(contributions.get(ScoreElement.KongOwnWindMultiplier))
+			.append(contributions.get(ScoreElement.KongPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedOwnWindScore))
+			.append(contributions.get(ScoreElement.KongOwnWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedPrevailingWindScore))
+			.append(contributions.get(ScoreElement.KongPrevailingWindMultiplier));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedWindScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongExposedDragonScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.KongConcealedDragonScore));
+	//	scheme.addScoreContribution(contributions.get(ScoreElement.OwnFlowerHandScore));
+	//	scheme.addScoreContribution(contributions.get(ScoreElement.OwnSeasonHandScore));
+	//	scheme.addScoreContribution(contributions.get(ScoreElement.AllFlowersHandScore));
+	//	scheme.addScoreContribution(contributions.get(ScoreElement.AllSeasonsHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.OriginalCallHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.NoChowsHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.SingleSuitHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.AllMajorHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.AllConcealedHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByLooseTileHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByOnlyPossibleTileHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByWallTileHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByLastWallTileHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByLastDiscardHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByRobbingKongHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByOriginalCallHandScore));
 		// Add in mahjong by no score.  score: 0, multiplier: 2
+
+		return scheme;
+	}
+
+	public ObjectNode toJson()
+	{
+		ObjectNode scheme = JsonUtil.createObjectNode();
+
+		// Temporary - only required to export current score scheme.
+
+		scheme.put("mahjongHandSize", MahjongHandSize);
+		scheme.put("limitScore", LimitScore);
+		scheme.put("initialScore", InitialScore);
+
+		Map<ScoreElement, ScoreContribution> allContributions = new HashMap<>();
+
+		for (ScoreList scoreList : m_contributions.values())
+		{
+			for (ScoreContribution contribution : scoreList)
+			{
+				ScoreContribution prevContribution = allContributions.get(contribution.getElement());
+
+				if (prevContribution != null &&
+						(prevContribution.getScore() != contribution.getScore() || prevContribution.getHandMultiplier() != contribution.getHandMultiplier()))
+				{
+					System.err.println("mismatch for contribution " + contribution.getElement());
+				}
+
+				allContributions.put(contribution.getElement(), contribution);
+			}
+		}
+
+		ArrayNode contributionsArray = scheme.withArray("contributions");
+
+		Set<ScoreElement> unusedElements = new HashSet<>();
+		unusedElements.addAll(Arrays.asList(ScoreElement.values()));
+
+		for (ScoreElement element : ScoreElement.values())
+		{
+			ScoreContribution contribution = allContributions.get(element);
+
+			if (contribution != null)
+			{
+				contributionsArray.add(contribution.toJson());
+				unusedElements.remove(element);
+			}
+		}
+
+		if (unusedElements.size() > 0)
+			System.err.println("Unused score elements: " + unusedElements);
+
+		return scheme;
 	}
 }
 

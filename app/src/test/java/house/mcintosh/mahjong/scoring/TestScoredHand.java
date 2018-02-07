@@ -1,10 +1,15 @@
 package house.mcintosh.mahjong.scoring;
 
+import android.content.Context;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.std.StdArraySerializers;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,18 +21,21 @@ import house.mcintosh.mahjong.exception.InvalidHandException;
 import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.model.Wind;
+import house.mcintosh.mahjong.util.JsonUtil;
+import house.mcintosh.mahjong.util.TestUtil;
 
 public class TestScoredHand
 {
 	@Test
-	public void setSorting()
+	public void setSorting() throws IOException
 	{
 		
 		// A bunch of sets to be added to a Hand, in the order that we expect them to be
 		// sorted in the hand.
 				
 		List<ScoredGroup> sets	= new ArrayList<>();
-		ScoringScheme		scheme	= ScoringScheme.instance();
+
+		ScoringScheme scheme =  TestUtil.loadDefaultScoringScheme();
 
 		sets.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Tile.Dragon.RED), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
 		sets.add(new ScoredGroup(new Group(Group.Type.KONG, new Tile(Tile.Dragon.WHITE), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
@@ -56,9 +64,9 @@ public class TestScoredHand
 	}
 	
 	@Test
-	public void testMahjongHands()
+	public void testMahjongHands() throws IOException
 	{
-		ScoringScheme	scheme	= ScoringScheme.instance();
+		ScoringScheme	scheme	= TestUtil.loadDefaultScoringScheme();
 		ScoredHand		hand	= new ScoredHand(scheme);
 		
 		hand.add(new ScoredGroup(new Group(Group.Type.PUNG, new Tile(Tile.Dragon.RED), Group.Visibility.EXPOSED), scheme, Wind.EAST, Wind.EAST));
@@ -114,9 +122,9 @@ public class TestScoredHand
 	}
 	
 	@Test
-	public void testLimit()
+	public void testLimit() throws IOException
 	{
-		ScoringScheme		scheme	= ScoringScheme.instance();
+		ScoringScheme	scheme	= TestUtil.loadDefaultScoringScheme();
 		ScoredHand		hand	= new ScoredHand(scheme);
 		
 
@@ -165,9 +173,9 @@ public class TestScoredHand
 	}
 
 	@Test
-	public void testFlagSerialisation()
+	public void testFlagSerialisation() throws IOException
 	{
-		ScoringScheme	scheme	= ScoringScheme.instance();
+		ScoringScheme	scheme	= TestUtil.loadDefaultScoringScheme();
 		ScoredHand		hand	= new ScoredHand(scheme);
 
 
@@ -219,6 +227,15 @@ public class TestScoredHand
 		hand = checkSerialisation(hand, scheme, Wind.NORTH, Wind.NORTH);
 	}
 
+	@Test
+	public void exportScheme() throws IOException
+	{
+		ScoringScheme scheme = TestUtil.loadDefaultScoringScheme();
+		ObjectNode json = scheme.toJson();
+
+		System.out.println(JsonUtil.toString(json));
+	}
+
 	private ScoredHand checkSerialisation(ScoredHand hand, ScoringScheme scheme, Wind ownWind, Wind prevailingWind)
 	{
 		ObjectNode origHandJson = hand.toJson();
@@ -232,13 +249,15 @@ public class TestScoredHand
 		return rebuiltHand;
 	}
 
-	private void buildAndCheckHandRandomOrder(List<ScoredGroup> sets)
+	private void buildAndCheckHandRandomOrder(List<ScoredGroup> sets) throws IOException
 	{
 		// Copy the sets so that we can randomise the order of adding entries to the hand.
 		
 		List<ScoredGroup> setsCopy = new LinkedList<>(sets);
+
+		ScoringScheme scheme = TestUtil.loadDefaultScoringScheme();
 		
-		ScoredHand	hand	= new ScoredHand(ScoringScheme.instance());
+		ScoredHand	hand	= new ScoredHand(scheme);
 		Random		random	= new Random();
 		
 		int remaining;
@@ -270,7 +289,7 @@ public class TestScoredHand
 				if (hand.isMahjong())
 					fail();
 				else
-					assertFalse(handTileCount < ScoringScheme.instance().MahjongHandSize);
+					assertFalse(handTileCount < scheme.MahjongHandSize);
 			}
 			
 			if (hand.isMahjong())
@@ -297,8 +316,6 @@ public class TestScoredHand
 			
 			assertTrue(setIndex >= 0);
 			assertTrue(setIndex > previousSetIndex);
-			
-			//System.out.print('.');
 			
 			previousSetIndex = setIndex;
 		}

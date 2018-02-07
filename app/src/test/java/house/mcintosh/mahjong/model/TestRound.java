@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import java.io.IOException;
+
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
@@ -11,7 +13,7 @@ import house.mcintosh.mahjong.scoring.ScoringScheme;
 public class TestRound
 {
 	@Test
-	public void testCreatingRound1()
+	public void testCreatingRound1() throws IOException
 	{
 		Wind prevailingWind = Wind.EAST;
 		
@@ -42,7 +44,7 @@ public class TestRound
 	}
 	
 	@Test
-	public void testCreatingRound2()
+	public void testCreatingRound2() throws IOException
 	{
 		Wind prevailingWind = Wind.NORTH;
 		
@@ -73,7 +75,7 @@ public class TestRound
 	}
 	
 	@Test
-	public void testCreatingRound3()
+	public void testCreatingRound3() throws IOException
 	{
 		Wind prevailingWind = Wind.WEST;
 		
