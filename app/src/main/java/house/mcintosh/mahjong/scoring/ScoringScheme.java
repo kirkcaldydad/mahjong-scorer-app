@@ -127,10 +127,17 @@ public final class ScoringScheme implements Serializable
 		}
 	}
 	
-	static private ScoringScheme s_instance = new ScoringScheme();
-	
 	private Map<ScoreElement, ScoreList> m_contributions = new HashMap<>();
-	
+
+	public int MahjongHandSize	= 14;
+	public int LimitScore		= 1000;
+	public int InitialScore		= 2000;
+
+	private int m_resourceId;
+	private String m_fileName;
+	private String m_displayName;
+
+
 	public ScoreList getScoreContribution(ScoreElement element)
 	{
 		return m_contributions.get(element);
@@ -151,12 +158,6 @@ public final class ScoringScheme implements Serializable
 		return false;
 	}
 	
-	// Based on scores from http://mahjongbritishrules.com/scoring/overview.html
-	
-	public int MahjongHandSize	= 14;
-	public int LimitScore		= 1000;
-	public int InitialScore		= 2000;
-	
 	// Set scores
 	
 	private ScoreList addScoreContribution(ScoreContribution contribution)
@@ -175,14 +176,22 @@ public final class ScoringScheme implements Serializable
 
 		ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
 		
-		return fromJson(node);
+		ScoringScheme scheme = fromJson(node);
+
+		scheme.m_resourceId = resourceId;
+
+		return scheme;
 	}
 
-	public static ScoringScheme fromJson(InputStream inStream) throws IOException
+	public static ScoringScheme fromJson(InputStream inStream, String fileName) throws IOException
 	{
 		ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
 
-		return fromJson(node);
+		ScoringScheme scheme = fromJson(node);
+
+		scheme.m_fileName = fileName;
+
+		return scheme;
 	}
 	
 	private static ScoringScheme fromJson(ObjectNode node)
@@ -276,6 +285,44 @@ public final class ScoringScheme implements Serializable
 		// Add in mahjong by no score.  score: 0, multiplier: 2
 
 		return scheme;
+	}
+
+	/**
+	 * @return  A Json structure from which this ScoringScheme can be loaded.
+	 */
+	public ObjectNode getIdJson()
+	{
+		ObjectNode node = JsonUtil.createObjectNode();
+
+		if (m_resourceId != 0)
+			node.put("resourceId", m_resourceId);
+
+		if (m_fileName != null)
+			node.put("fileName", m_fileName);
+
+		return node;
+	}
+
+	/**
+	 * Parse the resourceId of the resource that holds the detail of a scoring scheme
+	 * from a schemeId as returned by getIdJson().
+	 *
+	 * @return	The resourceId, or 0 if there is no resource Id available.
+	 */
+	static public int getResourceId(ObjectNode schemeId)
+	{
+		return schemeId.path("resourceId").asInt(0);
+	}
+
+	/**
+	 * Parse the name of a file that holds the detail of a scoring scheme
+	 * from a schemeId as returned by getIdJson().
+	 *
+	 * @return	The filename, or null if there is no filename available.
+	 */
+	static public String getFileName(ObjectNode schemeId)
+	{
+		return schemeId.path("fileName").asText(null);
 	}
 
 	public ObjectNode toJson()

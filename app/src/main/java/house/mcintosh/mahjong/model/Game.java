@@ -93,8 +93,14 @@ public final class Game
 		game.put("started", m_started);
 		game.put("finished", m_finished);
 		game.put("prevailingWind", m_prevailingWind.name());
+		game.set("scoringScheme", m_scheme.getIdJson());
 
 		return game;
+	}
+
+	static public ObjectNode getScoringSchemeId(JsonNode gameNode)
+	{
+		return (ObjectNode)gameNode.get("scoringScheme");
 	}
 
 	static public Game fromJson(JsonNode gameNode, ScoringScheme scheme)

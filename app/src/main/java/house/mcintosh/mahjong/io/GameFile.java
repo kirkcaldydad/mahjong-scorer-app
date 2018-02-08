@@ -17,6 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import house.mcintosh.mahjong.exception.LoadException;
+import house.mcintosh.mahjong.exception.MissingScoringSchemeException;
 import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.GameSummary;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
@@ -101,7 +102,22 @@ public class GameFile
 		{
 			JsonNode gameNode = JsonUtil.load(file);
 
-			Game game = Game.fromJson(gameNode, ScoringScheme.load(context, R.raw.scoring_scheme_british));
+			ObjectNode scoringSchemeIdNode = Game.getScoringSchemeId(gameNode);
+
+			ScoringScheme scheme;
+
+			try
+			{
+				scheme = ScoringSchemeFile.load(context, scoringSchemeIdNode);
+			}
+			catch (MissingScoringSchemeException msse)
+			{
+				Log.e(LOG_TAG, "No scoring scheme available:" + msse);
+				Log.i(LOG_TAG, "Using British Scoring Scheme");
+				scheme = ScoringScheme.load(context, R.raw.scoring_scheme_british);
+			}
+
+			Game game = Game.fromJson(gameNode, scheme);
 
 			gameFile = new GameFile(game, file);
 		}
