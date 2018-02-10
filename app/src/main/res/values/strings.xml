@@ -77,6 +77,11 @@
     <string name="action_edit_previous_round">Edit last round</string>
     <string name="action_rotate_seat_display">Rotate seats</string>
     <string name="action_edit_players">Edit Players</string>
+    <string name="action_select_scoring_scheme">Select scoring</string>\
+
+    <string name="selectScoringSchemeDialogTitle">Scoring scheme</string>
+    <string name="scoringSchemeBritish">British (standard)</string>
+    <string name="scoringSchemeBritish17Tile">British 17 Tile</string>
 
     <!-- non-Mahjong hand scores -->
     <string name="scoreDescriptionOriginalCallHandScore">Original call</string>
@@ -97,6 +102,8 @@
 
     <string name="notificationEastPlayer">%s is now East</string>
     <string name="enterHandActivityTitle">Enter Hand</string>
+
+    <string name="scoringSchemeLabel">Scoring: %s</string>
 
     <!-- Confirmation dialog for navigation that will lose entered hands. -->
     <plurals name="titleConfirmLoseHand">

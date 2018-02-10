@@ -128,6 +128,9 @@ public final class GamePlayActivity extends AppCompatActivity
 		m_round = new Round(m_game.getPrevailingWind());
 
 		displayGame(false);
+
+		((TextView)findViewById(R.id.txtScoringScheme))
+				.setText(getString(R.string.scoringSchemeLabel, m_game.getScoringScheme().getDisplayName()));
 	}
 
 	@Override

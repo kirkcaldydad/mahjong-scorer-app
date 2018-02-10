@@ -1,0 +1,162 @@
+{
+  "name" : "Standard British (17 tile)",
+  "schemaVersion" : 1,
+  "mahjongHandSize" : 17,
+  "limitScore" : 1000,
+  "initialScore" : 2000,
+  "contributions" : [ {
+    "name" : "PairSuitScore"
+  }, {
+    "name" : "PairWindScore"
+  }, {
+    "name" : "PairOwnWindScore",
+    "score" : 2
+  }, {
+    "name" : "PairPrevailingWindScore",
+    "score" : 2
+  }, {
+    "name" : "PairDragonScore",
+    "score" : 2
+  }, {
+    "name" : "ChowSuitScore"
+  }, {
+    "name" : "PungExposedMinorSuitScore",
+    "score" : 2
+  }, {
+    "name" : "PungExposedMajorSuitScore",
+    "score" : 4
+  }, {
+    "name" : "PungConcealedMinorSuitScore",
+    "score" : 4
+  }, {
+    "name" : "PungConcealedMajorSuitScore",
+    "score" : 8
+  }, {
+    "name" : "PungExposedPrevailingOwnWindScore",
+    "score" : 4
+  }, {
+    "name" : "PungExposedOwnWindScore",
+    "score" : 4
+  }, {
+    "name" : "PungExposedPrevailingWindScore",
+    "score" : 4
+  }, {
+    "name" : "PungExposedWindScore",
+    "score" : 4
+  }, {
+    "name" : "PungConcealedPrevailingOwnWindScore",
+    "score" : 8
+  }, {
+    "name" : "PungConcealedOwnWindScore",
+    "score" : 8
+  }, {
+    "name" : "PungConcealedPrevailingWindScore",
+    "score" : 8
+  }, {
+    "name" : "PungConcealedWindScore",
+    "score" : 8
+  }, {
+    "name" : "PungOwnWindMultiplier",
+    "multiplier" : 2
+  }, {
+    "name" : "PungPrevailingWindMultiplier",
+    "multiplier" : 2
+  }, {
+    "name" : "PungExposedDragonScore",
+    "score" : 4,
+    "multiplier" : 2
+  }, {
+    "name" : "PungConcealedDragonScore",
+    "score" : 8,
+    "multiplier" : 2
+  }, {
+    "name" : "KongExposedMinorSuitScore",
+    "score" : 8
+  }, {
+    "name" : "KongExposedMajorSuitScore",
+    "score" : 16
+  }, {
+    "name" : "KongConcealedMinorSuitScore",
+    "score" : 16
+  }, {
+    "name" : "KongConcealedMajorSuitScore",
+    "score" : 32
+  }, {
+    "name" : "KongExposedPrevailingOwnWindScore",
+    "score" : 16
+  }, {
+    "name" : "KongExposedOwnWindScore",
+    "score" : 16
+  }, {
+    "name" : "KongExposedPrevailingWindScore",
+    "score" : 16
+  }, {
+    "name" : "KongExposedWindScore",
+    "score" : 16
+  }, {
+    "name" : "KongConcealedPrevailingOwnWindScore",
+    "score" : 32
+  }, {
+    "name" : "KongConcealedOwnWindScore",
+    "score" : 32
+  }, {
+    "name" : "KongConcealedPrevailingWindScore",
+    "score" : 32
+  }, {
+    "name" : "KongConcealedWindScore",
+    "score" : 32
+  }, {
+    "name" : "KongOwnWindMultiplier",
+    "multiplier" : 2
+  }, {
+    "name" : "KongPrevailingWindMultiplier",
+    "multiplier" : 2
+  }, {
+    "name" : "KongExposedDragonScore",
+    "score" : 16,
+    "multiplier" : 2
+  }, {
+    "name" : "KongConcealedDragonScore",
+    "score" : 32,
+    "multiplier" : 2
+  }, {
+    "name" : "OriginalCallHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "MahjongHandScore",
+    "score" : 10
+  }, {
+    "name" : "NoChowsHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "SingleSuitHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "AllMajorHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "AllConcealedHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "MahjongByLooseTileHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "MahjongByOnlyPossibleTileHandScore",
+    "score" : 2
+  }, {
+    "name" : "MahjongByWallTileHandScore",
+    "score" : 2
+  }, {
+    "name" : "MahjongByLastWallTileHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "MahjongByLastDiscardHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "MahjongByRobbingKongHandScore",
+    "multiplier" : 2
+  }, {
+    "name" : "MahjongByOriginalCallHandScore",
+    "multiplier" : 2
+  } ]
+}

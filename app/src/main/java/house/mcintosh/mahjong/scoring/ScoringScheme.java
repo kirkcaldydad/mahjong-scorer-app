@@ -143,6 +143,21 @@ public final class ScoringScheme implements Serializable
 		return m_contributions.get(element);
 	}
 
+	public String getDisplayName()
+	{
+		return m_displayName;
+	}
+
+	public static String getDisplayName(Context context, int resourceId) throws IOException
+	{
+		try (InputStream inStream = context.getResources().openRawResource(resourceId))
+		{
+			ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
+
+			return node.path("name").asText("");
+		}
+	}
+
 	/**
 	 * @return	true if a score element has some score or a multiplier.  False if it has
 	 * 			nothing that will affect the score of a group or hand.
@@ -172,15 +187,17 @@ public final class ScoringScheme implements Serializable
 
 	public static ScoringScheme load(Context context, int resourceId) throws IOException
 	{
-		InputStream inStream = context.getResources().openRawResource(resourceId);
+		try (InputStream inStream = context.getResources().openRawResource(resourceId))
+		{
 
-		ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
-		
-		ScoringScheme scheme = fromJson(node);
+			ObjectNode node = (ObjectNode) JsonUtil.load(inStream);
 
-		scheme.m_resourceId = resourceId;
+			ScoringScheme scheme = fromJson(node);
 
-		return scheme;
+			scheme.m_resourceId = resourceId;
+
+			return scheme;
+		}
 	}
 
 	public static ScoringScheme fromJson(InputStream inStream, String fileName) throws IOException
@@ -201,6 +218,7 @@ public final class ScoringScheme implements Serializable
 		scheme.MahjongHandSize	= node.get("mahjongHandSize").asInt(14);
 		scheme.LimitScore		= node.get("limitScore").asInt(1000);
 		scheme.InitialScore		= node.get("initialScore").asInt(2000);
+		scheme.m_displayName	= node.get("name").asText("");
 		
 		// Load the contributions into a map from where they can be organised into ScoreLists.
 		
