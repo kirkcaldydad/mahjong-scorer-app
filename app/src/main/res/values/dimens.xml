@@ -11,4 +11,5 @@
     <dimen name="deleteButtonTopMargin">5dp</dimen>
     <dimen name="scorePaddingRight">10dp</dimen>
     <dimen name="summaryPlayerNameMinWidth">80dp</dimen>
+    <dimen name="tileInfoSideMargin">8dp</dimen>
 </resources>

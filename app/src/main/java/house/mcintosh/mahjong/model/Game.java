@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -358,6 +359,11 @@ public final class Game
 	public int getRoundCount()
 	{
 		return m_rounds.size();
+	}
+
+	public List<Round> getRounds()
+	{
+		return Collections.unmodifiableList(m_rounds);
 	}
 	
 	public Wind getPrevailingWind()

@@ -178,6 +178,10 @@ public final class GamePlayActivity extends AppCompatActivity
 			case R.id.action_edit_players:
 				editPlayers();
 				return true;
+
+			case R.id.action_show_game_info:
+				showGameInfo();
+				return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -464,6 +468,15 @@ public final class GamePlayActivity extends AppCompatActivity
 		intent.putExtra(EditPlayersActivity.PLAYERS_KEY, m_game.getSeats());
 
 		startActivityForResult(intent, EDIT_PLAYERS_REQUEST_CODE);
+	}
+
+	private void showGameInfo()
+	{
+		Intent intent = new Intent(this, GameInfoActivity.class);
+
+		intent.putExtra(GameInfoActivity.EXTRA_KEY_GAME_FILE, m_gameFile.getFile());
+
+		startActivity(intent);
 	}
 
 	/**

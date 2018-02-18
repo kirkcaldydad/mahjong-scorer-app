@@ -29,4 +29,10 @@
         <item name="android:textColor">@android:color/holo_red_dark</item>
     </style>
 
+    <style name="tile">
+        <item name="android:padding">@dimen/displayTilePadding</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/tile_border</item>
+    </style>
+
 </resources>

@@ -77,7 +77,8 @@
     <string name="action_edit_previous_round">Edit last round</string>
     <string name="action_rotate_seat_display">Rotate seats</string>
     <string name="action_edit_players">Edit Players</string>
-    <string name="action_select_scoring_scheme">Select scoring</string>\
+    <string name="action_select_scoring_scheme">Select scoring</string>
+    <string name="action_show_game_info">Game detail</string>
 
     <string name="selectScoringSchemeDialogTitle">Scoring scheme</string>
     <string name="scoringSchemeBritish">British (standard)</string>
@@ -102,6 +103,7 @@
 
     <string name="notificationEastPlayer">%s is now East</string>
     <string name="enterHandActivityTitle">Enter Hand</string>
+    <string name="gameInfoActivityTitle">Game Detail</string>
 
     <string name="scoringSchemeLabel">Scoring: %s</string>
 
@@ -132,5 +134,6 @@
 
     <string name="editPlayersActivityTitle">Edit players</string>
     <string name="createGameInstruction">1. Enter player names according to their seating positions. For an unoccupied seat leave the name empty.\n\n2. Use <b>ROTATE WIND</b> to set the starting player\'s wind to East.\n\n3. Select <b>SAVE AND START</b> to start the game.</string>
+    <string name="scoring_scheme">Scoring scheme:</string>
 
 </resources>

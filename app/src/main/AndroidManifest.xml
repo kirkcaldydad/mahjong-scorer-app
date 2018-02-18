@@ -38,6 +38,10 @@
             android:label="@string/editPlayersActivityTitle"
             android:parentActivityName=".GamePlayActivity"
             />
+        <activity android:name=".GameInfoActivity"
+            android:label="@string/gameInfoActivityTitle"
+            android:parentActivityName=".GameInfoActivity"
+            />
     </application>
 
 </manifest>
