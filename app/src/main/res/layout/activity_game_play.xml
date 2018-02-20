@@ -43,394 +43,410 @@
         android:background="#FFCCCCCC"
         app:layout_constraintTop_toBottomOf="@+id/tvPrevailingWind" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout0"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="26" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layoutBox0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="48"
-            android:background="@drawable/name_entry_border_box">
-
-            <ImageView
-                android:id="@+id/imgEastWind0"
-                android:layout_width="@dimen/displayTileWidth"
-                android:layout_height="@dimen/displayTileHeight"
-                android:layout_marginEnd="2dp"
-                android:layout_marginTop="2dp"
-                android:contentDescription="@string/enteredTile"
-                android:gravity="center"
-                android:padding="@dimen/displayTilePadding"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/wind_east" />
-
-            <TextView
-                android:id="@+id/tvPlayerWind0"
-                android:layout_width="0dp"
-                android:layout_height="28dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvPlayerName0"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:ellipsize="end"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind0" />
-
-            <TextView
-                android:id="@+id/tvPlayerScore0"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerName0" />
-
-            <TextView
-                android:id="@+id/tvPlayerRoundScore0"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore0" />
-
-        </android.support.constraint.ConstraintLayout>
-
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="26" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout13"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layoutBox3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="48"
-            android:background="@drawable/name_entry_border_box">
-
-            <ImageView
-                android:id="@+id/imgEastWind3"
-                android:layout_width="@dimen/displayTileWidth"
-                android:layout_height="@dimen/displayTileHeight"
-                android:layout_marginStart="2dp"
-                android:layout_marginTop="2dp"
-                android:contentDescription="@string/enteredTile"
-                android:gravity="center"
-                android:padding="@dimen/displayTilePadding"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/wind_east" />
-
-            <TextView
-                android:id="@+id/tvPlayerWind3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvPlayerName3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:ellipsize="end"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind3" />
-
-            <TextView
-                android:id="@+id/tvPlayerScore3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerName3" />
-
-            <TextView
-                android:id="@+id/tvPlayerRoundScore3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore3" />
-
-        </android.support.constraint.ConstraintLayout>
-
-        <Space
-            android:layout_width="8dp"
-            android:layout_height="match_parent" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layoutBox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="48"
-            android:background="@drawable/name_entry_border_box">
-
-            <ImageView
-                android:id="@+id/imgEastWind1"
-                android:layout_width="@dimen/displayTileWidth"
-                android:layout_height="@dimen/displayTileHeight"
-                android:layout_marginEnd="2dp"
-                android:layout_marginTop="2dp"
-                android:contentDescription="@string/enteredTile"
-                android:gravity="center"
-                android:padding="@dimen/displayTilePadding"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/wind_east" />
-
-            <TextView
-                android:id="@+id/tvPlayerWind1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tvPlayerName1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:ellipsize="end"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind1" />
-
-            <TextView
-                android:id="@+id/tvPlayerScore1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerName1" />
-
-            <TextView
-                android:id="@+id/tvPlayerRoundScore1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore1" />
-        </android.support.constraint.ConstraintLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerPrevailingWind">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="26" />
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layoutBox2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="48"
-            android:background="@drawable/name_entry_border_box">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/imgEastWind2"
-                android:layout_width="@dimen/displayTileWidth"
-                android:layout_height="@dimen/displayTileHeight"
-                android:layout_marginEnd="2dp"
-                android:layout_marginTop="2dp"
-                android:contentDescription="@string/enteredTile"
-                android:gravity="center"
-                android:padding="@dimen/displayTilePadding"
-                android:visibility="invisible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/wind_east" />
-
-            <TextView
-                android:id="@+id/tvPlayerWind2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/dividerPrevailingWind">
 
-            <TextView
-                android:id="@+id/tvPlayerName2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:ellipsize="end"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind2" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="26" />
 
-            <TextView
-                android:id="@+id/tvPlayerScore2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutBox2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="48"
+                    android:background="@drawable/name_entry_border_box">
+
+                    <ImageView
+                        android:id="@+id/imgEastWind2"
+                        android:layout_width="@dimen/displayTileWidth"
+                        android:layout_height="@dimen/displayTileHeight"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginTop="2dp"
+                        android:contentDescription="@string/enteredTile"
+                        android:gravity="center"
+                        android:padding="@dimen/displayTilePadding"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/wind_east" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerWind2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerName2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:ellipsize="end"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind2" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerScore2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName2" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerRoundScore2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore2" />
+                </android.support.constraint.ConstraintLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="26" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout13"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="24sp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerName2" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-            <TextView
-                android:id="@+id/tvPlayerRoundScore2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutBox3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="48"
+                    android:background="@drawable/name_entry_border_box">
+
+                    <ImageView
+                        android:id="@+id/imgEastWind3"
+                        android:layout_width="@dimen/displayTileWidth"
+                        android:layout_height="@dimen/displayTileHeight"
+                        android:layout_marginStart="2dp"
+                        android:layout_marginTop="2dp"
+                        android:contentDescription="@string/enteredTile"
+                        android:gravity="center"
+                        android:padding="@dimen/displayTilePadding"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/wind_east" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerWind3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerName3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:ellipsize="end"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind3" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerScore3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName3" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerRoundScore3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore3" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <Space
+                    android:layout_width="8dp"
+                    android:layout_height="match_parent" />
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutBox1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="48"
+                    android:background="@drawable/name_entry_border_box">
+
+                    <ImageView
+                        android:id="@+id/imgEastWind1"
+                        android:layout_width="@dimen/displayTileWidth"
+                        android:layout_height="@dimen/displayTileHeight"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginTop="2dp"
+                        android:contentDescription="@string/enteredTile"
+                        android:gravity="center"
+                        android:padding="@dimen/displayTilePadding"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/wind_east" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerWind1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerName1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:ellipsize="end"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind1" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerScore1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName1" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerRoundScore1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore1" />
+                </android.support.constraint.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore2" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
 
-        <Space
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="26" />
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="26" />
 
-    </LinearLayout>
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layoutBox0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="48"
+                    android:background="@drawable/name_entry_border_box">
+
+                    <ImageView
+                        android:id="@+id/imgEastWind0"
+                        android:layout_width="@dimen/displayTileWidth"
+                        android:layout_height="@dimen/displayTileHeight"
+                        android:layout_marginEnd="2dp"
+                        android:layout_marginTop="2dp"
+                        android:contentDescription="@string/enteredTile"
+                        android:gravity="center"
+                        android:padding="@dimen/displayTilePadding"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/wind_east" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerWind0"
+                        android:layout_width="0dp"
+                        android:layout_height="28dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerName0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:ellipsize="end"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="30sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerWind0" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerScore0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerName0" />
+
+                    <TextView
+                        android:id="@+id/tvPlayerRoundScore0"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="TextView"
+                        android:textAlignment="center"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPlayerScore0" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="26" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
