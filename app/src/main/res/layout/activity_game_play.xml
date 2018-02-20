@@ -26,15 +26,6 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/tvPrevailingWind"
         app:layout_constraintEnd_toStartOf="@+id/tvPrevailingWind" />
 
-    <TextView
-        android:id="@+id/txtScoringScheme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tvPrevailingWind"
-        app:layout_constraintStart_toEndOf="@+id/tvPrevailingWind" />
-
     <View
         android:id="@+id/dividerPrevailingWind"
         android:layout_width="fill_parent"
