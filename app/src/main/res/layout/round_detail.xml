@@ -43,7 +43,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerNameSize" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerWind0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/playerWindStartMargin"
+                        android:layout_weight="1"
                         android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScoreIncrement0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreIncrementStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScore0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreValueStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                 </LinearLayout>
 
@@ -65,7 +91,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerNameSize" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerWind1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/playerWindStartMargin"
+                        android:layout_weight="1"
                         android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScoreIncrement1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreIncrementStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScore1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreValueStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                 </LinearLayout>
 
@@ -87,7 +139,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerNameSize" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerWind2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/playerWindStartMargin"
+                        android:layout_weight="1"
                         android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScoreIncrement2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreIncrementStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScore2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreValueStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                 </LinearLayout>
 
@@ -109,7 +187,33 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerNameSize" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerWind3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/playerWindStartMargin"
+                        android:layout_weight="1"
                         android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScoreIncrement3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreIncrementStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+
+                    <TextView
+                        android:id="@+id/txtPlayerScore3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/scoreValueStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                 </LinearLayout>
 

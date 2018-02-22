@@ -313,21 +313,8 @@ public final class Game
 			m_prevailingWind = m_prevailingWind.next();
 	}
 
-	/**
-	 * Remove the last added round from the hand and return it.
-	 *
-	 * @return The last added round or null if there is no round to return.
-	 */
-	public Round popRound()
+	private List<Round> clearGame()
 	{
-		if (m_rounds.size() == 0)
-			return null;
-
-		// To get the state of the game back to the way it was before the removed round,
-		// set it back to the start of the game, and add all the rounds again except for the
-		// last one.  Simplistic but simple and avoids complicated calculations to reverse
-		// scores and the position of play.
-
 		List<Round> allRounds = m_rounds;
 
 		m_rounds = new ArrayList<>();
@@ -343,6 +330,25 @@ public final class Game
 			initialScores.put(player, m_scheme.InitialScore);
 
 		m_scores = initialScores;
+		return allRounds;
+	}
+
+	/**
+	 * Remove the last added round from the hand and return it.
+	 *
+	 * @return The last added round or null if there is no round to return.
+	 */
+	public Round popRound()
+	{
+		if (m_rounds.size() == 0)
+			return null;
+
+		// To get the state of the game back to the way it was before the removed round,
+		// set it back to the start of the game, and add all the rounds again except for the
+		// last one.  Simplistic but simple and avoids complicated calculations to reverse
+		// scores and the position of play.
+
+		List<Round> allRounds = clearGame();
 
 		// Add all the rounds to the game, except the most recent one.
 
@@ -354,6 +360,38 @@ public final class Game
 		}
 
 		return allRounds.get(lastRoundIndex);
+	}
+
+	/**
+	 * Get all the scores for all rounds in the game.
+	 *
+	 * @return	A list of maps.  Each map has key Player, and value is the score for that player.
+	 * 			The list has an entry corresponding to each round in the game.
+	 */
+	public List<Map<Player, Integer>> getRoundScores()
+	{
+		// To get the state of the game back to the way it was at each round,
+		// set it back to the start of the game, and add all the rounds again except for the
+		// last one.  Simplistic but simple and avoids keeping the scores for all previous
+		// rounds - although maybe that would be better.
+
+		List<Round> allRounds = clearGame();
+
+		// Add all the rounds to the game, recording the scores as we go.
+
+		int roundsCount = allRounds.size();
+		List<Map<Player, Integer>> allRoundScores = new ArrayList<>(roundsCount);
+
+		for (int i = 0 ; i < roundsCount ; i++)
+		{
+			addRound(allRounds.get(i));
+
+			Map<Player, Integer> roundScores = new HashMap<>(m_scores);
+
+			allRoundScores.add(roundScores);
+		}
+
+		return allRoundScores;
 	}
 
 	public int getRoundCount()

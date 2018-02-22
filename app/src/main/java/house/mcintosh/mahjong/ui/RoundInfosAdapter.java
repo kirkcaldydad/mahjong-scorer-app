@@ -28,10 +28,6 @@ import house.mcintosh.mahjong.scoring.ScoredHand;
 
 public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 {
-	private final TextView[] playerNameViews = new TextView[4];
-	private final LinearLayout[] infoLayoutContainers = new LinearLayout[4];
-	private final LinearLayout[] tileLayoutContainers = new LinearLayout[4];
-
 	private final TileDrawables m_tileDrawables;
 
 	private int standardTileMargin;
@@ -53,18 +49,42 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
+		Context context = getContext();
+
+		TextView[] playerNameViews = new TextView[4];
+		TextView[] playerWindViews = new TextView[4];
+		TextView[] playerScoreIncrementViews = new TextView[4];
+		TextView[] playerScoreViews = new TextView[4];
+		LinearLayout[] infoLayoutContainers = new LinearLayout[4];
+		LinearLayout[] tileLayoutContainers = new LinearLayout[4];
+
 		// Get the data item for this position
 		RoundInfo game = getItem(position);
 		// Check if an existing view is being reused, otherwise inflate the view
 		if (convertView == null)
 		{
-			convertView = LayoutInflater.from(getContext()).inflate(R.layout.round_detail, parent, false);
+			convertView = LayoutInflater.from(context).inflate(R.layout.round_detail, parent, false);
 		}
 
 		playerNameViews[0] = (TextView)convertView.findViewById(R.id.txtPlayerName0);
 		playerNameViews[1] = (TextView)convertView.findViewById(R.id.txtPlayerName1);
 		playerNameViews[2] = (TextView)convertView.findViewById(R.id.txtPlayerName2);
 		playerNameViews[3] = (TextView)convertView.findViewById(R.id.txtPlayerName3);
+
+		playerWindViews[0] = (TextView)convertView.findViewById(R.id.txtPlayerWind0);
+		playerWindViews[1] = (TextView)convertView.findViewById(R.id.txtPlayerWind1);
+		playerWindViews[2] = (TextView)convertView.findViewById(R.id.txtPlayerWind2);
+		playerWindViews[3] = (TextView)convertView.findViewById(R.id.txtPlayerWind3);
+
+		playerScoreIncrementViews[0] = (TextView)convertView.findViewById(R.id.txtPlayerScoreIncrement0);
+		playerScoreIncrementViews[1] = (TextView)convertView.findViewById(R.id.txtPlayerScoreIncrement1);
+		playerScoreIncrementViews[2] = (TextView)convertView.findViewById(R.id.txtPlayerScoreIncrement2);
+		playerScoreIncrementViews[3] = (TextView)convertView.findViewById(R.id.txtPlayerScoreIncrement3);
+
+		playerScoreViews[0] = (TextView)convertView.findViewById(R.id.txtPlayerScore0);
+		playerScoreViews[1] = (TextView)convertView.findViewById(R.id.txtPlayerScore1);
+		playerScoreViews[2] = (TextView)convertView.findViewById(R.id.txtPlayerScore2);
+		playerScoreViews[3] = (TextView)convertView.findViewById(R.id.txtPlayerScore3);
 
 		infoLayoutContainers[0] = (LinearLayout)convertView.findViewById(R.id.layoutInfoPlayer0);
 		infoLayoutContainers[1] = (LinearLayout)convertView.findViewById(R.id.layoutInfoPlayer1);
@@ -77,6 +97,7 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		tileLayoutContainers[3] = (LinearLayout)convertView.findViewById(R.id.layoutTilesPlayer3);
 
 		RoundInfo roundInfo = getItem(position);
+		int highestScore = Integer.MIN_VALUE;
 
 		for (int i = 0 ; i < 4 ; i++)
 		{
@@ -88,18 +109,47 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 			if (player != null)
 			{
 				playerNameViews[i].setText(player.getName());
+
+				playerWindViews[i].setText(round.getPlayerWind(player).getName(context));
+
+				int increment = roundInfo.getScoreIncrement(player);
+				String displayIncrement = Integer.toString(increment);
+
+				if (increment >= 0)
+					displayIncrement = "+" + displayIncrement;
+
+				int score = roundInfo.getScore(player);
+				String displayScore = "= " + Integer.toString(score);
+
+				playerScoreIncrementViews[i].setText(displayIncrement);
+				playerScoreViews[i].setText(displayScore);
+
 				ScoredHand hand = round.getHand(player);
 
 				displayHand(tileLayoutContainer, hand);
 
 				infoLayoutContainers[i].setVisibility(View.VISIBLE);
 				tileLayoutContainers[i].setVisibility(View.VISIBLE);
+
+				highestScore = Math.max(highestScore, score);
 			}
 			else
 			{
 				infoLayoutContainers[i].setVisibility(View.GONE);
 				tileLayoutContainers[i].setVisibility(View.GONE);
 			}
+		}
+
+		for (int i = 0 ; i < 4 ; i++)
+		{
+			Player player = roundInfo.getPlayer(i);
+
+			if (player == null)
+				continue;
+
+			int typeface = ( roundInfo.getScore(player) == highestScore ) ? Typeface.BOLD : Typeface.NORMAL;
+
+			playerScoreViews[i].setTypeface(null, typeface);
 		}
 
 		// Return the completed view to render on screen

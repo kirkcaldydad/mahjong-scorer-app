@@ -12,4 +12,9 @@
     <dimen name="scorePaddingRight">10dp</dimen>
     <dimen name="summaryPlayerNameMinWidth">80dp</dimen>
     <dimen name="tileInfoSideMargin">8dp</dimen>
+    <dimen name="scoreIncrementStartMargin">8dp</dimen>
+    <dimen name="scoreValueStartMargin">8dp</dimen>
+    <dimen name="playerWindStartMargin">8dp</dimen>
+    <dimen name="gameDetailPlayerNameSize">24sp</dimen>
+    <dimen name="gameDetailPlayerScoreSize">24sp</dimen>
 </resources>

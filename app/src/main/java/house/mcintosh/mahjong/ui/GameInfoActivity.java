@@ -59,23 +59,51 @@ public final class GameInfoActivity extends AppCompatActivity
 
 		Intent launchIntent = getIntent();
 
-		File gamefile = (File)launchIntent.getSerializableExtra(EXTRA_KEY_GAME_FILE);
+		File gamefile = (File) launchIntent.getSerializableExtra(EXTRA_KEY_GAME_FILE);
 		GameFile gameFile = GameFile.load(this, gamefile);
 		m_game = gameFile.getGame();
 
 		ScoringScheme scheme = m_game.getScoringScheme();
-		((TextView)findViewById(R.id.txtScoringSchemeName)).setText(scheme.getDisplayName());
+		((TextView) findViewById(R.id.txtScoringSchemeName)).setText(scheme.getDisplayName());
 
 		String prevailingWindName = m_game.getPrevailingWind().getName(this);
-		((TextView)findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
+		((TextView) findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
 
-		// Create a list of RoundInfo instances to be displayed.
+		// Create a list of RoundInfo instances to be displayed.  We can also get the
+		// scores for all rounds from the game, foir display and caclulating the increments
+		// for each player.
+
+		Game scoreCalcGame = new Game(scheme);
+		Player[] seats = m_game.getSeats();
+		Map<Player, Integer> previousScores = new HashMap<>();
+
+		for (int i = 0; i < seats.length; i++)
+		{
+			scoreCalcGame.setPlayer(seats[i], i);
+			previousScores.put(seats[i], scheme.InitialScore);
+		}
 
 		ArrayList<RoundInfo> roundInfos = new ArrayList<>(m_game.getRoundCount());
+		List<Round> rounds = m_game.getRounds();
+		List<Map<Player, Integer>> roundScores = m_game.getRoundScores();
 
-		for (Round round : m_game.getRounds())
+		for (int i = 0 ; i < rounds.size() ; i++)
 		{
-			roundInfos.add(new RoundInfo(round, m_game.getSeats()));
+			Round round = rounds.get(i);
+			Map<Player, Integer> playerScores = roundScores.get(i);
+			Map<Player, Integer> scoreIncrements = new HashMap<>();
+
+			for (Map.Entry<Player, Integer> playerEntry : playerScores.entrySet())
+			{
+				Player player = playerEntry.getKey();
+				Integer roundScore = playerEntry.getValue();
+
+				scoreIncrements.put(player, roundScore - previousScores.get(player));
+			}
+
+			roundInfos.add(new RoundInfo(round, m_game.getSeats(), playerScores, scoreIncrements));
+
+			previousScores = playerScores;
 		}
 
 		RoundInfosAdapter adapter = new RoundInfosAdapter(this, roundInfos, new TileDrawables(this));
