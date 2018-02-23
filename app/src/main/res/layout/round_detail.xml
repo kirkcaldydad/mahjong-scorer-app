@@ -3,6 +3,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutRoundDetail"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context="house.mcintosh.mahjong.ui.CreateGameActivity">
@@ -31,6 +32,28 @@
                 <Space
                     android:layout_width="match_parent"
                     android:layout_height="8dp" />
+
+                <LinearLayout
+                    android:id="@+id/layoutRoundInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtPrevailingWindLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/prevailingWind" />
+
+                    <TextView
+                        android:id="@+id/txtPrevailingWindName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/prevailingWindStartMargin"
+                        android:layout_weight="1"
+                        android:text="TextView" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layoutInfoPlayer0"
@@ -72,6 +95,12 @@
                         android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtHandDescription0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
 
                 <LinearLayout
                     android:id="@+id/layoutTilesPlayer0"
@@ -121,6 +150,12 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/txtHandDescription1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
                 <LinearLayout
                     android:id="@+id/layoutTilesPlayer1"
                     android:layout_width="wrap_content"
@@ -169,6 +204,12 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/txtHandDescription2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
+
                 <LinearLayout
                     android:id="@+id/layoutTilesPlayer2"
                     android:layout_width="wrap_content"
@@ -216,6 +257,12 @@
                         android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtHandDescription3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView" />
 
                 <LinearLayout
                     android:id="@+id/layoutTilesPlayer3"

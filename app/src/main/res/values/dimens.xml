@@ -17,4 +17,5 @@
     <dimen name="playerWindStartMargin">8dp</dimen>
     <dimen name="gameDetailPlayerNameSize">24sp</dimen>
     <dimen name="gameDetailPlayerScoreSize">24sp</dimen>
+    <dimen name="prevailingWindStartMargin">8dp</dimen>
 </resources>

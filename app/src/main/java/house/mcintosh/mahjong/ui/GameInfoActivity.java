@@ -101,7 +101,7 @@ public final class GameInfoActivity extends AppCompatActivity
 				scoreIncrements.put(player, roundScore - previousScores.get(player));
 			}
 
-			roundInfos.add(new RoundInfo(round, m_game.getSeats(), playerScores, scoreIncrements));
+			roundInfos.add(0, new RoundInfo(round, m_game.getSeats(), playerScores, scoreIncrements));
 
 			previousScores = playerScores;
 		}

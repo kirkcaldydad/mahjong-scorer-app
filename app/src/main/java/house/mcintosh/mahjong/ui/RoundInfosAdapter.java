@@ -12,19 +12,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
 
-import house.mcintosh.mahjong.model.GameSummary;
-import house.mcintosh.mahjong.model.Group;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Round;
 import house.mcintosh.mahjong.model.RoundInfo;
 import house.mcintosh.mahjong.model.Tile;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
+import house.mcintosh.mahjong.util.DisplayUtil;
 
 public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 {
@@ -55,16 +53,23 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		TextView[] playerWindViews = new TextView[4];
 		TextView[] playerScoreIncrementViews = new TextView[4];
 		TextView[] playerScoreViews = new TextView[4];
+		TextView[] handDescriptionViews = new TextView[4];
 		LinearLayout[] infoLayoutContainers = new LinearLayout[4];
 		LinearLayout[] tileLayoutContainers = new LinearLayout[4];
 
 		// Get the data item for this position
-		RoundInfo game = getItem(position);
+		RoundInfo roundInfo = getItem(position);
 		// Check if an existing view is being reused, otherwise inflate the view
 		if (convertView == null)
 		{
 			convertView = LayoutInflater.from(context).inflate(R.layout.round_detail, parent, false);
 		}
+
+		int colorResource = (position % 2) == 0 ? R.color.secondaryLightBackgroundColor : R.color.primaryLightBackgroundColor;
+		convertView.setBackgroundResource(colorResource);
+
+		String prevailingWindName = roundInfo.getRound().getPrevailingWind().getName(context);
+		((TextView)convertView.findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
 
 		playerNameViews[0] = (TextView)convertView.findViewById(R.id.txtPlayerName0);
 		playerNameViews[1] = (TextView)convertView.findViewById(R.id.txtPlayerName1);
@@ -86,6 +91,11 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		playerScoreViews[2] = (TextView)convertView.findViewById(R.id.txtPlayerScore2);
 		playerScoreViews[3] = (TextView)convertView.findViewById(R.id.txtPlayerScore3);
 
+		handDescriptionViews[0] = (TextView)convertView.findViewById(R.id.txtHandDescription0);
+		handDescriptionViews[1] = (TextView)convertView.findViewById(R.id.txtHandDescription1);
+		handDescriptionViews[2] = (TextView)convertView.findViewById(R.id.txtHandDescription2);
+		handDescriptionViews[3] = (TextView)convertView.findViewById(R.id.txtHandDescription3);
+
 		infoLayoutContainers[0] = (LinearLayout)convertView.findViewById(R.id.layoutInfoPlayer0);
 		infoLayoutContainers[1] = (LinearLayout)convertView.findViewById(R.id.layoutInfoPlayer1);
 		infoLayoutContainers[2] = (LinearLayout)convertView.findViewById(R.id.layoutInfoPlayer2);
@@ -96,7 +106,6 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		tileLayoutContainers[2] = (LinearLayout)convertView.findViewById(R.id.layoutTilesPlayer2);
 		tileLayoutContainers[3] = (LinearLayout)convertView.findViewById(R.id.layoutTilesPlayer3);
 
-		RoundInfo roundInfo = getItem(position);
 		int highestScore = Integer.MIN_VALUE;
 
 		for (int i = 0 ; i < 4 ; i++)
@@ -126,7 +135,14 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 
 				ScoredHand hand = round.getHand(player);
 
-				displayHand(tileLayoutContainer, hand);
+				CharSequence handDescription = DisplayUtil.getScoreDescription(context, hand);
+
+				TextView handDescriptionView = handDescriptionViews[i];
+				handDescriptionView.setText(handDescription);
+
+				handDescriptionView.setVisibility(handDescription.length() > 0 ? View.VISIBLE : View.GONE);
+
+				displayHandTiles(tileLayoutContainer, hand);
 
 				infoLayoutContainers[i].setVisibility(View.VISIBLE);
 				tileLayoutContainers[i].setVisibility(View.VISIBLE);
@@ -137,6 +153,7 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 			{
 				infoLayoutContainers[i].setVisibility(View.GONE);
 				tileLayoutContainers[i].setVisibility(View.GONE);
+				handDescriptionViews[i].setVisibility(View.GONE);
 			}
 		}
 
@@ -156,7 +173,7 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		return convertView;
 	}
 
-	private void displayHand(LinearLayout parent, ScoredHand hand)
+	private void displayHandTiles(LinearLayout parent, ScoredHand hand)
 	{
 		int handSize = hand.size();
 		int lastGroupIndex = handSize - 1;
