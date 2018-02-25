@@ -135,5 +135,6 @@
     <string name="editPlayersActivityTitle">Edit players</string>
     <string name="createGameInstruction">1. Enter player names according to their seating positions. For an unoccupied seat leave the name empty.\n\n2. Use <b>ROTATE WIND</b> to set the starting player\'s wind to East.\n\n3. On the menu, use <b>Select scoring</b> to change the scoring scheme.\n\n4. Select <b>SAVE AND START</b> to start the game.</string>
     <string name="scoring_scheme">Scoring scheme:</string>
+    <string name="roundsPlayed">Rounds played:</string>
 
 </resources>

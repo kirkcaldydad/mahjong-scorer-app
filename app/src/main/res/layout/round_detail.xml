@@ -83,7 +83,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/scoreIncrementStartMargin"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                     <TextView
                         android:id="@+id/txtPlayerScore0"
@@ -137,7 +138,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/scoreIncrementStartMargin"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                     <TextView
                         android:id="@+id/txtPlayerScore1"
@@ -191,7 +193,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/scoreIncrementStartMargin"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                     <TextView
                         android:id="@+id/txtPlayerScore2"
@@ -245,7 +248,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/scoreIncrementStartMargin"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="TextView"
+                        android:textSize="@dimen/gameDetailPlayerScoreSize" />
 
                     <TextView
                         android:id="@+id/txtPlayerScore3"

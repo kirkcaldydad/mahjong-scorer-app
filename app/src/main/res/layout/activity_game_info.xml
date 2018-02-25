@@ -47,6 +47,26 @@
         app:layout_constraintStart_toEndOf="@+id/txtPrevailingWindLabel"
         app:layout_constraintTop_toBottomOf="@+id/txtScoringSchemeName" />
 
+    <TextView
+        android:id="@+id/txtRoundCountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/roundsPlayed"
+        app:layout_constraintBottom_toBottomOf="@+id/txtRoundCount"
+        app:layout_constraintEnd_toStartOf="@+id/txtRoundCount" />
+
+    <TextView
+        android:id="@+id/txtRoundCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/roundsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/dividerPrevailingWind"
         android:layout_width="fill_parent"

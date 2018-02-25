@@ -111,5 +111,7 @@ public final class GameInfoActivity extends AppCompatActivity
 		ListView roundsList = findViewById(R.id.roundsList);
 
 		roundsList.setAdapter(adapter);
+
+		((TextView) findViewById(R.id.txtRoundCount)).setText(Integer.toString(rounds.size()));
 	}
 }
