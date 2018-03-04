@@ -1,7 +1,9 @@
 package house.mcintosh.mahjong.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +18,7 @@ import android.widget.ListView;
 
 import java.io.File;
 import java.util.List;
+import java.util.stream.Collector;
 
 import house.mcintosh.mahjong.io.GameFile;
 import house.mcintosh.mahjong.model.GameSummary;
@@ -98,6 +101,7 @@ public final class GameListActivity extends AppCompatActivity
 
 		//noinspection SimplifiableIfStatement
 		if (id == R.id.action_settings) {
+			showAboutDialog();
 			return true;
 		}
 
@@ -137,5 +141,25 @@ public final class GameListActivity extends AppCompatActivity
 				}
 
 		}
+	}
+
+	private void showAboutDialog()
+	{
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder
+				.setTitle(R.string.aboutMahjongScorerTitle)
+				.setMessage(getString(R.string.aboutMessage, "#.#.#"))
+				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface dialog, int id)
+						{
+							// User clicked Cancel button.  Stay on this page.  Nothing to do.
+						}
+					});
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
 	}
 }
