@@ -122,50 +122,100 @@ public final class Round
 	
 	public int getPlayerScore(Player player)
 	{
+
+
+		// If there are only two players, need to calculate the score in a different way, because
+		// following the normal scoring with only two players does nothing with the non-mahjong
+		// player's score.
+
+		if (m_entries.size() == 2)
+			return calculateTwoPlayerScore(player);
+
+		return calculateThreeFourPlayerScore(player);
+	}
+
+	private int calculateThreeFourPlayerScore(Player player)
+	{
 		int score = 0;
 
 		Entry thisPlayerEntry = m_entries.get(player);
-		
+
 		if (thisPlayerEntry.hand.isMahjong())
 		{
 			// Calculate score based on this being the mahjong player.
-			
+
 			Entry receivingEntry = thisPlayerEntry;
-			
+
 			for (Entry givingEntry : m_entries.values())
 			{
 				if (givingEntry.player.equals(player))
 					continue;
-				
+
 				int eastMultiplier = 1;
-				
+
 				if (receivingEntry.playerWind == Wind.EAST || givingEntry.playerWind == Wind.EAST)
 					eastMultiplier = 2;
-				
+
 				score += receivingEntry.hand.getTotalScore() * eastMultiplier;
 			}
 		}
 		else
 		{
 			// Calculate score based on this not being mahjong player.
-			
+
 			for (Entry thatPlayerEntry : m_entries.values())
 			{
 				if (thatPlayerEntry.player.equals(player))
 					continue;
-				
+
 				int eastMultiplier = 1;
-				
+
 				if (thisPlayerEntry.playerWind == Wind.EAST || thatPlayerEntry.playerWind == Wind.EAST)
 					eastMultiplier = 2;
-				
+
 				if (thatPlayerEntry.hand.isMahjong())
 					score -= thatPlayerEntry.hand.getTotalScore() * eastMultiplier;
 				else
 					score += (thisPlayerEntry.hand.getTotalScore() - thatPlayerEntry.hand.getTotalScore()) * eastMultiplier;
 			}
 		}
-		
+
+		return score;
+	}
+
+	private int calculateTwoPlayerScore(Player player)
+	{
+		Entry thatPlayerEntry = null;
+
+		Entry thisPlayerEntry = m_entries.get(player);
+
+
+
+		for (Entry playerEntry : m_entries.values())
+		{
+			if (!playerEntry.player.equals(player))
+			{
+				thatPlayerEntry = playerEntry;
+				break;
+			}
+		}
+
+		int thisHandScore;
+		int thatHandScore;
+
+		if (thisPlayerEntry.hand.isMahjong())
+		{
+			thisHandScore = 2 * thisPlayerEntry.hand.getTotalScore();
+			thatHandScore = thatPlayerEntry.hand.getTotalScore();
+		}
+		else
+		{
+			thisHandScore = thisPlayerEntry.hand.getTotalScore();
+			thatHandScore = 2 * thatPlayerEntry.hand.getTotalScore();
+		}
+
+		int score = thisHandScore - thatHandScore;
+
 		return score;
 	}
 

@@ -13,6 +13,6 @@ public class TestUtil
 	{
 		String scoringSchemeFile = "res/raw/scoring_scheme_british.json";
 		InputStream inStream = TestUtil.class.getClassLoader().getResourceAsStream(scoringSchemeFile);
-		return ScoringScheme.fromJson(inStream);
+		return ScoringScheme.fromJson(inStream, scoringSchemeFile);
 	}
 }

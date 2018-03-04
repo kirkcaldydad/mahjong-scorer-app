@@ -104,4 +104,57 @@ public class TestRound
 		assertEquals(-136 +32-4+16-4, northScore);
 		assertEquals(0, eastScore + southScore + westScore + northScore);		
 	}
+
+	@Test
+	public void testCreatingTwoPlayerRound() throws IOException
+	{
+		Wind prevailingWind = Wind.WEST;
+
+		Round round = new Round(prevailingWind);
+
+		Player eastPlayer	= Player.create("East Player");
+
+		Player westPlayer	= Player.create("West Player");
+
+		round.addHand(eastPlayer, RoundUtil.createHand2(Wind.EAST, prevailingWind), Wind.EAST);
+		round.addHand(westPlayer, RoundUtil.createMahjongHand136(Wind.WEST, prevailingWind), Wind.WEST);
+
+		// Check the score for each player.
+
+		int eastScore	= round.getPlayerScore(eastPlayer);
+		int westScore	= round.getPlayerScore(westPlayer);
+
+		assertEquals(-136*2 +2, eastScore);
+		assertEquals(+136*2 -2, westScore);
+		assertEquals(0, eastScore + westScore);
+	}
+
+
+	@Test
+	public void testCreatingThreePlayerRound() throws IOException
+	{
+		Wind prevailingWind = Wind.WEST;
+
+		Round round = new Round(prevailingWind);
+
+		Player eastPlayer	= Player.create("East Player");
+		Player southPlayer	= Player.create("South Player");
+		Player westPlayer	= Player.create("West Player");
+
+		round.addHand(eastPlayer, RoundUtil.createHand2(Wind.EAST, prevailingWind), Wind.EAST);
+		round.addHand(southPlayer, RoundUtil.createHand4(Wind.SOUTH, prevailingWind), Wind.SOUTH);
+		round.addHand(westPlayer, RoundUtil.createMahjongHand136(Wind.WEST, prevailingWind), Wind.WEST);
+
+		// Check the score for each player.
+
+		int eastScore	= round.getPlayerScore(eastPlayer);
+		int southScore	= round.getPlayerScore(southPlayer);
+		int westScore	= round.getPlayerScore(westPlayer);
+
+		assertEquals(-136*2 +4-8, eastScore);
+		assertEquals(-136*1 +8-4, southScore);
+		assertEquals(+136*3, westScore);
+		assertEquals(0, eastScore + southScore + westScore);
+	}
+
 }
