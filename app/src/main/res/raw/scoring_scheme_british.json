@@ -126,6 +126,9 @@
     "name" : "MahjongHandScore",
     "score" : 10
   }, {
+    "name" : "MahjongByNoScoreHandScore",
+    "multiplier" : 2
+  }, {
     "name" : "NoChowsHandScore",
     "multiplier" : 2
   }, {

@@ -91,6 +91,7 @@
 
     <!-- Mahjong hand scores -->
     <string name="scoreDescriptionMahjongHandScore">Mahjong</string>
+    <string name="scoreDescriptionMahjongByNoScoreHandScore">No score</string>
     <string name="scoreDescriptionNoChowsHandScore">No chows</string>
     <string name="scoreDescriptionSingleSuitHandScore">Single suit</string>
     <string name="scoreDescriptionAllMajorHandScore">All major</string>

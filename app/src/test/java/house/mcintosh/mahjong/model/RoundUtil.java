@@ -73,6 +73,24 @@ public class RoundUtil
 		
 		return hand;
 	}
+
+	public static ScoredHand createMahjongNoScoreHand(Wind playerWind, Wind prevailingWind) throws IOException
+	{
+		ScoringScheme scheme = TestUtil.loadDefaultScoringScheme();
+
+		ScoredHand hand = new ScoredHand(scheme);
+
+		hand.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.CIRCLES, Tile.Number.ONE), Group.Visibility.EXPOSED), scheme, playerWind, prevailingWind));
+		hand.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.CHARACTERS, Tile.Number.TWO), Group.Visibility.EXPOSED), scheme, playerWind, prevailingWind));
+		hand.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.BAMBOO, Tile.Number.SEVEN), Group.Visibility.EXPOSED), scheme, playerWind, prevailingWind));
+		hand.add(new ScoredGroup(new Group(Group.Type.CHOW, new Tile(Tile.Suit.BAMBOO, Tile.Number.TWO), Group.Visibility.EXPOSED), scheme, playerWind, prevailingWind));
+		hand.add(new ScoredGroup(new Group(Group.Type.PAIR, new Tile(Tile.Suit.BAMBOO, Tile.Number.THREE)), scheme, playerWind, prevailingWind));
+		assertTrue(hand.isMahjong());
+		assertEquals(10*2, hand.getTotalScoreUnlimited());
+
+		return hand;
+
+	}
 	
 	/**
 	 * Create a hand from the selection available depending on an index.

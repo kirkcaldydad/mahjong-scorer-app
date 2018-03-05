@@ -326,6 +326,10 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 				}
 			}
 
+			// Only group scores count towards the no score determination.
+			if (groupScores.getTotal() == 0)
+				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.MahjongByNoScoreHandScore));
+
 			if (allMajor)
 				wholeHandScores.append(m_scheme.getScoreContribution(ScoreElement.AllMajorHandScore));
 			
@@ -364,8 +368,6 @@ public final class ScoredHand extends ArrayList<ScoredGroup> implements Serializ
 				}
 			}
 		}
-
-
 
 		m_totalScoreUnlimited	= new ScoreList().append(groupScores).append(wholeHandScores).getTotal();
 		m_totalScoreLimited		= Math.min(m_totalScoreUnlimited, m_scheme.LimitScore);

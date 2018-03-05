@@ -82,6 +82,7 @@ public final class ScoringScheme implements Serializable
 
 		// Mahjong hand scores
 		MahjongHandScore(					R.string.scoreDescriptionMahjongHandScore),
+		MahjongByNoScoreHandScore(			R.string.scoreDescriptionMahjongByNoScoreHandScore),
 		NoChowsHandScore(					R.string.scoreDescriptionNoChowsHandScore),
 		SingleSuitHandScore(				R.string.scoreDescriptionSingleSuitHandScore),
 		AllMajorHandScore(					R.string.scoreDescriptionAllMajorHandScore),
@@ -289,6 +290,7 @@ public final class ScoringScheme implements Serializable
 	//	scheme.addScoreContribution(contributions.get(ScoreElement.AllSeasonsHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.OriginalCallHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongHandScore));
+		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByNoScoreHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.NoChowsHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.SingleSuitHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.AllMajorHandScore));
@@ -300,7 +302,6 @@ public final class ScoringScheme implements Serializable
 		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByLastDiscardHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByRobbingKongHandScore));
 		scheme.addScoreContribution(contributions.get(ScoreElement.MahjongByOriginalCallHandScore));
-		// Add in mahjong by no score.  score: 0, multiplier: 2
 
 		return scheme;
 	}
