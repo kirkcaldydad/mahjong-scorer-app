@@ -113,8 +113,29 @@ public final class CreateGameActivity extends AppCompatActivity
 
 	public void onRotateWindClick(View view)
 	{
+		// Maximum of 4 recursions means that if all names are empty, East starts at the
+		// scorer's own seat and rotates one position with each click.  If any of the names
+		// are filled in it rotates to the next non-blank name.
+		rotateWindToOccupiedSeat(4);
+
+		displayWinds();
+		setButtonState();
+	}
+
+	/**
+	 * Rotate winds, recursing if necessary until east is at a position that has a name entered.
+	 *
+	 * @param maxRecursions	A counter that is decremented on each recursion to prevent
+	 *                      unlimited recursion if all names are empty.
+	 */
+	private void rotateWindToOccupiedSeat(int maxRecursions)
+	{
+		int eastPosition = 0;
+
 		if (m_winds == null)
+		{
 			m_winds = new Wind[]{Wind.EAST, Wind.SOUTH, Wind.WEST, Wind.NORTH};
+		}
 		else
 		{
 			Wind last = m_winds[3];
@@ -122,10 +143,19 @@ public final class CreateGameActivity extends AppCompatActivity
 			m_winds[2] = m_winds[1];
 			m_winds[1] = m_winds[0];
 			m_winds[0] = last;
+
+			for (int i = 0 ; i < 4 ; i++)
+			{
+				if (m_winds[i] == Wind.EAST)
+				{
+					eastPosition = i;
+					break;
+				}
+			}
 		}
 
-		displayWinds();
-		setButtonState();
+		if (m_names[eastPosition].isEmpty() && maxRecursions > 0)
+			rotateWindToOccupiedSeat(--maxRecursions);
 	}
 
 	private void displayScoringScheme()
@@ -174,7 +204,6 @@ public final class CreateGameActivity extends AppCompatActivity
 	{
 		// Create a new game instance and save it.
 
-		// TODO: make scoring scheme selectable.
 		ScoringScheme scheme = ScoringScheme.load(this, m_selectedScoringSchemeOption.schemeResource);
 		Game game = new Game(scheme);
 
@@ -237,6 +266,7 @@ public final class CreateGameActivity extends AppCompatActivity
 		}
 
 		((Button) findViewById(R.id.startButton)).setEnabled(playerCount >= 2 && gotEastPlayer);
+		((Button) findViewById(R.id.windSelectButton)).setEnabled(playerCount > 0);
 	}
 
 	/**
