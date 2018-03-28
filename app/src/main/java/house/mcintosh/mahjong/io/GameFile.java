@@ -129,6 +129,17 @@ public class GameFile
 		return gameFile;
 	}
 
+	public void delete()
+	{
+		boolean deleted = m_file.delete();
+
+		if (!deleted)
+		{
+			// Shouldn't ever happen, but doesn't really matter.
+			Log.e(LOG_TAG, "Cannot delete game file:" + m_file.getAbsolutePath());
+		}
+	}
+
 	public File getFile()
 	{
 		return m_file;

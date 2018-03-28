@@ -64,6 +64,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="dontSave">Continue without saving</string>
+    <string name="deleteGame">Delete game</string>
 
     <string name="questionMahjongByLooseTile">A loose tile</string>
     <string name="questionMahjongByWallTile">A tile from the wall</string>
@@ -81,6 +82,7 @@
     <string name="action_edit_players">Edit Players</string>
     <string name="action_select_scoring_scheme">Select scoring</string>
     <string name="action_show_game_info">Game detail</string>
+    <string name="action_delete_game">Delete game</string>
 
     <string name="selectScoringSchemeDialogTitle">Scoring scheme</string>
     <string name="scoringSchemeBritish">British (standard)</string>
@@ -139,5 +141,10 @@
     <string name="createGameInstruction">1. Enter player names according to their seating positions. For an unoccupied seat leave the name empty.\n\n2. Use <b>ROTATE WIND</b> to set the starting player\'s wind to East.\n\n3. On the menu, use <b>Select scoring</b> to change the scoring scheme.\n\n4. Select <b>SAVE AND START</b> to start the game.</string>
     <string name="scoring_scheme">Scoring scheme:</string>
     <string name="roundsPlayed">Rounds played:</string>
+
+    <string name="confirmGameDeleteTitle">Delete game?</string>
+    <string name="confirmGameDeleteMessage">Are you sure you want to delete the game?</string>
+    <string name="confirm2GameDeleteTitle">Are you sure?</string>
+    <string name="confirm2GameDeleteMessage">Are you really sure you want to delete the game?\n\nThis action cannot be undone.\n\nAll information about this game will be removed and you will not be able to recover the game after it is deleted.</string>
 
 </resources>

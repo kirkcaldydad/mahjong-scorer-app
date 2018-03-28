@@ -162,22 +162,26 @@ public final class GamePlayActivity extends AppCompatActivity
 		switch (item.getItemId())
 		{
 			case android.R.id.home:
-				return confirmLoseEnteredRoundForNavigateUp();
+				return onNavigateUpAction();
 
 			case R.id.action_edit_previous_round:
-				editPreviousRound();
+				onEditPreviousRound();
 				return true;
 
 			case R.id.action_rotate_seat_display:
-				rotateSeatDisplay();
+				onRotateSeatDisplay();
 				return true;
 
 			case R.id.action_edit_players:
-				editPlayers();
+				onEditPlayers();
 				return true;
 
 			case R.id.action_show_game_info:
 				showGameInfo();
+				return true;
+
+			case R.id.action_delete_game:
+				onDeleteGame();
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -190,10 +194,10 @@ public final class GamePlayActivity extends AppCompatActivity
 	@Override
 	public void onBackPressed()
 	{
-		confirmLoseEnteredRoundForNavigateUp();
+		onNavigateUpAction();
 	}
 
-	public boolean confirmLoseEnteredRoundForNavigateUp()
+	public boolean onNavigateUpAction()
 	{
 		final GamePlayActivity self = this;
 
@@ -403,7 +407,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		return true;
 	}
 
-	private void editPreviousRound()
+	private void onEditPreviousRound()
 	{
 		if (!m_round.isEmpty())
 		{
@@ -421,7 +425,7 @@ public final class GamePlayActivity extends AppCompatActivity
 							// the previous round, which will now not come down this prompt route.
 							m_round = new Round(m_round.getPrevailingWind());
 
-							editPreviousRound();
+							onEditPreviousRound();
 						}
 					};
 
@@ -441,7 +445,7 @@ public final class GamePlayActivity extends AppCompatActivity
 		displayGame(false);
 	}
 
-	private void rotateSeatDisplay()
+	private void onRotateSeatDisplay()
 	{
 		m_game.rotateSeats();
 
@@ -451,7 +455,7 @@ public final class GamePlayActivity extends AppCompatActivity
 	/**
 	 * Open the activity to edit players.
 	 */
-	private void editPlayers()
+	private void onEditPlayers()
 	{
 		if (m_game.isFinished())
 		{
@@ -474,6 +478,76 @@ public final class GamePlayActivity extends AppCompatActivity
 		intent.putExtra(GameInfoActivity.EXTRA_KEY_GAME_FILE, m_gameFile.getFile());
 
 		startActivity(intent);
+	}
+
+	private void onDeleteGame()
+	{
+		// Prompt to confirm operation.
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder
+				.setTitle(R.string.confirmGameDeleteTitle)
+				.setMessage(R.string.confirmGameDeleteMessage)
+				.setPositiveButton(R.string.deleteGame, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Delete game button.  Display a second level confirmation dialog.
+						onDeleteGameConfirmation();
+					}
+				})
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Cancel button.  Stay on this page.  Nothing to do.
+					}
+				});
+
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
+	}
+
+	private void onDeleteGameConfirmation()
+	{
+		// Prompt to confirm operation.
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder
+				.setTitle(R.string.confirm2GameDeleteTitle)
+				.setMessage(R.string.confirm2GameDeleteMessage)
+				.setPositiveButton(R.string.deleteGame, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Delete game button.  They've been warned enough - do the delete.
+						doDeleteGame();
+					}
+				})
+				.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int id)
+					{
+						// User clicked Cancel button.  Stay on this page.  Nothing to do.
+					}
+				});
+
+		AlertDialog dialog = builder.create();
+
+		dialog.show();
+	}
+
+	private void doDeleteGame()
+	{
+		m_gameFile.delete();
+
+		Intent returnHandIntent = NavUtils.getParentActivityIntent(this);
+
+		NavUtils.navigateUpTo(this, returnHandIntent);
 	}
 
 	/**
