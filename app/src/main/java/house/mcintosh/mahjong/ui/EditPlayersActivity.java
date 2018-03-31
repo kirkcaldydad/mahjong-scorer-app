@@ -55,6 +55,13 @@ public class EditPlayersActivity extends AppCompatActivity
 		m_playerName2.setVisibility(m_players[2] == null ? View.INVISIBLE : View.VISIBLE);
 		m_playerName3.setVisibility(m_players[3] == null ? View.INVISIBLE : View.VISIBLE);
 
+		// Set outline colours depending on whether there is a player in each position.
+
+		findViewById(R.id.playerContainer0).setBackground(getDrawable(m_players[0] == null ? R.drawable.name_entry_border_box_muted : R.drawable.name_entry_border_box));
+		findViewById(R.id.playerContainer1).setBackground(getDrawable(m_players[1] == null ? R.drawable.name_entry_border_box_muted : R.drawable.name_entry_border_box));
+		findViewById(R.id.playerContainer2).setBackground(getDrawable(m_players[2] == null ? R.drawable.name_entry_border_box_muted : R.drawable.name_entry_border_box));
+		findViewById(R.id.playerContainer3).setBackground(getDrawable(m_players[3] == null ? R.drawable.name_entry_border_box_muted : R.drawable.name_entry_border_box));
+
 		// Don't show the wind fields or buttons at all.
 
 		findViewById(R.id.playerWindText0).setVisibility(View.GONE);

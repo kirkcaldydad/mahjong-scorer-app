@@ -44,6 +44,7 @@ public final class CreateGameActivity extends AppCompatActivity
 	private Wind[] m_winds = null;
 	private TextView[] m_windTextViews = new TextView[4];
 	private View[] m_eastSymbols = new View[4];
+	private View[] m_nameOutlines = new View[4];
 	private TextView m_txtScoringScheme;
 
 	@Override
@@ -68,6 +69,11 @@ public final class CreateGameActivity extends AppCompatActivity
 		m_eastSymbols[1] = findViewById(R.id.imgEastWind1);
 		m_eastSymbols[2] = findViewById(R.id.imgEastWind2);
 		m_eastSymbols[3] = findViewById(R.id.imgEastWind3);
+
+		m_nameOutlines[0] = findViewById(R.id.playerContainer0);
+		m_nameOutlines[1] = findViewById(R.id.playerContainer1);
+		m_nameOutlines[2] = findViewById(R.id.playerContainer2);
+		m_nameOutlines[3] = findViewById(R.id.playerContainer3);
 
 		m_txtScoringScheme = findViewById(R.id.txtScoringScheme);
 
@@ -340,7 +346,11 @@ public final class CreateGameActivity extends AppCompatActivity
 		@Override
 		public void onTextChanged(CharSequence s, int start, int before, int count)
 		{
-			m_names[m_nameIndex] = s.toString().trim();
+			String name = s.toString().trim();
+			m_names[m_nameIndex] = name;
+
+			m_nameOutlines[m_nameIndex].setBackground(getDrawable(name.isEmpty() ? R.drawable.name_entry_border_box_muted : R.drawable.name_entry_border_box));
+
 			setButtonState();
 
 

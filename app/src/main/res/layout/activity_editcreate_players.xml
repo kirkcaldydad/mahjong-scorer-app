@@ -36,10 +36,11 @@
             android:layout_weight="26" />
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/playerContainer2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="48"
-            android:background="@drawable/name_entry_border_box"
+            android:background="@drawable/name_entry_border_box_muted"
             tools:layout_editor_absoluteX="47dp">
 
             <TextView
@@ -113,10 +114,11 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/playerContainer3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="47"
-            android:background="@drawable/name_entry_border_box">
+            android:background="@drawable/name_entry_border_box_muted">
 
             <TextView
                 android:id="@+id/playerWindText3"
@@ -172,10 +174,11 @@
             android:layout_weight="6" />
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/playerContainer1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="47"
-            android:background="@drawable/name_entry_border_box">
+            android:background="@drawable/name_entry_border_box_muted">
 
             <TextView
                 android:id="@+id/playerWindText1"
@@ -249,10 +252,11 @@
             android:layout_weight="26" />
 
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/playerContainer0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="48"
-            android:background="@drawable/name_entry_border_box">
+            android:background="@drawable/name_entry_border_box_muted">
 
             <TextView
                 android:id="@+id/playerWindText0"
