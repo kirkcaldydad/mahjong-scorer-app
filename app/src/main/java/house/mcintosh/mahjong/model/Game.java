@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import house.mcintosh.mahjong.exception.InternalException;
 import house.mcintosh.mahjong.exception.InvalidGameStateException;
 import house.mcintosh.mahjong.exception.InvalidModelException;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
@@ -24,12 +25,13 @@ public final class Game
 	private Player[]				m_seats				= new Player[4];;
 	private int						m_seatsOccupied		= 0;
 	private List<Round>				m_rounds			= new ArrayList<>();
-	private Map<Player, Integer>	m_scores			= new HashMap<>();
 	private boolean					m_started			= false;
 	private boolean					m_finished			= false;
 	
 	private final ScoringScheme		m_scheme;
 	private final GameMeta			m_meta;
+
+	List<Map<Player, Integer>> 		m_allRoundStartScores	= new ArrayList<>();
 	
 	private Player		m_startingPlayer;
 	private Player		m_endingPlayer;
@@ -38,14 +40,16 @@ public final class Game
 	
 	public Game(ScoringScheme scheme)
 	{
-		m_scheme = scheme;
-		m_meta = new GameMeta();
+		this(scheme, new GameMeta());
 	}
 
 	private Game(ScoringScheme scheme, GameMeta meta)
 	{
 		m_scheme = scheme;
 		m_meta = meta;
+
+		// Create an initial score map to hold the scores for the start of round 1.
+		m_allRoundStartScores.add(new HashMap<Player, Integer>());
 	}
 
 	public ObjectNode toJson()
@@ -54,6 +58,8 @@ public final class Game
 		ArrayNode	seats	= JsonUtil.createArrayNode();
 		ArrayNode	players	= JsonUtil.createArrayNode();
 		ObjectNode	scores	= JsonUtil.createObjectNode();
+
+		Map<Player, Integer> currentScores = getLastRoundEndScores();
 
 		game.put("version", "1");
 		game.set("meta", m_meta.toJson());
@@ -66,6 +72,7 @@ public final class Game
 			{
 				players.add(player.toJson());
 				seat.put("playerId", player.getId());
+				scores.put(player.getId(), currentScores.get(player));
 
 				if (player.equals(m_startingPlayer))
 					seat.put("startingPlayer", true);
@@ -75,8 +82,6 @@ public final class Game
 
 				if (player.equals(m_eastPlayer))
 					seat.put("eastPlayer", true);
-
-				scores.put(player.getId(), m_scores.get(player));
 			}
 
 			seats.add(seat);
@@ -131,6 +136,8 @@ public final class Game
 			Player player = Player.get(new PlayerId(seatNode.get("playerId")));
 			game.m_seats[i] = player;
 
+			game.m_allRoundStartScores.get(0).put(player, game.m_scheme.InitialScore);
+
 			game.m_seatsOccupied++;
 
 			if (seatNode.path("startingPlayer").asBoolean(false))
@@ -145,9 +152,9 @@ public final class Game
 
 		// Initialise the game state indicators.
 
+		game.startGame(game.m_startingPlayer);
+
 		game.m_started = gameNode.path("started").asBoolean(false);
-		game.m_finished = gameNode.path("finished").asBoolean(false);
-		game.m_prevailingWind = Wind.valueOf(gameNode.path("prevailingWind").asText());
 
 		// Load the rounds.
 
@@ -155,20 +162,7 @@ public final class Game
 
 		for (JsonNode roundNode : roundsNode)
 		{
-			game.m_rounds.add(Round.fromJson(roundNode, scheme));
-		}
-
-		// Load the scores.
-
-		ObjectNode scoresNode = (ObjectNode)gameNode.get("scores");
-
-		for (Iterator<String> it = scoresNode.fieldNames(); it.hasNext(); )
-		{
-			String playerId = it.next();
-
-			Player player = Player.get(new PlayerId(playerId));
-
-			game.m_scores.put(Player.get(new PlayerId(playerId)), scoresNode.get(playerId).asInt());
+			game.addRound(Round.fromJson(roundNode, scheme));
 		}
 
 		return game;
@@ -187,8 +181,8 @@ public final class Game
 		
 		m_seats[index] = player;
 		m_seatsOccupied++;
-		
-		m_scores.put(player, m_scheme.InitialScore);
+
+		m_allRoundStartScores.get(0).put(player, m_scheme.InitialScore);
 	}
 
 	public Player getPlayer(int index)
@@ -270,19 +264,25 @@ public final class Game
 		m_rounds.add(round);
 		
 		// Update the score with the new round scores.
+
+		Map<Player, Integer> thisRoundStartScores = m_allRoundStartScores.get(m_allRoundStartScores.size()-1);
+		Map<Player, Integer> nextRoundStartScores = new HashMap<>();
 		
 		for (Player player : m_seats)
 		{
 			if (player == null)
 				continue;
 			
-			Integer currentScore = m_scores.get(player);
-			
-			m_scores.put(player, currentScore + round.getPlayerScore(player));
+			Integer currentScore = thisRoundStartScores.get(player);
+			Integer changedScore = currentScore + round.getPlayerScore(player);
+
+			nextRoundStartScores.put(player, changedScore);
 		}
+
+		m_allRoundStartScores.add(nextRoundStartScores);
 		
 		// Move the player and prevailing wind on to the next round.
-		
+
 		if (round.getHand(m_eastPlayer).isMahjong())
 			// Continue game without moving east player on.
 			return;
@@ -326,10 +326,14 @@ public final class Game
 
 		Map<Player, Integer> initialScores = new HashMap<>();
 
-		for (Player player : m_scores.keySet())
-			initialScores.put(player, m_scheme.InitialScore);
+		for (Player player : m_seats)
+		{
+			if (player != null)
+				initialScores.put(player, m_scheme.InitialScore);
+		}
 
-		m_scores = initialScores;
+		m_allRoundStartScores = new ArrayList<Map<Player, Integer>>();
+		m_allRoundStartScores.add(initialScores);
 		return allRounds;
 	}
 
@@ -366,32 +370,49 @@ public final class Game
 	 * Get all the scores for all rounds in the game.
 	 *
 	 * @return	A list of maps.  Each map has key Player, and value is the score for that player.
-	 * 			The list has an entry corresponding to each round in the game.
+	 * 			Entries in the list match the list returned by getRounds().
 	 */
 	public List<Map<Player, Integer>> getRoundScores()
 	{
-		// To get the state of the game back to the way it was at each round,
-		// set it back to the start of the game, and add all the rounds again except for the
-		// last one.  Simplistic but simple and avoids keeping the scores for all previous
-		// rounds - although maybe that would be better.
+		return m_allRoundStartScores.subList(1, m_allRoundStartScores.size());
+	}
 
-		List<Round> allRounds = clearGame();
+	public Map<Player, Integer> getIntialScores()
+	{
+		return  m_allRoundStartScores.get(0);
+	}
 
-		// Add all the rounds to the game, recording the scores as we go.
+	/**
+	 * @return	The scores at the end of the last completed round.  Will be the
+	 * 			initial scores if no rounds have been added to the game.
+	 */
+	public Map<Player, Integer> getLastRoundEndScores()
+	{
+		return  m_allRoundStartScores.get(m_allRoundStartScores.size()-1);
+	}
 
-		int roundsCount = allRounds.size();
-		List<Map<Player, Integer>> allRoundScores = new ArrayList<>(roundsCount);
+	/**
+	 * @return	The scores at the start of the last added Round.  null if no
+	 * 			rounds have been added to the game.
+	 */
+	public Map<Player, Integer> getLastRoundStartScores()
+	{
+		int roundStartIndex = m_allRoundStartScores.size() - 2;
 
-		for (int i = 0 ; i < roundsCount ; i++)
-		{
-			addRound(allRounds.get(i));
+		if (roundStartIndex < 0)
+			return null;
 
-			Map<Player, Integer> roundScores = new HashMap<>(m_scores);
+		return  m_allRoundStartScores.get(roundStartIndex);
+	}
 
-			allRoundScores.add(roundScores);
-		}
+	public Round getLastRound()
+	{
+		int index = m_rounds.size() - 1;
 
-		return allRoundScores;
+		if (index < 0)
+			return null;
+
+		return m_rounds.get(index);
 	}
 
 	public int getRoundCount()
@@ -433,7 +454,7 @@ public final class Game
 	
 	public int getPlayerScore(Player player)
 	{
-		Integer score = m_scores.get(player);
+		Integer score = m_allRoundStartScores.get(m_allRoundStartScores.size()-1).get(player);
 
 		if (score == null)
 			System.out.println("got null score for " + player.toJson());

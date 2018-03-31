@@ -70,22 +70,22 @@ public final class GameInfoActivity extends AppCompatActivity
 		((TextView) findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
 
 		// Create a list of RoundInfo instances to be displayed.  We can also get the
-		// scores for all rounds from the game, foir display and caclulating the increments
+		// scores for all rounds from the game, for display and caclulating the increments
 		// for each player.
 
 		Game scoreCalcGame = new Game(scheme);
 		Player[] seats = m_game.getSeats();
-		Map<Player, Integer> previousScores = new HashMap<>();
 
 		for (int i = 0; i < seats.length; i++)
 		{
 			scoreCalcGame.setPlayer(seats[i], i);
-			previousScores.put(seats[i], scheme.InitialScore);
 		}
 
 		ArrayList<RoundInfo> roundInfos = new ArrayList<>(m_game.getRoundCount());
 		List<Round> rounds = m_game.getRounds();
 		List<Map<Player, Integer>> roundScores = m_game.getRoundScores();
+		Map<Player, Integer> previousScores = m_game.getIntialScores();
+
 
 		for (int i = 0 ; i < rounds.size() ; i++)
 		{

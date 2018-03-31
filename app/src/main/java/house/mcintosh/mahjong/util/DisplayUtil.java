@@ -101,7 +101,7 @@ public final class DisplayUtil
 		return multipliers.toString();
 	}
 
-	public static String getTotalScoreWithStatus(Context context, ScoredHand hand)
+	public static String getHandScoreWithStatus(Context context, ScoredHand hand)
 	{
 		int score = hand.getTotalScore();
 
@@ -113,6 +113,23 @@ public final class DisplayUtil
 			sb.append(' ').append(context.getText(R.string.mahjong));
 
 		sb.append(')');
+
+		return sb.toString();
+	}
+
+	public static String getScoreIncrementWithStatus(Context context, int fromRoundScore, int toRoundScore, ScoredHand hand)
+	{
+		int scoreIncrement = toRoundScore - fromRoundScore;
+
+		StringBuilder sb = new StringBuilder();
+
+		if (scoreIncrement >= 0)
+			sb.append('+');
+
+		sb.append(scoreIncrement);
+
+		if (hand.isMahjong())
+			sb.append(' ').append(context.getText(R.string.mahjong));
 
 		return sb.toString();
 	}

@@ -313,15 +313,25 @@ public final class GamePlayActivity extends AppCompatActivity
 
 	private void displayGame(boolean showMultiMahjongError)
 	{
-		displayPlayer(m_game.getPlayer(0), m_playerViews[0], showMultiMahjongError);
-		displayPlayer(m_game.getPlayer(1), m_playerViews[1], showMultiMahjongError);
-		displayPlayer(m_game.getPlayer(2), m_playerViews[2], showMultiMahjongError);
-		displayPlayer(m_game.getPlayer(3), m_playerViews[3], showMultiMahjongError);
+		Map<Player, Integer> previousRoundStartScores = m_game.getLastRoundStartScores();
+		Map<Player, Integer> previousRoundEndScores = m_game.getLastRoundEndScores();
+		Round previousRound = m_game.getLastRound();
+
+		displayPlayer(m_game.getPlayer(0), m_playerViews[0], showMultiMahjongError, previousRound, previousRoundStartScores, previousRoundEndScores);
+		displayPlayer(m_game.getPlayer(1), m_playerViews[1], showMultiMahjongError, previousRound, previousRoundStartScores, previousRoundEndScores);
+		displayPlayer(m_game.getPlayer(2), m_playerViews[2], showMultiMahjongError, previousRound, previousRoundStartScores, previousRoundEndScores);
+		displayPlayer(m_game.getPlayer(3), m_playerViews[3], showMultiMahjongError, previousRound, previousRoundStartScores, previousRoundEndScores);
 
 		m_prevailingWindView.setText(m_windNames.get(m_game.getPrevailingWind()));
 	}
 
-	private void displayPlayer(Player player, PlayerViews views, boolean showMultiMahjongError)
+	private void displayPlayer(
+			Player player,
+			PlayerViews views,
+			boolean showMultiMahjongError,
+			Round previousRound,
+			Map<Player, Integer> previousRoundStartScores,
+			Map<Player, Integer> previousRoundEndScores)
 	{
 		if (player == null)
 		{
@@ -356,7 +366,7 @@ public final class GamePlayActivity extends AppCompatActivity
 							R.style.complete;
 
 			views.playerName.setTextAppearance(styleResource);
-			views.roundScore.setText(DisplayUtil.getTotalScoreWithStatus(this, playerHand));
+			views.roundScore.setText(DisplayUtil.getHandScoreWithStatus(this, playerHand));
 			views.roundScore.setVisibility(View.VISIBLE);
 			views.outlineBox.setBackground(getDrawable(R.drawable.name_entry_border_box_muted));
 		}
@@ -365,6 +375,24 @@ public final class GamePlayActivity extends AppCompatActivity
 			views.playerName.setTextAppearance(R.style.available);
 			views.roundScore.setVisibility(View.INVISIBLE);
 			views.outlineBox.setBackground(getDrawable(R.drawable.name_entry_border_box));
+
+			int roundScoreVisibility = View.INVISIBLE;
+
+			if (player != null && previousRound != null && previousRoundStartScores != null && m_round.isEmpty())
+			{
+				// Current round is completed.  Display the score increments.
+
+				String scoreIncrementStr = DisplayUtil.getScoreIncrementWithStatus(
+						this,
+						previousRoundStartScores.get(player),
+						previousRoundEndScores.get(player),
+						previousRound.getHand(player));
+				views.roundScore.setText(scoreIncrementStr);
+
+				roundScoreVisibility = View.VISIBLE;
+			}
+
+			views.roundScore.setVisibility(roundScoreVisibility);
 		}
 	}
 
