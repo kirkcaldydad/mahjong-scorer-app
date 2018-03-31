@@ -373,8 +373,6 @@ public final class GamePlayActivity extends AppCompatActivity
 		else
 		{
 			views.playerName.setTextAppearance(R.style.available);
-			views.roundScore.setVisibility(View.INVISIBLE);
-			views.outlineBox.setBackground(getDrawable(R.drawable.name_entry_border_box));
 
 			int roundScoreVisibility = View.INVISIBLE;
 
@@ -392,7 +390,11 @@ public final class GamePlayActivity extends AppCompatActivity
 				roundScoreVisibility = View.VISIBLE;
 			}
 
+			int outlineResource = player == null ? R.drawable.name_entry_border_box_muted : R.drawable.name_entry_border_box;
+
+			views.outlineBox.setBackground(getDrawable(outlineResource));
 			views.roundScore.setVisibility(roundScoreVisibility);
+
 		}
 	}
 
