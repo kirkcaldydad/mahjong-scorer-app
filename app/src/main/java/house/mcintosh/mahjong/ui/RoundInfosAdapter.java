@@ -20,6 +20,7 @@ import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Round;
 import house.mcintosh.mahjong.model.RoundInfo;
 import house.mcintosh.mahjong.model.Tile;
+import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoredGroup;
 import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.util.DisplayUtil;
@@ -68,9 +69,6 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		int colorResource = (position % 2) == 0 ? R.color.secondaryLightBackgroundColor : R.color.primaryLightBackgroundColor;
 		convertView.setBackgroundResource(colorResource);
 
-		String prevailingWindName = roundInfo.getRound().getPrevailingWind().getName(context);
-		((TextView)convertView.findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
-
 		playerNameViews[0] = (TextView)convertView.findViewById(R.id.txtPlayerName0);
 		playerNameViews[1] = (TextView)convertView.findViewById(R.id.txtPlayerName1);
 		playerNameViews[2] = (TextView)convertView.findViewById(R.id.txtPlayerName2);
@@ -108,65 +106,111 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 
 		int highestScore = Integer.MIN_VALUE;
 
-		for (int i = 0 ; i < 4 ; i++)
+		if (roundInfo.hasRound())
 		{
-			Player player = roundInfo.getPlayer(i);
-			Round round = roundInfo.getRound();
-			LinearLayout tileLayoutContainer = tileLayoutContainers[i];
-			tileLayoutContainer.removeAllViews();
+			int roundNumber = getCount() - position - 1;
 
-			if (player != null)
+			String roundNumberMessage = context.getResources().getString(R.string.roundNumber, Integer.toString(roundNumber));
+			((TextView)convertView.findViewById(R.id.txtRoundDescription)).setText(roundNumberMessage);
+
+			String prevailingWindName = roundInfo.getRound().getPrevailingWind().getName(context);
+			((TextView)convertView.findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
+
+			for (int i = 0; i < 4; i++)
 			{
-				playerNameViews[i].setText(player.getName());
+				Player player = roundInfo.getPlayer(i);
+				Round round = roundInfo.getRound();
+				LinearLayout tileLayoutContainer = tileLayoutContainers[i];
+				tileLayoutContainer.removeAllViews();
 
-				playerWindViews[i].setText(round.getPlayerWind(player).getName(context));
+				if (player != null)
+				{
+					playerNameViews[i].setText(player.getName());
 
-				int increment = roundInfo.getScoreIncrement(player);
-				String displayIncrement = Integer.toString(increment);
+					playerWindViews[i].setText(round.getPlayerWind(player).getName(context));
 
-				if (increment >= 0)
-					displayIncrement = "+" + displayIncrement;
+					int increment = roundInfo.getScoreIncrement(player);
+					String displayIncrement = Integer.toString(increment);
 
-				int score = roundInfo.getScore(player);
-				String displayScore = "= " + Integer.toString(score);
+					if (increment >= 0)
+						displayIncrement = "+" + displayIncrement;
 
-				playerScoreIncrementViews[i].setText(displayIncrement);
-				playerScoreViews[i].setText(displayScore);
+					int score = roundInfo.getScore(player);
+					String displayScore = "= " + Integer.toString(score);
 
-				ScoredHand hand = round.getHand(player);
+					playerScoreIncrementViews[i].setText(displayIncrement);
+					playerScoreViews[i].setText(displayScore);
 
-				CharSequence handDescription = DisplayUtil.getScoreDescription(context, hand);
+					playerScoreIncrementViews[i].setVisibility(View.VISIBLE);
 
-				TextView handDescriptionView = handDescriptionViews[i];
-				handDescriptionView.setText(handDescription);
+					ScoredHand hand = round.getHand(player);
 
-				handDescriptionView.setVisibility(handDescription.length() > 0 ? View.VISIBLE : View.GONE);
+					CharSequence handDescription = DisplayUtil.getScoreDescription(context, hand);
 
-				displayHandTiles(tileLayoutContainer, hand);
+					TextView handDescriptionView = handDescriptionViews[i];
+					handDescriptionView.setText(handDescription);
 
-				infoLayoutContainers[i].setVisibility(View.VISIBLE);
-				tileLayoutContainers[i].setVisibility(View.VISIBLE);
+					handDescriptionView.setVisibility(handDescription.length() > 0 ? View.VISIBLE : View.GONE);
 
-				highestScore = Math.max(highestScore, score);
+					displayHandTiles(tileLayoutContainer, hand);
+
+					infoLayoutContainers[i].setVisibility(View.VISIBLE);
+					tileLayoutContainers[i].setVisibility(View.VISIBLE);
+
+					highestScore = Math.max(highestScore, score);
+				}
+				else
+				{
+					infoLayoutContainers[i].setVisibility(View.GONE);
+					tileLayoutContainers[i].setVisibility(View.GONE);
+					handDescriptionViews[i].setVisibility(View.GONE);
+				}
 			}
-			else
+
+			for (int i = 0; i < 4; i++)
 			{
-				infoLayoutContainers[i].setVisibility(View.GONE);
-				tileLayoutContainers[i].setVisibility(View.GONE);
-				handDescriptionViews[i].setVisibility(View.GONE);
+				Player player = roundInfo.getPlayer(i);
+
+				if (player == null)
+					continue;
+
+				int typeface = (roundInfo.getScore(player) == highestScore) ? Typeface.BOLD : Typeface.NORMAL;
+
+				playerScoreViews[i].setTypeface(null, typeface);
+				playerNameViews[i].setTypeface(null, typeface);
 			}
 		}
-
-		for (int i = 0 ; i < 4 ; i++)
+		else
 		{
-			Player player = roundInfo.getPlayer(i);
+			// No round available - This must be the initial score.
 
-			if (player == null)
-				continue;
+			((TextView)convertView.findViewById(R.id.txtRoundDescription)).setText(R.string.gameStart);
 
-			int typeface = ( roundInfo.getScore(player) == highestScore ) ? Typeface.BOLD : Typeface.NORMAL;
+			String prevailingWindName = Wind.EAST.getName(context);
+			((TextView)convertView.findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
 
-			playerScoreViews[i].setTypeface(null, typeface);
+			for (int i = 0 ; i < 4 ; i++)
+			{
+				Player player = roundInfo.getPlayer(i);
+
+				if (player != null)
+				{
+					playerNameViews[i].setText(player.getName());
+					playerWindViews[i].setText(roundInfo.getPlayerWind(player).getName(context));
+
+					playerScoreViews[i].setText(Integer.toString(roundInfo.getScore(player)));
+					playerScoreViews[i].setTypeface(null, Typeface.NORMAL);
+
+					playerScoreIncrementViews[i].setVisibility(View.GONE);
+				}
+				else
+				{
+					infoLayoutContainers[i].setVisibility(View.GONE);
+				}
+
+				handDescriptionViews[i].setVisibility(View.GONE);
+				tileLayoutContainers[i].setVisibility(View.GONE);
+			}
 		}
 
 		// Return the completed view to render on screen

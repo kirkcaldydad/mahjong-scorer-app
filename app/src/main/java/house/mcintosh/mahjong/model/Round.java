@@ -122,8 +122,6 @@ public final class Round
 	
 	public int getPlayerScore(Player player)
 	{
-
-
 		// If there are only two players, need to calculate the score in a different way, because
 		// following the normal scoring with only two players does nothing with the non-mahjong
 		// player's score.

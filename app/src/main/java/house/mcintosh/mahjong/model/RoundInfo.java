@@ -2,39 +2,17 @@ package house.mcintosh.mahjong.model;
 
 import java.util.Map;
 
-public class RoundInfo
+public interface RoundInfo
 {
-	private final Round m_round;
-	private final Player[] m_seats;
-	private final Map<Player, Integer> m_totalScores;
-	private final Map<Player, Integer> m_scoreIncrements;
+	public boolean hasRound();
 
-	public RoundInfo(Round round, Player[] seats, Map<Player, Integer> totalScores, Map<Player, Integer> scoreIncrements)
-	{
-		m_round = round;
-		m_seats = seats;
+	public Round getRound();
 
-		m_totalScores = totalScores;
-		m_scoreIncrements = scoreIncrements;
-	}
+	public Player getPlayer(int position);
 
-	public Round getRound()
-	{
-		return m_round;
-	}
+	public Wind getPlayerWind(Player player);
 
-	public Player getPlayer(int position)
-	{
-		return m_seats[position];
-	}
+	public int getScore(Player player);
 
-	public int getScore(Player player)
-	{
-		return m_totalScores.get(player);
-	}
-
-	public int getScoreIncrement(Player player)
-	{
-		return m_scoreIncrements.get(player);
-	}
+	public int getScoreIncrement(Player player);
 }

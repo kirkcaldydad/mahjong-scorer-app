@@ -125,6 +125,9 @@
     <string name="prevailingWindNote">Prev: %s</string>
     <string name="ownWindNote">Own: %s</string>
 
+    <string name="gameStart">Game start.</string>
+    <string name="roundNumber">Round %s.</string>
+
     <plurals name="titleGameFinished">
         <item quantity="one">%s won!</item>
         <item quantity="other">Wow! It\'s a draw.</item>

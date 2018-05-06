@@ -28,6 +28,8 @@ import house.mcintosh.mahjong.model.Game;
 import house.mcintosh.mahjong.model.Player;
 import house.mcintosh.mahjong.model.Round;
 import house.mcintosh.mahjong.model.RoundInfo;
+import house.mcintosh.mahjong.model.RoundRoundInfo;
+import house.mcintosh.mahjong.model.StartingScoreInfo;
 import house.mcintosh.mahjong.model.Wind;
 import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
@@ -70,7 +72,7 @@ public final class GameInfoActivity extends AppCompatActivity
 		((TextView) findViewById(R.id.txtPrevailingWindName)).setText(prevailingWindName);
 
 		// Create a list of RoundInfo instances to be displayed.  We can also get the
-		// scores for all rounds from the game, for display and caclulating the increments
+		// scores for all rounds from the game, for display and calculating the increments
 		// for each player.
 
 		Game scoreCalcGame = new Game(scheme);
@@ -86,7 +88,6 @@ public final class GameInfoActivity extends AppCompatActivity
 		List<Map<Player, Integer>> roundScores = m_game.getRoundScores();
 		Map<Player, Integer> previousScores = m_game.getIntialScores();
 
-
 		for (int i = 0 ; i < rounds.size() ; i++)
 		{
 			Round round = rounds.get(i);
@@ -101,10 +102,24 @@ public final class GameInfoActivity extends AppCompatActivity
 				scoreIncrements.put(player, roundScore - previousScores.get(player));
 			}
 
-			roundInfos.add(0, new RoundInfo(round, m_game.getSeats(), playerScores, scoreIncrements));
+			roundInfos.add(0, new RoundRoundInfo(round, m_game.getSeats(), playerScores, scoreIncrements));
 
 			previousScores = playerScores;
 		}
+
+		// Add a sort of fake roundInfo that represents the initial state of the game.
+
+		Map<Player, Integer> initialScores = m_game.getIntialScores();
+		Map<Player, Wind> playerWinds = new HashMap<>();
+
+		for (Player player : initialScores.keySet())
+		{
+			playerWinds.put(player, m_game.getPlayerWind(player));
+		}
+
+		StartingScoreInfo startScoreInfo = new StartingScoreInfo(m_game.getSeats(), initialScores, playerWinds);
+
+		roundInfos.add(startScoreInfo);
 
 		RoundInfosAdapter adapter = new RoundInfosAdapter(this, roundInfos, new TileDrawables(this));
 
