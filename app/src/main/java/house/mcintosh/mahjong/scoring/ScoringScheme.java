@@ -75,7 +75,7 @@ public final class ScoringScheme implements Serializable
 		// Whole hand scores
 		
 //		OwnFlowerHandScore,
-//		OwnSeasonHandScore		 ,
+//		OwnSeasonHandScore,
 //		AllFlowersHandScore,
 //		AllSeasonsHandScore		 ,
 		OriginalCallHandScore(				R.string.scoreDescriptionOriginalCallHandScore),
