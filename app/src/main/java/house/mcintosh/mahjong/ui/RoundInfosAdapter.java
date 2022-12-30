@@ -1,11 +1,10 @@
 package house.mcintosh.mahjong.ui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
+import androidx.annotation.NonNull;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,8 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 
 	private int standardTileMargin;
 	private int groupTileMargin;
+	private int standardTilePadding;
+	private int backTilePadding;
 	private int tileHeight;
 	private int tileWidth;
 
@@ -39,10 +40,12 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 		super(context, 0, roundInfos);
 		m_tileDrawables = tileDrawables;
 
-		standardTileMargin = (int)convertDpToPixel(2, getContext());
-		groupTileMargin = (int)convertDpToPixel(8, getContext());
-		tileHeight = (int)convertDpToPixel(40, getContext());
-		tileWidth = (int)convertDpToPixel(30, getContext());
+		standardTileMargin = DisplayUtil.getPxDimension(context, R.dimen.displayTileMargin);
+		groupTileMargin = DisplayUtil.getPxDimension(context, R.dimen.displayGroupMargin);
+		standardTilePadding = DisplayUtil.getPxDimension(context, R.dimen.displayTilePadding);
+		backTilePadding = DisplayUtil.getPxDimension(context, R.dimen.displayTileBorder);
+		tileHeight = DisplayUtil.getPxDimension(context, R.dimen.displayTileHeight);
+		tileWidth = DisplayUtil.getPxDimension(context, R.dimen.displayTileWidth);
 	}
 
 	@Override
@@ -241,9 +244,23 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 				Tile tile = tiles.get(tileIndex);
 				ImageView imageView = new ImageView(getContext(), null, 0, R.style.tile);
 
-				Drawable tileDrawable = group.isConcealed() && (tileIndex == 0 || tileIndex == 3) ?
-										m_tileDrawables.getTileBack() :
-										m_tileDrawables.get(tile);
+				Drawable tileDrawable;
+				int padding;
+
+				if (group.isConcealed() && (tileIndex == 0 || tileIndex == 3))
+				{
+					tileDrawable = m_tileDrawables.getTileBack();
+					padding = backTilePadding;
+				}
+				else
+				{
+					tileDrawable = m_tileDrawables.get(tile);
+					padding = standardTilePadding;
+				}
+
+				imageView.setImageDrawable(tileDrawable);
+				imageView.setPadding(padding, padding, padding, padding);
+
 				imageView.setImageDrawable(tileDrawable);
 
 				parent.addView(imageView);
@@ -267,20 +284,5 @@ public final class RoundInfosAdapter extends ArrayAdapter<RoundInfo>
 
 			firstGroup = false;
 		}
-	}
-
-	/**
-	 * This method converts dp unit to equivalent pixels, depending on device density.
-	 *
-	 * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
-	 * @param context Context to get resources and device specific display metrics
-	 * @return A float value to represent px equivalent to dp depending on device density
-	 */
-	public static float convertDpToPixel(float dp, Context context)
-	{
-				Resources resources = context.getResources();
-				DisplayMetrics metrics = resources.getDisplayMetrics();
-				float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-				return px;
 	}
 }

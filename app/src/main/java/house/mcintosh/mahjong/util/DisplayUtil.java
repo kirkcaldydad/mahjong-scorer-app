@@ -1,7 +1,9 @@
 package house.mcintosh.mahjong.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -46,20 +48,28 @@ public final class DisplayUtil
 		{
 			Drawable tileDrawable;
 
+			ImageView imageView = (ImageView)view.getChildAt(i);
+			Context context = imageView.getContext();
+
 			if (group.isConcealed() && (i == 0 || i == 3))
 			{
 				tileDrawable = drawables.getTileBack();
+
+				imageView.setImageDrawable(tileDrawable);
+
+				int padding = getPxDimension(context, R.dimen.displayTileBorder);
+				imageView.setPadding(padding, padding, padding, padding);
+
 			}
 			else
 			{
 				Tile tile = tiles.get(i);
 				tileDrawable = drawables.get(tile);
+				imageView.setImageDrawable(tileDrawable);
+				int padding = getPxDimension(context, R.dimen.displayTilePadding);
+				imageView.setPadding(padding, padding, padding, padding);
 			}
 
-
-			ImageView imageView = (ImageView)view.getChildAt(i);
-
-			imageView.setImageDrawable(tileDrawable);
 			imageView.setVisibility(View.VISIBLE);
 		}
 
@@ -234,5 +244,28 @@ public final class DisplayUtil
 		}
 
 		return sb;
+	}
+
+	/**
+	 * This method converts dp unit to equivalent pixels, depending on device density.
+	 *
+	 * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+	 * @param context Context to get resources and device specific display metrics
+	 * @return A float value to represent px equivalent to dp depending on device density
+	 */
+	public static float dpToPx(float dp, Context context)
+	{
+		Resources resources = context.getResources();
+		DisplayMetrics metrics = resources.getDisplayMetrics();
+		float px = dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+		return px;
+	}
+
+	/**
+	 * @return	The value of a dimension, rounded to the nearest pixel.
+	 */
+	public static int getPxDimension(Context context, int dimensionResourceId)
+	{
+		return (int)(context.getResources().getDimension(dimensionResourceId) + 0.5f);
 	}
 }

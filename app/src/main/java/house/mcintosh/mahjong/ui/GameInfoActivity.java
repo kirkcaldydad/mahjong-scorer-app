@@ -1,26 +1,17 @@
 package house.mcintosh.mahjong.ui;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import androidx.core.app.NavUtils;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import house.mcintosh.mahjong.io.GameFile;
@@ -31,9 +22,7 @@ import house.mcintosh.mahjong.model.RoundInfo;
 import house.mcintosh.mahjong.model.RoundRoundInfo;
 import house.mcintosh.mahjong.model.StartingScoreInfo;
 import house.mcintosh.mahjong.model.Wind;
-import house.mcintosh.mahjong.scoring.ScoredHand;
 import house.mcintosh.mahjong.scoring.ScoringScheme;
-import house.mcintosh.mahjong.util.DisplayUtil;
 
 public final class GameInfoActivity extends AppCompatActivity
 {
